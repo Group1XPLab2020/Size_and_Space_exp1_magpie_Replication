@@ -1,0 +1,1 @@
+This folder contains all analysis scripts for preprocessing, plotting and summarizing or analysing data from the original experiment, our pilot and our main replication experiment in the respective subfolders 
