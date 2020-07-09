@@ -2,8 +2,8 @@ This folder contains code used for implementing the respective experiments with 
 
 * 01_original
       - stimulus_material
-          + stimulus_small.jpg
-          + stimulus_large.jpg
+            + stimulus_small.jpg
+            + stimulus_large.jpg
 * 02_pilot
       - [everything about the pilot]
       - [stimulus_material]
