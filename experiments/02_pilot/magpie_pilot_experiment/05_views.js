@@ -115,6 +115,19 @@ const forced_choice_2A = magpieViews.view_generator("forced_choice", {
   }
 });
 
+
+const training_trials = magpieViews.view_generator("key_press", {
+  // This will use all trials specified in `data`, you can user a smaller value (for testing), but not a larger value
+  trials: key_press_trials.length,
+  // name should be identical to the variable name
+  name: 'training_trials',
+  data: key_press_trials,
+  // you can add custom functions at different stages through a view's life cycle
+  hook: {
+      after_response_enabled: check_response
+  }
+});
+
 // There are many more templates available:
 // forced_choice, slider_rating, dropdown_choice, testbox_input, rating_scale, image_selection, sentence_choice,
 // key_press, self_paced_reading and self_paced_reading_rating_scale

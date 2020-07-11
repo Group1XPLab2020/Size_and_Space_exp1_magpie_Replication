@@ -51,6 +51,7 @@ const time_limit = function(data, next) {
 
 // compares the chosen answer to the value of `option1`
 check_response = function(data, next) {
+    console.log(data)
     $('input[name=answer]').on('change', function(e) {
         if (e.target.value === data.correct) {
             alert('Your answer is correct! Yey!');
