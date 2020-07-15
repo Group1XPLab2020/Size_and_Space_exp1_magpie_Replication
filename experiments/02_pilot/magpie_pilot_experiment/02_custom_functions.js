@@ -4,9 +4,9 @@
 *
 *
 */
-const coin = _.sample(["head", "tail"]); // You can determine global (random) parameters here
+// determine which mapping to present first 
+const first_mapping = _.sample(["compatible", "incompatible"]); 
 // Declare your variables here
-
 
 
 /* Helper functions
@@ -42,21 +42,21 @@ const time_limit = function(data, next) {
         window.timeout = [];
     }
     // Add timeouts to the timeoutarray
-    // Reminds the participant to respond after 5 seconds
+    // Reminds the participant to respond after 2 seconds
     window.timeout.push(setTimeout(function(){
           $('#reminder').text('Please answer more quickly!');
-    }, 5000));
+    }, 2000));
     next();
 };
 
 // compares the chosen answer to the value of `option1`
 check_response = function(data, next) {
-    console.log(data)
-    $('input[name=answer]').on('change', function(e) {
-        if (e.target.value === data.correct) {
+    //console.log(data)
+    $('input[name=answer]').on('change', function(e) { // this line does not work for key_press views ??
+        if (e.target.value === data.expected) {
             alert('Your answer is correct! Yey!');
         } else {
-            alert('Sorry, this answer is incorrect :( The correct answer was ' + data.correct);
+            alert('Sorry, this answer is incorrect :( The correct answer was ' + data.expected);
         }
         next();
     })
