@@ -207,6 +207,21 @@ const experimental_trials_incompatible = magpieViews.view_generator("key_press",
     fix_duration: 1000
   });
 
+// TESTING
+const test_view = custom_views.keypress_rotation_main({
+    trials: 5,
+    // trials: 8,
+    name: 'test_view',
+    trial_type: 'experimental_trials_compatible',
+    fix_duration: 1000,
+    //pause: 2000,
+    data: _.shuffle(compatible_trails),
+    key1: 'q',
+    key2: 'p',
+    q: 'large',
+    p: 'small'
+});
+
 // assigning experimental trail order
 if(first_mapping==='compatible') {
     training_trials1 = training_trials_compatible

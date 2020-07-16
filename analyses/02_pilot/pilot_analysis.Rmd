@@ -1,0 +1,183 @@
+---
+title: "Data Analysis Experiment 1"
+author: "Alex"
+date: '`r format(Sys.Date(), "%d.%m.%Y")`'
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  warning = FALSE, 
+  message = FALSE 
+)
+```
+
+```{r echo=FALSE}
+library(tidyverse)
+
+library(aida)
+
+library(brms)
+
+# use the aida-theme for plotting
+theme_set(theme_aida())
+
+# global color scheme / non-optimized
+project_colors = c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7", "#000000")
+
+# setting theme colors globally
+scale_colour_discrete <- function(...) {
+  scale_colour_manual(..., values = project_colors)
+}
+scale_fill_discrete <- function(...) {
+   scale_fill_manual(..., values = project_colors)
+} 
+```
+
+# Analysis experiment 1
+
+## Import data
+```{r}
+raw_data <- read_delim('sample_results.csv', delim=',')
+glimpse(raw_data)
+```
+
+## Preprocessing
+
+```{r}
+# Filter out reaction times below 100ms and above 1500ms,
+# rename response column and remove columns where no response was given
+data <- raw_data %>%
+  filter(trial_type=="experimental_trials_compatible" | trial_type=="experimental_trials_incompatible") %>% 
+  filter(RT>=100) %>% 
+  filter(RT<=1500) %>% 
+  select(trial_type, trial_number, key_pressed, Response, correctness, RT, Mapping, q, p, expected) %>% 
+  mutate(Participant=1) # only for testing
+```
+
+## Plotting Mean RTs 
+
+```{r}
+data_agg <- data %>% 
+  group_by(Mapping, Response) %>% 
+  summarize(meanRT = mean(RT),
+            variance = var(RT),
+            sd = sd(RT),
+            se = sqrt(variance / length(RT)))
+
+data_agg2 <- data %>% 
+  group_by(Participant, Mapping, Response) %>% 
+  summarize(meanRT = mean(RT))# %>% 
+ # group_by(Mapping) %>% 
+ # summarize(meanRT = mean(meanRT))
+
+ggplot(data = data_agg, aes(x=Response, y=meanRT, fill=Mapping)) +
+  geom_errorbar(aes(ymin=meanRT-se, ymax=meanRT+se), width=0.5, position=position_dodge2(padding=0.5)) +
+  geom_col(position="dodge", width=0.5) +
+  coord_cartesian(ylim=c(350, 450))
+
+(data_agg2$meanRT)
+  
+```
+
+# Hypothesis testing
+
+
+```{r}
+
+model <- brm(
+  formula = RT ~ Mapping * Response +
+           (Response || Participant) +
+            (Response || Mapping),
+  data = data
+)
+
+brm()
+
+model
+
+```
+
+```{r}
+
+h <- hypothesis(model, "Intercept < Intercept + Mappingincompatible")
+print(h, digits = 4)
+
+h2 <- hypothesis(model, "Intercept + Responseright < Intercept + Mappingincompatible + Responseright + Mappingincompatible:Responseright")
+print(h2, digits = 4)
+
+h3 <- hypothesis(model, "Intercept + Mappingincompatible + Responseright + Mappingincompatible:Responseright - (Intercept + Responseright) > Intercept + Mappingincompatible - (Intercept)")
+print(h2, digits = 4)
+
+```
+
+
+```{r}
+# A significant main effect of S-R Mapping reflected shorter RTs with the compatible
+# mapping (M = 377 ms, SD = 44) than with the incompatible mapping (M = 406 ms, SD = 62),
+# F(1, 23) = 11.119, MSE = 1,923.554, p = .003, 2 = .326 p η .
+data %>% 
+  group_by(Mapping) %>% 
+  summarize(M = mean(RT),
+            SD = sd(RT))
+
+aov(formula=meanRT ~ Mapping + Error(Participant/(Mapping)), data=data_agg2) %>% summary()
+```
+
+
+```{r}
+# A significant S-R Mapping × Response interaction reflected a numerically larger
+# Mapping effect for the right-hand response (mean difference = 46 ms) than
+# for the left-hand response (mean difference = 14 ms),
+# F(1, 23) = 13.621, MSE = 424.756, p = .001, 2 = .372 p η .
+
+# create temporary data frame to calculate left and right differences
+t1 <- data %>% 
+  group_by(Mapping, Response) %>% 
+  summarize(meanRT = mean(RT))
+
+left <- t1 %>% filter(Response=='left')
+right <- t1 %>% filter(Response=='right')
+left_mean_difference <- slice(left['meanRT'], 2) - slice(left['meanRT'], 1)
+right_mean_difference <- slice(right['meanRT'], 2) - slice(right['meanRT'], 1)
+
+tribble(~response, ~mean_difference,
+        'left', left_mean_difference$meanRT,
+        'right', right_mean_difference$meanRT)
+
+aov(formula=RT ~ Mapping*Response, data=data) %>% summary()
+```
+
+```{r}
+# In fact, the mapping effect was significant for the right-hand response, t(23) = 4.753, p < .001, but only
+# marginally significant for the left-hand response, t(23) = 1.401, p = .088.
+
+#t.test()
+```
+
+```{r}
+# Table 1 reconstruciton (mean error percentages): 
+
+# averaging per participant, then per condition
+data %>% 
+  group_by(Participant, Mapping, Response) %>% 
+  summarize(meanRT = mean(RT)) %>% 
+  group_by(Mapping, Response) %>% 
+  summarize(avRT = mean(meanRT),
+            variance = var(meanRT),
+            sd = sd(meanRT),
+            len = length(meanRT)) %>% 
+  mutate(se = sqrt(variance / len)) %>% 
+  mutate(percentage_error = se/24)
+
+# averaging directly per condition
+data %>% 
+  group_by(Mapping, Response) %>% 
+  summarize(meanRT = mean(RT),
+            variance = var(RT),
+            sd = sd(RT),
+            len = length(RT)) %>% 
+  mutate(se = sqrt(variance / len)) %>% 
+  mutate(percentage_error = se/24)
+```
+

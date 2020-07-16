@@ -17,14 +17,15 @@ $("document").ready(function() {
         views_seq: [
             intro,
             instructions,
-            training_trials1,
+            test_view, // TESTING
+        /*    training_trials1,
             start_experimental_trials1_instructions,
             experimental_trials1,
             switch_mappings_instructions,
             training_trials2,
             start_experimental_trials2_instructions,
-            experimental_trials2,
-            post_test,
+            experimental_trials2, */
+            post_test, 
             thanks,
         ],
         // Here, you can specify all information for the deployment
