@@ -17,6 +17,8 @@ library(tidyverse)
 
 library(aida)
 
+library(brms)
+
 # use the aida-theme for plotting
 theme_set(theme_aida())
 
@@ -36,7 +38,7 @@ scale_fill_discrete <- function(...) {
 
 ## Import data
 ```{r}
-raw_data <- read_delim('joc-1-1-19-s1.csv', delim=';')
+raw_data <- read_delim('../../data/01_original/01_raw_data.csv', delim=';')
 glimpse(raw_data)
 ```
 
@@ -55,20 +57,53 @@ data <- raw_data %>%
 ## Plotting Mean RTs 
 
 ```{r}
-data %>% 
+data_agg <- data %>% 
   group_by(Mapping, Response) %>% 
   summarize(meanRT = mean(RT),
             variance = var(RT),
             sd = sd(RT),
-            se = sqrt(variance / length(RT))) %>% 
-  ggplot(aes(x=Response, y=meanRT, fill=Mapping)) +
+            se = sqrt(variance / length(RT)))
+
+data_agg2 <- data %>% 
+  group_by(Participant, Mapping, Response) %>% 
+  summarize(meanRT = mean(RT))# %>% 
+ # group_by(Mapping) %>% 
+ # summarize(meanRT = mean(meanRT))
+
+ggplot(data = data_agg, aes(x=Response, y=meanRT, fill=Mapping)) +
   geom_errorbar(aes(ymin=meanRT-se, ymax=meanRT+se), width=0.5, position=position_dodge2(padding=0.5)) +
   geom_col(position="dodge", width=0.5) +
   coord_cartesian(ylim=c(350, 450))
+
+(data_agg2$meanRT)
   
 ```
 
 # Hypothesis testing
+
+
+```{r}
+
+model <- brm(
+  formula = meanRT ~ Mapping * Response +
+            (1 || Participant),
+  data = data_agg2
+)
+
+model
+
+```
+
+```{r}
+
+h <- hypothesis(model, "Intercept < Intercept + Mappingincompatible")
+print(h, digits = 4)
+
+h2 <- hypothesis(model, "Intercept + Responseright < Intercept + Mappingincompatible + Responseright + Mappingincompatible:Responseright")
+print(h2, digits = 4)
+
+```
+
 
 ```{r}
 # A significant main effect of S-R Mapping reflected shorter RTs with the compatible
@@ -79,7 +114,7 @@ data %>%
   summarize(M = mean(RT),
             SD = sd(RT))
 
-aov(formula=RT ~ Mapping, data=data) %>% summary()
+aov(formula=meanRT ~ Mapping + Error(Participant/(Mapping)), data=data_agg2) %>% summary()
 ```
 
 
