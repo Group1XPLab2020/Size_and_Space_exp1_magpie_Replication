@@ -85,10 +85,13 @@ ggplot(data = data_agg, aes(x=Response, y=meanRT, fill=Mapping)) +
 ```{r}
 
 model <- brm(
-  formula = meanRT ~ Mapping * Response +
-            (1 || Participant),
-  data = data_agg2
+  formula = RT ~ Mapping * Response +
+           (Response || Participant) +
+            (Response || Mapping),
+  data = data
 )
+
+brm()
 
 model
 
@@ -100,6 +103,9 @@ h <- hypothesis(model, "Intercept < Intercept + Mappingincompatible")
 print(h, digits = 4)
 
 h2 <- hypothesis(model, "Intercept + Responseright < Intercept + Mappingincompatible + Responseright + Mappingincompatible:Responseright")
+print(h2, digits = 4)
+
+h3 <- hypothesis(model, "Intercept + Mappingincompatible + Responseright + Mappingincompatible:Responseright - (Intercept + Responseright) > Intercept + Mappingincompatible - (Intercept)")
 print(h2, digits = 4)
 
 ```
