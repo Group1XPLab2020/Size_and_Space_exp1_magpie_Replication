@@ -1,40 +1,53 @@
-// In this file you can specify the trial data for your experiment
+// In this file we specify the trial data for your experiment
+// compatible: small is left and large is right
 
-
-const trial_info = {
-    forced_choice: [
-        {
-            question: "What's on the bread?",
-            picture: "images/stimulus_small.jpg",
-            option1: 'left',
-            option2: 'right',
-            correct: 'left'
-        },
-        {
-            question: "What's the weather like?",
-            picture: "images/stimulus_large.jpg",
-            option1: "left",
-            option2: "right",
-            correct: "right"
-        }
-    ]
-};
-
-const key_press_trials = [
-    {
+// specify each of the four possible trials (varying stimulus size and mapping)
+small_compatible_trial = {
         picture: "images/stimulus_small.jpg",
         key1: 'q',
         key2: 'p',
         q: 'small',
         p: 'large',
         expected: 'small'
-    },
-    {
+}
+
+large_compatible_trial = {
         picture: "images/stimulus_large.jpg",
         key1: 'q',
         key2: 'p',
         q: 'small',
         p: 'large',
         expected: 'large'
-    }
-];
+}
+
+small_incompatible_trial = {
+        picture: "images/stimulus_small.jpg",
+        key1: 'q',
+        key2: 'p',
+        q: 'large',
+        p: 'small',
+        expected: 'small'
+}
+
+large_incompatible_trial = {
+        picture: "images/stimulus_large.jpg",
+        key1: 'q',
+        key2: 'p',
+        q: 'large',
+        p: 'small',
+        expected: 'large'
+}
+
+// create empty arrays with length 60. these are our trial blocks
+let compatible_trails = new Array(60)
+let incompatible_trials = new Array(60)
+
+// fill arrays with 30 of each stimulus trial (30x small stimulus[0-29], 30x large stimulus[30-59])
+for(let i=0; i<30; i++) {
+    compatible_trails[i] =  small_compatible_trial
+    compatible_trails[i+30] =  large_compatible_trial
+    incompatible_trials[i] =  small_incompatible_trial
+    incompatible_trials[i+30] =  large_incompatible_trial
+}
+
+

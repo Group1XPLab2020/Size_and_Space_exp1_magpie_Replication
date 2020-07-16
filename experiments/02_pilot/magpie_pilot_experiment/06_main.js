@@ -15,9 +15,15 @@ $("document").ready(function() {
     window.magpie_monitor = magpieInit({
         // You have to specify all views you want to use in this experiment and the order of them
         views_seq: [
-            //intro,
-            // instructions,
-            training_trials,
+            intro,
+            instructions,
+            training_trials1,
+            start_experimental_trials1_instructions,
+            experimental_trials1,
+            switch_mappings_instructions,
+            training_trials2,
+            start_experimental_trials2_instructions,
+            experimental_trials2,
             post_test,
             thanks,
         ],
@@ -36,7 +42,10 @@ $("document").ready(function() {
         progress_bar: {
             in: [
                 // list the view-names of the views for which you want a progress bar
-                training_trials.name,
+                training_trials1.name,
+                experimental_trials1.name,
+                training_trials2.name, // does not yet work after switching mapping for some reason ??
+                experimental_trials2.name
             ],
              // Possible styles are "default", "separate" and "chunks"
             style: "separate",
