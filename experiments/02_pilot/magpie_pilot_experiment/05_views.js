@@ -23,11 +23,10 @@ const intro = magpieViews.view_generator("intro", {
   trials: 1,
   name: 'intro',
   // If you use JavaScripts Template String `I am a Template String`, you can use HTML <></> and javascript ${} inside
-  text: `TODO This is a sample introduction view.
+  text: `Welcome to our experiment and thank you for participating!
             <br />
             <br />
-            The introduction view welcomes the participant and gives general information
-            about the experiment
+            Please click the button below to get started.
             <br />
             <br />
             Debug info: <strong>${first_mapping}</strong> first group.`,
@@ -35,37 +34,69 @@ const intro = magpieViews.view_generator("intro", {
 });
 
 // For most tasks, you need instructions views
-const instructions = magpieViews.view_generator("instructions", {
+const instructions_compatible = magpieViews.view_generator("instructions", {
   trials: 1,
-  name: 'instructions',
+  name: 'instructions_compatible',
   title: 'General Instructions',
-  text: `TODO This is a sample instructions view.
+  text: `This experiment consists of 2 main blocks. Before each block you will have a short practice to get comfortable with the task.
             <br />
             <br />
-            Tell your participants what they are to do here.`,
-  buttonText: 'go to trials'
+            Every block has several trials, in each trial you first have to fixate a fixation cross which is placed in the middle of the screen.
+            After some time you are going to see a square, your task now is to decide with a <b>key press</b> on your keyboard whether this square is either <b>big</b> or <b>small</b>.
+            <br />
+            <br />
+            Please use the following keys for your decision:
+            <br />
+            Press <b>q</b> when you see a <b>small</b> square and
+            <br />
+            press <b>p</b> when you see a <b>big</b> square.
+            <br />
+            <br />
+            Please try to respond as accurate and as fast as possible. We will now start to practice that.`,
+  buttonText: 'go to practice'
 });
+
+const instructions_incompatible = magpieViews.view_generator("instructions", {
+  trials: 1,
+  name: 'instructions_incompatible',
+  title: 'General Instructions',
+  text: `This experiment consists of 2 main blocks. Before each block you will have a short practice to get comfortable with the task.
+            <br />
+            <br />
+            Every block has several trials, in each trial you first have to fixate a fixation cross which is placed in the middle of the screen.
+            After some time you are going to see a square, your task now is to decide with a <b>key press</b> on your keyboard whether this square is either <b>big</b> or <b>small</b>.
+            <br />
+            <br />
+            Please use the following keys for your decision:
+            <br />
+            Press <b>p</b> when you see a <b>small</b> square and
+            <br />
+            press <b>q</b> when you see a <b>big</b> square.
+            <br />
+            <br />
+            Please try to respond as accurate and as fast as possible. We will now start to practice that.`,
+  buttonText: 'go to practice'
 
 // Show in between training and experimental trials
 const start_experimental_trials1_instructions = magpieViews.view_generator("instructions", {
   trials: 1,
   name: 'start_experimental_trials1',
-  title: 'Experimental trials 1',
-  text: `We will now start the first block of experimental trials.
+  title: 'Experimental block 1',
+  text: `Great! Let us start with the main part now, you are ready for the first block of the experiment.
             <br />
             <br />
-            Please try to respond accurately and quickly.`,
+            Use the same keys as in the practice part before and <b>remember</b>, please try to respond as accurate and fast as possible.`,
   buttonText: 'start experimental trials'
 });
 
 const start_experimental_trials2_instructions = magpieViews.view_generator("instructions", {
   trials: 1,
   name: 'start_experimental_trials1',
-  title: 'Experimental trials 2',
-  text: `We will now start the second block of experimental trials.
+  title: 'Experimental block 2',
+  text: `Great! Now you are ready for the second block of our experiment.
             <br />
             <br />
-            Please again try to respond accurately and quickly.`,
+            Use the same keys as in the practice trail before and <b>remember</b>, please try to respond as accurate and fast as possible.`,
   buttonText: 'start experimental trials'
 });
 
@@ -76,7 +107,11 @@ const switch_mappings_to_incompatible_instructions = magpieViews.view_generator(
   text: `The first half of the experiment is now completed.
             <br />
             <br />
-            We will now swap the keys: You will now use <b>q</b> for <b>large</b> stimuli and <b>p</b> for <b>small</b> stimuli.
+            We will now swap the keys: You will now use
+            <br />
+            <b>q</b> when you see a <b>large</b> square and
+            <br />
+            <b>p</b> when you see a <b>small</b> square.
             <br />
             <br />
             You will again first get 10 practice trials to get used to the new setting.`,
@@ -91,7 +126,11 @@ const switch_mappings_to_compatible_instructions = magpieViews.view_generator("i
   text: `The first half of the experiment is now completed.
             <br />
             <br />
-            We will now swap the keys: You will now use <b>q</b> for <b>small</b> stimuli and <b>p</b> for <b>large</b> stimuli.
+            We will now swap the keys: You will now use
+            <br />
+            <b>q</b> when you see a <b>small</b> square and
+            <br />
+            <b>p</b> when you see a <b>large</b> square.
             <br />
             <br />
             You will again first get 10 practice trials to get used to the new setting.`,
