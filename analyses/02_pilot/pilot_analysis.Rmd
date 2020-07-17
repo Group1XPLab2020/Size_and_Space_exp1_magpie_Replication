@@ -52,7 +52,7 @@ data <- raw_data %>%
   filter(RT>=100) %>% 
   filter(RT<=1500) %>% 
   select(trial_type, trial_number, key_pressed, Response, correctness, RT, Mapping, q, p, expected) %>% 
-  mutate(Participant=1) # only for testing, will be rename(Participant=submission_id) in final analysis 
+  mutate(Participant=1) # only for testing, will be changed to rename(Participant=submission_id) in final analysis 
 ```
 
 ## Plotting Mean RTs 
