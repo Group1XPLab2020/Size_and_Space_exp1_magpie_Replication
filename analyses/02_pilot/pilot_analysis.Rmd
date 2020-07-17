@@ -1,6 +1,6 @@
 ---
 title: "Data Analysis Experiment 1"
-author: "Alex"
+author: "Paul Jänsch, Alexander Prochnow, Ludger Masch, Pia Stermann"
 date: '`r format(Sys.Date(), "%d.%m.%Y")`'
 output: html_document
 ---
@@ -37,6 +37,7 @@ scale_fill_discrete <- function(...) {
 # Analysis experiment 1
 
 ## Import data
+
 ```{r}
 raw_data <- read.csv('sample_results.csv')
 glimpse(raw_data)
@@ -45,14 +46,13 @@ glimpse(raw_data)
 ## Preprocessing
 
 ```{r}
-# Filter out reaction times below 100ms and above 1500ms,
-# rename response column and remove columns where no response was given
+# Filter out reaction times below 100ms and above 1500ms
 data <- raw_data %>%
   filter(trial_type=="experimental_trials_compatible" | trial_type=="experimental_trials_incompatible") %>% 
   filter(RT>=100) %>% 
   filter(RT<=1500) %>% 
   select(trial_type, trial_number, key_pressed, Response, correctness, RT, Mapping, q, p, expected) %>% 
-  mutate(Participant=1) # only for testing
+  mutate(Participant=1) # only for testing, will be rename(Participant=submission_id) in final analysis 
 ```
 
 ## Plotting Mean RTs 
@@ -73,7 +73,6 @@ ggplot(data = data_agg, aes(x=Response, y=meanRT, fill=Mapping)) +
 ```
 
 # Hypothesis testing
-
 
 ```{r}
 
@@ -98,32 +97,5 @@ print(h2, digits = 4)
 h3 <- hypothesis(model, "Intercept + Mappingincompatible + Responseright + Mappingincompatible:Responseright - (Intercept + Responseright) > Intercept + Mappingincompatible - (Intercept)")
 print(h2, digits = 4)
 
-```
-
-
-```{r}
-# Table 1 reconstruciton (mean error percentages): 
-
-# averaging per participant, then per condition
-data %>% 
-  group_by(Participant, Mapping, Response) %>% 
-  summarize(meanRT = mean(RT)) %>% 
-  group_by(Mapping, Response) %>% 
-  summarize(avRT = mean(meanRT),
-            variance = var(meanRT),
-            sd = sd(meanRT),
-            len = length(meanRT)) %>% 
-  mutate(se = sqrt(variance / len)) %>% 
-  mutate(percentage_error = se/24)
-
-# averaging directly per condition
-data %>% 
-  group_by(Mapping, Response) %>% 
-  summarize(meanRT = mean(RT),
-            variance = var(RT),
-            sd = sd(RT),
-            len = length(RT)) %>% 
-  mutate(se = sqrt(variance / len)) %>% 
-  mutate(percentage_error = se/24)
 ```
 
