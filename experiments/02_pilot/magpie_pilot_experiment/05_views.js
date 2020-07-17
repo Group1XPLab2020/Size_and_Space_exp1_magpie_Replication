@@ -76,6 +76,7 @@ const instructions_incompatible = magpieViews.view_generator("instructions", {
             <br />
             Please try to respond as accurate and as fast as possible. We will now start to practice that.`,
   buttonText: 'go to practice'
+});
 
 // Show in between training and experimental trials
 const start_experimental_trials1_instructions = magpieViews.view_generator("instructions", {
@@ -263,12 +264,14 @@ const test_view = custom_views.keypress_rotation_main({
 
 // assigning experimental trail order
 if(first_mapping==='compatible') {
+    general_instruction = instructions_compatible
     training_trials1 = training_trials_compatible
     experimental_trials1 = experimental_trials_compatible
     switch_mappings_instructions = switch_mappings_to_incompatible_instructions
     training_trials2 = training_trials_incompatible
     experimental_trials2 = experimental_trials_incompatible
 } else {
+    general_instruction = instructions_incompatible
     training_trials1 = training_trials_incompatible
     experimental_trials1 = experimental_trials_incompatible
     switch_mappings_instructions = switch_mappings_to_compatible_instructions

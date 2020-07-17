@@ -16,16 +16,17 @@ $("document").ready(function() {
         // You have to specify all views you want to use in this experiment and the order of them
         views_seq: [
             intro,
-            instructions,
-            test_view, // TESTING
-        /*    training_trials1,
+            general_instruction,
+            // TESTING
+            test_view,
+        /*  training_trials1,
             start_experimental_trials1_instructions,
             experimental_trials1,
             switch_mappings_instructions,
             training_trials2,
             start_experimental_trials2_instructions,
             experimental_trials2, */
-            post_test, 
+            post_test,
             thanks,
         ],
         // Here, you can specify all information for the deployment
