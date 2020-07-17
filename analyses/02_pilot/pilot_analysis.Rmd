@@ -65,18 +65,10 @@ data_agg <- data %>%
             sd = sd(RT),
             se = sqrt(variance / length(RT)))
 
-data_agg2 <- data %>% 
-  group_by(Participant, Mapping, Response) %>% 
-  summarize(meanRT = mean(RT))# %>% 
- # group_by(Mapping) %>% 
- # summarize(meanRT = mean(meanRT))
-
 ggplot(data = data_agg, aes(x=Response, y=meanRT, fill=Mapping)) +
   geom_errorbar(aes(ymin=meanRT-se, ymax=meanRT+se), width=0.5, position=position_dodge2(padding=0.5)) +
   geom_col(position="dodge", width=0.5) +
   coord_cartesian(ylim=c(350, 450))
-
-(data_agg2$meanRT)
   
 ```
 
@@ -87,12 +79,9 @@ ggplot(data = data_agg, aes(x=Response, y=meanRT, fill=Mapping)) +
 
 model <- brm(
   formula = RT ~ Mapping * Response +
-           (Response || Participant) +
-            (Response || Mapping),
+           (Response || Participant),
   data = data
 )
-
-brm()
 
 model
 
