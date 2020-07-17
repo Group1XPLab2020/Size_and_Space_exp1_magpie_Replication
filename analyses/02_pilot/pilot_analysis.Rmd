@@ -38,7 +38,7 @@ scale_fill_discrete <- function(...) {
 
 ## Import data
 ```{r}
-raw_data <- read_delim('sample_results.csv', delim=',')
+raw_data <- read.csv('sample_results.csv')
 glimpse(raw_data)
 ```
 
@@ -65,18 +65,10 @@ data_agg <- data %>%
             sd = sd(RT),
             se = sqrt(variance / length(RT)))
 
-data_agg2 <- data %>% 
-  group_by(Participant, Mapping, Response) %>% 
-  summarize(meanRT = mean(RT))# %>% 
- # group_by(Mapping) %>% 
- # summarize(meanRT = mean(meanRT))
-
 ggplot(data = data_agg, aes(x=Response, y=meanRT, fill=Mapping)) +
   geom_errorbar(aes(ymin=meanRT-se, ymax=meanRT+se), width=0.5, position=position_dodge2(padding=0.5)) +
   geom_col(position="dodge", width=0.5) +
   coord_cartesian(ylim=c(350, 450))
-
-(data_agg2$meanRT)
   
 ```
 
@@ -87,12 +79,9 @@ ggplot(data = data_agg, aes(x=Response, y=meanRT, fill=Mapping)) +
 
 model <- brm(
   formula = RT ~ Mapping * Response +
-           (Response || Participant) +
-            (Response || Mapping),
+           (Response || Participant),
   data = data
 )
-
-brm()
 
 model
 
@@ -111,49 +100,6 @@ print(h2, digits = 4)
 
 ```
 
-
-```{r}
-# A significant main effect of S-R Mapping reflected shorter RTs with the compatible
-# mapping (M = 377 ms, SD = 44) than with the incompatible mapping (M = 406 ms, SD = 62),
-# F(1, 23) = 11.119, MSE = 1,923.554, p = .003, 2 = .326 p η .
-data %>% 
-  group_by(Mapping) %>% 
-  summarize(M = mean(RT),
-            SD = sd(RT))
-
-aov(formula=meanRT ~ Mapping + Error(Participant/(Mapping)), data=data_agg2) %>% summary()
-```
-
-
-```{r}
-# A significant S-R Mapping × Response interaction reflected a numerically larger
-# Mapping effect for the right-hand response (mean difference = 46 ms) than
-# for the left-hand response (mean difference = 14 ms),
-# F(1, 23) = 13.621, MSE = 424.756, p = .001, 2 = .372 p η .
-
-# create temporary data frame to calculate left and right differences
-t1 <- data %>% 
-  group_by(Mapping, Response) %>% 
-  summarize(meanRT = mean(RT))
-
-left <- t1 %>% filter(Response=='left')
-right <- t1 %>% filter(Response=='right')
-left_mean_difference <- slice(left['meanRT'], 2) - slice(left['meanRT'], 1)
-right_mean_difference <- slice(right['meanRT'], 2) - slice(right['meanRT'], 1)
-
-tribble(~response, ~mean_difference,
-        'left', left_mean_difference$meanRT,
-        'right', right_mean_difference$meanRT)
-
-aov(formula=RT ~ Mapping*Response, data=data) %>% summary()
-```
-
-```{r}
-# In fact, the mapping effect was significant for the right-hand response, t(23) = 4.753, p < .001, but only
-# marginally significant for the left-hand response, t(23) = 1.401, p = .088.
-
-#t.test()
-```
 
 ```{r}
 # Table 1 reconstruciton (mean error percentages): 
