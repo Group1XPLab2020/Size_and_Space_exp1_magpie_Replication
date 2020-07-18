@@ -108,14 +108,14 @@ pp_check(model)
 
 ```{r}
 
-h <- hypothesis(model, "(Intercept) < (Intercept + Mappingincompatible)")
+h <- hypothesis(model, "1 < exp(Mappingincompatible)")
 print(h, digits = 4)
 
-h2 <- hypothesis(model, "Intercept + Responseright < Intercept + Mappingincompatible + Responseright + Mappingincompatible:Responseright")
+h2 <- hypothesis(model, "1 < exp(Mappingincompatible + Mappingincompatible:Responseright)")
 print(h2, digits = 4)
 
 h3 <- hypothesis(model, "Intercept + Mappingincompatible + Responseright + Mappingincompatible:Responseright - (Intercept + Responseright) > Intercept + Mappingincompatible - (Intercept)")
-print(h2, digits = 4)
+print(h3, digits = 4)
 
 ```
 
