@@ -52,6 +52,8 @@ data <- raw_data %>%
   filter(RT>=100) %>% 
   filter(RT<=1500) %>% 
   rename(Response=Actual_Key)
+
+data$logRT = log(data$RT)
 ```
 
 ## Plotting Mean RTs 
@@ -75,7 +77,7 @@ ggplot(data = data_agg, aes(x=Response, y=meanRT, fill=Mapping)) +
   geom_col(position="dodge", width=0.5) +
   coord_cartesian(ylim=c(350, 450))
 
-(data_agg2$meanRT)
+#(data_agg2$meanRT)
   
 ```
 
@@ -84,22 +86,29 @@ ggplot(data = data_agg, aes(x=Response, y=meanRT, fill=Mapping)) +
 
 ```{r}
 
-model <- brm(
+model_bad <- brm(
   formula = RT ~ Mapping * Response +
-           (Response || Participant) +
-            (Response || Mapping),
+           (Response || Participant),
   data = data
 )
 
-brm()
+model <- brm(
+  formula = logRT ~ Mapping * Response +
+           (Response || Participant),
+  data = data
+)
 
 model
+
+pp_check(model_bad)
+pp_check(model)
+
 
 ```
 
 ```{r}
 
-h <- hypothesis(model, "Intercept < Intercept + Mappingincompatible")
+h <- hypothesis(model, "(Intercept) < (Intercept + Mappingincompatible)")
 print(h, digits = 4)
 
 h2 <- hypothesis(model, "Intercept + Responseright < Intercept + Mappingincompatible + Responseright + Mappingincompatible:Responseright")
