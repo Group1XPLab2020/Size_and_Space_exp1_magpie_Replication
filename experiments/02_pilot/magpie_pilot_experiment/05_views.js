@@ -144,7 +144,6 @@ const post_test = magpieViews.view_generator("post_test", {
   name: 'post_test',
   title: 'Additional information',
   text: 'Answering the following questions is optional, but your answers will help us analyze our results.'
-
   // You can change much of what appears here, e.g., to present it in a different language, as follows:
   // buttonText: 'Weiter',
   // age_question: 'Alter',
@@ -159,6 +158,13 @@ const post_test = magpieViews.view_generator("post_test", {
   // languages_question: 'Muttersprache',
   // languages_more: '(in der Regel die Sprache, die Sie als Kind zu Hause gesprochen haben)',
   // comments_question: 'Weitere Kommentare'
+});
+
+const handedness_post_test = custom_views.handedness_post_test({
+  trials: 1,
+  name: 'handedness_post_test',
+  title: 'Handedness information',
+  text: 'Please answer which hand is your dominant one (usually the hand which you write with).'
 });
 
 // The 'thanks' view is crucial; never delete it; it submits the results!
@@ -258,9 +264,25 @@ const test_view = custom_views.keypress_rotation_main({
     data: _.shuffle(compatible_trails),
     key1: 'q',
     key2: 'p',
-    q: 'large',
-    p: 'small'
+    q: 'small',
+    p: 'large'
 });
+
+const test_view_practice = custom_views.keypress_rotation_practice({
+    trials: 1,
+    // trials: 2,
+    name: 'test_view_practice',
+    trial_type: 'training_trials_compatible',
+    //pause: 500,
+    fix_duration: 1000,
+    data: _.shuffle(compatible_trails),
+    key1: "q",
+    key2: "p",
+    q: 'small',
+    p: 'large'
+});
+
+// END TESTING
 
 // assigning experimental trail order
 if(first_mapping==='compatible') {

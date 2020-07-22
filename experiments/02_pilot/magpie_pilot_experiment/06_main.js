@@ -18,7 +18,10 @@ $("document").ready(function() {
             intro,
             general_instruction,
             // TESTING
-            test_view,
+            test_view_practice,
+            //start_experimental_trials1_instructions,
+           // test_view,
+            // END TESTING
         /*  training_trials1,
             start_experimental_trials1_instructions,
             experimental_trials1,
@@ -26,7 +29,8 @@ $("document").ready(function() {
             training_trials2,
             start_experimental_trials2_instructions,
             experimental_trials2, */
-            post_test,
+            handedness_post_test,
+            //post_test,
             thanks,
         ],
         // Here, you can specify all information for the deployment

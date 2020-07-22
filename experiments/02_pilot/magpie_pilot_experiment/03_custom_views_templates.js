@@ -46,24 +46,43 @@ custom_views.keypress_rotation_practice = function(config) {
                         config.data[CT].expected ===
                             config[keyPressed]
                     ) {
-                        correctness = "correct";
-                        // show feedback (for practice trial only)
+                        correctness = 1;
+                        // show feedback (for training trial only)
                         $(".magpie-view-stimulus").addClass("magpie-invisible");
                         $('#feedback').text('Correct!');
 
                     } else {
-                        correctness = "incorrect";
-                        // show feedback (for practice trial only)
+                        correctness = 0;
+                        // show feedback (for training trial only)
                         $(".magpie-view-stimulus").addClass("magpie-invisible");
                         $('#feedback').text('Incorrect!');
                     }
-
+                    
+                    // create Response data entry, i.e. recode q=left, p=right
+                    if (keyPressed === "q") {
+                        response = "left"
+                    } else if (keyPressed === "p") {
+                        response = "right"
+                    }
+                    
+                    // create Mapping entry
+                    if (config.trial_type==="experimental_trials_compatible" || 
+                        config.trial_type==="training_trials_compatible") {
+                        mapping = "compatible"
+                        
+                    } else if (config.trial_type==="experimental_trials_incompatible" || 
+                        config.trial_type==="training_trials_incompatible") {
+                        mapping = "incompatible"       
+                    }
+                    
                     const trial_data = {
                         trial_type: config.trial_type,
                         trial_number: CT + 1,
                         key_pressed: keyPressed,
+                        Response: response,
                         correctness: correctness,
-                        RT: RT
+                        RT: RT,
+                        Mapping: mapping
                     };
 
                     for (let prop in config.data[CT]) {
@@ -100,22 +119,23 @@ custom_views.keypress_rotation_practice = function(config) {
 
                     magpie.trial_data.push(trial_data);
                     $("body").off("keydown", handleKeyPress);
-                    setTimeout(magpie.findNextView, 400); // delay to accomodate feedback
+                    setTimeout(magpie.findNextView, 1500); // delay to accomodate feedback
                 }
             };
 
             const enableResponse = function() {
+                startingTime = Date.now();
                 $(".magpie-view").append(answerContainerElem);
                 $("body").on("keydown", handleKeyPress);
             };
 
-            startingTime = Date.now();
+            //startingTime = Date.now(); TESTING
 
             // creates the DOM of the trial view
             magpieUtils.view.createTrialDOM(
                 {
                     pause: config.pause,
-                    //fix_duration: config.fix_duration,
+                    fix_duration: config.fix_duration,
                     stim_duration: config.stim_duration,
                     data: config.data[CT],
                     evts: config.hook,
@@ -182,6 +202,14 @@ custom_views.keypress_rotation_main = function(config) {
                         correctness = 0;
                     }
                     
+                    if (RT>=2000) {
+                        // show that response was too slow
+                        $(".magpie-view-stimulus").addClass("magpie-invisible");
+                        $('#feedback').text('Too slow!');
+                    } else {
+                        $(".magpie-view-stimulus").addClass("magpie-invisible");
+                    }
+                    
                     // create Response data entry, i.e. recode q=left, p=right
                     if (keyPressed === "q") {
                         response = "left"
@@ -243,16 +271,23 @@ custom_views.keypress_rotation_main = function(config) {
 
                     magpie.trial_data.push(trial_data);
                     $("body").off("keydown", handleKeyPress);
-                    magpie.findNextView();
+                    // delay transition to next trial to show feedback if necessary, 
+                    // otherwise move to the next trial without delay
+                    //if(RT>=2000) {
+                    setTimeout(magpie.findNextView, 1500); // delay to accomodate feedback
+                    /*} else {
+                        magpie.findNextView();
+                    }*/
                 }
             };
 
             const enableResponse = function() {
+                startingTime = Date.now();
                 $(".magpie-view").append(answerContainerElem);
                 $("body").on("keydown", handleKeyPress);
             };
 
-            startingTime = Date.now();
+            //startingTime = Date.now();
 
             // creates the DOM of the trial view
             magpieUtils.view.createTrialDOM(
@@ -273,3 +308,71 @@ custom_views.keypress_rotation_main = function(config) {
 
     return keypress_rotation_main_function;
 };
+
+
+// Custom post test view to ask participants for their handedness
+custom_views.handedness_post_test = function(config) {
+    // Define view elements:
+    // stimulus container
+    const post_test_stimulus_container = function(config, CT) {
+        return `<div class='magpie-view magpie-post-test-view'>
+                    <h1 class='magpie-view-title'>${config.title}</h1>
+                    <section class="magpie-text-container">
+                        <p class="magpie-view-text">${config.text}</p>
+                    </section>
+                </div>`;
+    }
+    
+    // answer container
+    post_test_answer_container = function(config, CT) {
+        const quest = magpieUtils.view.fill_defaults_post_test(config);
+        return `<form>
+                    <p class='magpie-view-text'>
+                        <label for="handedness">${"Handedness"}:</label>
+                        <select id="handedness" name="handedness">
+                            <option></option>
+                            <option value="${"right-handed"}">${"right-handed"}</option>
+                            <option value="${"left-handed"}">${"left-handed"}</option>
+                            <option value="${"mixed-handedness"}">${"mixed-handedness"}</option>
+                        </select>
+                    </p>
+                    <button id="next" class='magpie-view-button'>${config.button}</button>
+            </form>`
+    }
+    
+    // handle response function
+    post_test_handle_response = function(config, CT, magpie, answer_container_generator, startingTime) {
+        $(".magpie-view").append(answer_container_generator(config, CT));
+
+        $("#next").on("click", function(e) {
+            // prevents the form from submitting
+            e.preventDefault();
+
+            // records the post test info
+            magpie.global_data.handedness = $("#handedness").val();
+            magpie.global_data.endTime = Date.now();
+            magpie.global_data.timeSpent =
+                (magpie.global_data.endTime -
+                    magpie.global_data.startTime) /
+                60000;
+
+            // moves to the next view
+            magpie.findNextView();
+        });
+    }
+    
+    // Create post test instance using custom view elements
+    const post_test_instance = magpieViews.view_generator(
+        'post_test',
+        // config information
+        config,
+        // custom generator functions
+        {
+            stimulus_container_generator: post_test_stimulus_container,
+            answer_container_generator: post_test_answer_container,
+            handle_response_function: post_test_handle_response
+        }
+    );
+    
+    return post_test_instance;
+}
