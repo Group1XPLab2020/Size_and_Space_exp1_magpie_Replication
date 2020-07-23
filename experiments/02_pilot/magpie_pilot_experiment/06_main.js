@@ -20,7 +20,7 @@ $("document").ready(function() {
             // 1st block
             instructions1,
             training_trials1,
-            start_experimental_trials_instructions1, 
+            // start_experimental_trials_instructions1, 
             experimental_trials1,
             // Distractor task
             distractor_task_instructions,
@@ -30,9 +30,9 @@ $("document").ready(function() {
             training_trials2,
             start_experimental_trials_instructions2,
             experimental_trials2,
-            // post-questionnaires
+            //post-questionnaires
             handedness_post_test,
-            post_test,
+            optional_post_test,
             thanks,
         ],
         // Specify deployement information

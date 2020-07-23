@@ -16,3 +16,11 @@
 .custom-border {
    border: 1px solid powderblue;
 }
+
+/* used to center the compared stimuli image in the instructions*/
+.custom_center {
+  display: block;
+  object-fit: contain;
+  margin-left: auto;
+  margin-right: auto;
+}
