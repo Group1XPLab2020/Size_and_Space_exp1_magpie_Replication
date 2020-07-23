@@ -1,11 +1,11 @@
-// In this file you can create your own custom view templates
+// In this file we create our own custom view templates
 
 // First we create a custom_views object
 const custom_views = {};
 
 // We can now add view templates to our custom_views object
 
-// Custom view template for training trials
+// Custom view template for training trials based on the key_press view
 custom_views.keypress_training = function(config) {
     const keypress_training_function = {
         name: config.name,
@@ -124,12 +124,11 @@ custom_views.keypress_training = function(config) {
             };
 
             const enableResponse = function() {
+                // set starting time to be after the fixation period, i.e. once the response is enabled
                 startingTime = Date.now();
                 $(".magpie-view").append(answerContainerElem);
                 $("body").on("keydown", handleKeyPress);
             };
-
-            //startingTime = Date.now(); TESTING
 
             // creates the DOM of the trial view
             magpieUtils.view.createTrialDOM(
@@ -155,7 +154,7 @@ custom_views.keypress_training = function(config) {
 
 
 
-// Custom view template for main/experimental trials
+// Custom view template for main/experimental trials based on the key_press view
 custom_views.keypress_experimental = function(config) {
     const keypress_experimental_function = {
         name: config.name,
@@ -272,22 +271,18 @@ custom_views.keypress_experimental = function(config) {
                     magpie.trial_data.push(trial_data);
                     $("body").off("keydown", handleKeyPress);
                     // delay transition to next trial to show feedback if necessary, 
-                    // otherwise move to the next trial without delay
-                    //if(RT>=2000) {
+                    // otherwise just show a blank screen
                     setTimeout(magpie.findNextView, 1500); // delay to accomodate feedback
-                    /*} else {
-                        magpie.findNextView();
-                    }*/
                 }
             };
 
             const enableResponse = function() {
+                // set starting time to be after the fixation period, i.e. once the response is enabled
                 startingTime = Date.now();
                 $(".magpie-view").append(answerContainerElem);
                 $("body").on("keydown", handleKeyPress);
             };
 
-            //startingTime = Date.now();
 
             // creates the DOM of the trial view
             magpieUtils.view.createTrialDOM(
@@ -309,6 +304,7 @@ custom_views.keypress_experimental = function(config) {
     return keypress_experimental_function;
 };
 
+// Handedness questionnaire:
 
 // Custom post test view to ask participants for their handedness
 custom_views.handedness_post_test = function(config) {

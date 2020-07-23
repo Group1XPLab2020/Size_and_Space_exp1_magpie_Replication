@@ -1,4 +1,4 @@
-// In this file you initialize and configure your experiment using magpieInit
+// In this file we initialize and configure our experiment using magpieInit
 
 $("document").ready(function() {
     // prevent scrolling when space is pressed
@@ -30,12 +30,12 @@ $("document").ready(function() {
             training_trials2,
             start_experimental_trials_instructions2,
             experimental_trials2,
-            // post-questionnaire
+            // post-questionnaires
             handedness_post_test,
             post_test,
             thanks,
         ],
-        // Here, you can specify all information for the deployment
+        // Specify deployement information
         deploy: {
             experimentID: "INSERT_A_NUMBER",
             serverAppURL: "https://magpie-demo.herokuapp.com/api/submit_experiment/",
@@ -46,14 +46,14 @@ $("document").ready(function() {
             contact_email: "YOUREMAIL@wherelifeisgreat.you",
             prolificURL: "https://app.prolific.ac/submissions/complete?cc=SAMPLE1234"
         },
-        // Here, you can specify how the progress bar should look like
+        // Specify progress bars
         progress_bar: {
             in: [
-                // list the view-names of the views for which you want a progress bar
+                // list the view-names of the views for which we want a progress bar
                 training_trials1.name,
                 experimental_trials1.name,
                 distractor_task.name,
-                training_trials2.name, // does not yet work after switching mapping for some reason ??
+                training_trials2.name,
                 experimental_trials2.name
             ],
              // Possible styles are "default", "separate" and "chunks"

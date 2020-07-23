@@ -1,21 +1,23 @@
-// Here, you can define all custom functions, you want to use and initialize some variables
+// Here, we define all custom functions and variables
 
 /* Variables
 *
 *
 */
+
 // determine which mapping to present first 
 const first_mapping = _.sample(["compatible", "incompatible"]); 
-// set initial key mappings for the compatible case first
+
+// set initial key mappings for the compatible case first (unused currently)
 var q_mapping = "small";
 var p_mapping = "large";
 
-// change key mappings if the incompatible case is first
+// change key mappings if the incompatible case is first (unused currently)
 if (first_mapping === "incompatible") {
     q_mapping = "large";
     p_mapping = "small";
 }
-// Declare your variables here
+
 
 
 /* Helper functions
@@ -23,6 +25,7 @@ if (first_mapping === "incompatible") {
 *
 */
 
+// function to swap the mapping (unused currently)
 const swap_mapping = function() {
     if (first_mapping === "compatible") {
         // switch to incompatible mapping
@@ -33,7 +36,6 @@ const swap_mapping = function() {
         q_mapping = "small";
         p_mapping = "large";
     }
-    console.log("q = ", q_mapping)
 }
 
 
@@ -49,45 +51,3 @@ const generateID = function(len) {
     window.crypto.getRandomValues(arr);
     return Array.from(arr, this.dec2hex).join("");
 };
-// Declare your helper functions here
-
-
-
-/* Hooks  
-*
-*
-*/
-
-// Error feedback if participants exceeds the time for responding
-const time_limit = function(data, next) {
-    if (typeof window.timeout === 'undefined'){
-        window.timeout = [];
-    }
-    // Add timeouts to the timeoutarray
-    // Reminds the participant to respond after 2 seconds
-    window.timeout.push(setTimeout(function(){
-          $('#reminder').text('Please answer more quickly!');
-    }, 2000));
-    next();
-};
-
-// compares the chosen answer to the value of `option1`
-check_response = function(data, next) {
-    //console.log(data)
-    $('input[name=answer]').on('change', function(e) { // this line does not work for key_press views ??
-        if (e.target.value === data.expected) {
-            alert('Your answer is correct! Yey!');
-        } else {
-            alert('Sorry, this answer is incorrect :( The correct answer was ' + data.expected);
-        }
-        next();
-    })
-}
-
-// Declare your hooks here
-
-
-/* Generators for custom view templates, answer container elements and enable response functions
-*
-*
-*/
