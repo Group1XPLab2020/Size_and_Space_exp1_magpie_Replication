@@ -65,10 +65,10 @@ triangle_trial = {
     expected: "triangle"
 }
 
-distractor_trials = new Array(10)
+distractor_trials = new Array(20)
 
-for(let i=0; i<5; i++) {
+for(let i=0; i<10; i++) {
     distractor_trials[i] = circle_trial
-    distractor_trials[i+5] =  triangle_trial
+    distractor_trials[i+10] =  triangle_trial
 }
 

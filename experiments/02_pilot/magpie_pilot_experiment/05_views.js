@@ -61,8 +61,7 @@ const instructions_stimulus_container = function(config, CT) {
                     <section class="magpie-text-container">
                         <p class="magpie-view-text">${config.text}</p>
                         <br />
-                        <img style='display: block; object-fit: contain; margin-left: auto;
-  margin-right: auto;' src="images/both_stimuli_compared.jpg" alt="circle image">
+                        <img class="custom_center" src="images/both_stimuli_compared.jpg" alt="circle image">
                     </section>
                     
                 </div>`;
@@ -171,6 +170,13 @@ const post_test = magpieViews.view_generator("post_test", {
   text: 'Answering the following questions is optional, but your answers will help us analyze our results.'
 });
 
+const optional_post_test = custom_views.optional_post_test({
+   trials: 1,
+    name: 'opt_post_test',
+    title: 'Additional information',
+    text: 'Answering the following questions is optional, but your answers will help us analyze our results.'
+});
+
 // Asks participants for their handedness (important for exploratory hypotheses)
 const handedness_post_test = custom_views.handedness_post_test({
   trials: 1,
@@ -193,7 +199,7 @@ const thanks = magpieViews.view_generator("thanks", {
 
 // Experimental trials with a compatible mapping
 const experimental_trials_compatible = custom_views.keypress_experimental({
-    trials: 2,
+    trials: 2, //60
     name: 'experimental_trials_compatible',
     trial_type: 'experimental_trials_compatible',
     fix_duration: 1000,
@@ -206,7 +212,7 @@ const experimental_trials_compatible = custom_views.keypress_experimental({
 
 // Experimental trials with an incompatible mapping
 const experimental_trials_incompatible = custom_views.keypress_experimental({
-    trials: 2,
+    trials: 2, //60
     name: 'experimental_trials_incompatible',
     trial_type: 'experimental_trials_incompatible',
     fix_duration: 1000,
@@ -219,7 +225,7 @@ const experimental_trials_incompatible = custom_views.keypress_experimental({
 
 // Training trials with a compatible mapping
 const training_trials_compatible = custom_views.keypress_training({
-    trials: 2,
+    trials: 2, //10
     name: 'test_view_practice',
     trial_type: 'training_trials_compatible',
     fix_duration: 1000,
@@ -232,7 +238,7 @@ const training_trials_compatible = custom_views.keypress_training({
 
 // Training trials with an incompatible mapping
 const training_trials_incompatible = custom_views.keypress_training({
-    trials: 2,
+    trials: 2, //10
     name: 'training_trials_incompatible',
     trial_type: 'training_trials_incompatible',
     fix_duration: 1000,
@@ -246,7 +252,7 @@ const training_trials_incompatible = custom_views.keypress_training({
 // The distractor task, showing participants either a circle or a triangle
 // and have them respond by mouse click on the corresponding button
 const distractor_task = magpieViews.view_generator("forced_choice", {
-    trials: 10,
+    trials: 2,//20
     name: "distractor_trials",
     trial_type: "test",
     data: _.shuffle(distractor_trials),
