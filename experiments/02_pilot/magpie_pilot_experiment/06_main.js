@@ -20,7 +20,7 @@ $("document").ready(function() {
             // 1st block
             instructions1,
             training_trials1,
-            // start_experimental_trials_instructions1, 
+            start_experimental_trials_instructions1, 
             experimental_trials1,
             // Distractor task
             distractor_task_instructions,

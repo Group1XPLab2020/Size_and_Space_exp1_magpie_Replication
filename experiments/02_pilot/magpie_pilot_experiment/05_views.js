@@ -55,6 +55,8 @@ const block_instructions = magpieViews.view_generator("instructions", {
   buttonText: 'go to practice'
 });
 
+// custom stimulus container which adds the compared stimuli image below the instructions text
+// using the custom_center style
 const instructions_stimulus_container = function(config, CT) {
         return `<div class='magpie-view'>
                     <h1 class='magpie-view-title'>${config.title}</h1>
@@ -73,14 +75,14 @@ const instructions_compatible = magpieViews.view_generator("instructions", {
   name: 'instructions_compatible',
   title: 'Instructions for the next part',
   text: `This part consists of several trials. In each trial you first have to fixate a fixation cross which is placed in the middle of the screen.
-            After some time, the fixation cross will disappear and you are going to see a square instead, which is either small or large (see Figure below). Your task then is to decide with a <b>key press</b> on your keyboard whether this square is either <b>small</b> (a) or <b>large</b> (b).
+            After some time, the fixation cross will disappear and you are going to see a square instead, which is either small or large (see figure below). Your task then is to decide with a <b>key press</b> on your keyboard whether this square is either <b>small</b> (a) or <b>large</b> (b).
             <br />
             <br />
             Please use the following keys for your decision:
             <br />
-            Press <b>q</b> when you see a <b>small</b> square and
+            Press <b>q</b> with your left index finger when you see a <b>small</b> square and
             <br />
-            press <b>p</b> when you see a <b>large</b> square.
+            press <b>p</b> with your right index finger when you see a <b>large</b> square.
             <br />
             <br />
             Following these instructions, you will firstly have to complete some practice trials to become familiar with this part's task. In these practice trials, you will additionally receive short feedback messages in each trial, telling you whether your answer was correct.
@@ -99,14 +101,14 @@ const instructions_incompatible = magpieViews.view_generator("instructions", {
   name: 'instructions_incompatible',
   title: 'Instructions for the next part',
   text: `This part consists of several trials. In each trial you first have to fixate a fixation cross which is placed in the middle of the screen.
-            After some time, the fixation cross will disappear and you are going to see a square instead, which is either small or large (see Figure below). Your task then is to decide with a <b>key press</b> on your keyboard whether this square is either <b>small</b> (a) or <b>large</b> (b).
+            After some time, the fixation cross will disappear and you are going to see a square instead, which is either small or large (see figure below). Your task then is to decide with a <b>key press</b> on your keyboard whether this square is either <b>small</b> (a) or <b>large</b> (b).
             <br />
             <br />
             Please use the following keys for your decision:
             <br />
-            Press <b>p</b> when you see a <b>small</b> square and
+            Press <b>p</b> with your right index finger when you see a <b>small</b> square and
             <br />
-            press <b>q</b> when you see a <b>large</b> square.
+            press <b>q</b> with your left index finger when you see a <b>large</b> square.
             <br />
             <br />
             Following these instructions, you will firstly have to complete some practice trials to become familiar with this part's task. In these practice trials, you will additionally receive short feedback messages in each trial, telling you whether your answer was correct.
