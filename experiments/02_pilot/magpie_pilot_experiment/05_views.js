@@ -11,10 +11,7 @@ const intro = magpieViews.view_generator("intro", {
   text: `Welcome to our experiment and thank you for participating!
             <br />
             <br />
-            Please click the button below to get started.
-            <br />
-            <br />
-            Debug info: <strong>${first_mapping}</strong> first group.`,
+            Please click the button below to get started.`,
   buttonText: 'begin the experiment'
 });
 
