@@ -199,7 +199,7 @@ const thanks = magpieViews.view_generator("thanks", {
 
 // Experimental trials with a compatible mapping
 const experimental_trials_compatible = custom_views.keypress_experimental({
-    trials: 2,
+    trials: 2, //60
     name: 'experimental_trials_compatible',
     trial_type: 'experimental_trials_compatible',
     fix_duration: 1000,
@@ -212,7 +212,7 @@ const experimental_trials_compatible = custom_views.keypress_experimental({
 
 // Experimental trials with an incompatible mapping
 const experimental_trials_incompatible = custom_views.keypress_experimental({
-    trials: 2,
+    trials: 2, //60
     name: 'experimental_trials_incompatible',
     trial_type: 'experimental_trials_incompatible',
     fix_duration: 1000,
@@ -225,7 +225,7 @@ const experimental_trials_incompatible = custom_views.keypress_experimental({
 
 // Training trials with a compatible mapping
 const training_trials_compatible = custom_views.keypress_training({
-    trials: 2,
+    trials: 2, //10
     name: 'test_view_practice',
     trial_type: 'training_trials_compatible',
     fix_duration: 1000,
@@ -238,7 +238,7 @@ const training_trials_compatible = custom_views.keypress_training({
 
 // Training trials with an incompatible mapping
 const training_trials_incompatible = custom_views.keypress_training({
-    trials: 2,
+    trials: 2, //10
     name: 'training_trials_incompatible',
     trial_type: 'training_trials_incompatible',
     fix_duration: 1000,
@@ -252,7 +252,7 @@ const training_trials_incompatible = custom_views.keypress_training({
 // The distractor task, showing participants either a circle or a triangle
 // and have them respond by mouse click on the corresponding button
 const distractor_task = magpieViews.view_generator("forced_choice", {
-    trials: 2,
+    trials: 2,//20
     name: "distractor_trials",
     trial_type: "test",
     data: _.shuffle(distractor_trials),
