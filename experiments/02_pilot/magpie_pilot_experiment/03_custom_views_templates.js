@@ -5,9 +5,9 @@ const custom_views = {};
 
 // We can now add view templates to our custom_views object
 
-// Custom view template for practice trials
-custom_views.keypress_rotation_practice = function(config) {
-    const keypress_rotation_practice_function = {
+// Custom view template for training trials
+custom_views.keypress_training = function(config) {
+    const keypress_training_function = {
         name: config.name,
         title: magpieUtils.view.setter.title(config.title, ""),
         render: function(CT, magpie) {
@@ -148,7 +148,7 @@ custom_views.keypress_rotation_practice = function(config) {
         trials: config.trials
     };
 
-    return keypress_rotation_practice_function;
+    return keypress_training_function;
 };
 
 
@@ -156,8 +156,8 @@ custom_views.keypress_rotation_practice = function(config) {
 
 
 // Custom view template for main/experimental trials
-custom_views.keypress_rotation_main = function(config) {
-    const keypress_rotation_main_function = {
+custom_views.keypress_experimental = function(config) {
+    const keypress_experimental_function = {
         name: config.name,
         title: magpieUtils.view.setter.title(config.title, ""),
         render: function(CT, magpie) {
@@ -205,7 +205,7 @@ custom_views.keypress_rotation_main = function(config) {
                     if (RT>=2000) {
                         // show that response was too slow
                         $(".magpie-view-stimulus").addClass("magpie-invisible");
-                        $('#feedback').text('Too slow!');
+                        $('#feedback').text('Try to respond more quickly!');
                     } else {
                         $(".magpie-view-stimulus").addClass("magpie-invisible");
                     }
@@ -306,7 +306,7 @@ custom_views.keypress_rotation_main = function(config) {
         trials: config.trials
     };
 
-    return keypress_rotation_main_function;
+    return keypress_experimental_function;
 };
 
 
@@ -330,7 +330,6 @@ custom_views.handedness_post_test = function(config) {
                     <p class='magpie-view-text'>
                         <label for="handedness">${"Handedness"}:</label>
                         <select id="handedness" name="handedness">
-                            <option></option>
                             <option value="${"right-handed"}">${"right-handed"}</option>
                             <option value="${"left-handed"}">${"left-handed"}</option>
                             <option value="${"mixed-handedness"}">${"mixed-handedness"}</option>

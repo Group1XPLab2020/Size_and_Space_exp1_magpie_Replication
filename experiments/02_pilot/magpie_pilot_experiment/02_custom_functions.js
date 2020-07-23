@@ -6,6 +6,15 @@
 */
 // determine which mapping to present first 
 const first_mapping = _.sample(["compatible", "incompatible"]); 
+// set initial key mappings for the compatible case first
+var q_mapping = "small";
+var p_mapping = "large";
+
+// change key mappings if the incompatible case is first
+if (first_mapping === "incompatible") {
+    q_mapping = "large";
+    p_mapping = "small";
+}
 // Declare your variables here
 
 
@@ -13,6 +22,19 @@ const first_mapping = _.sample(["compatible", "incompatible"]);
 *
 *
 */
+
+const swap_mapping = function() {
+    if (first_mapping === "compatible") {
+        // switch to incompatible mapping
+        q_mapping = "large";
+        p_mapping = "small";
+    } else {
+        // switch to compatible mapping
+        q_mapping = "small";
+        p_mapping = "large";
+    }
+    console.log("q = ", q_mapping)
+}
 
 
 /* For generating random participant IDs */

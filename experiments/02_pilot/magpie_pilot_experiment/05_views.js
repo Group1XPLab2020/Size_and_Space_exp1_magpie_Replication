@@ -33,8 +33,128 @@ const intro = magpieViews.view_generator("intro", {
   buttonText: 'begin the experiment'
 });
 
-// For most tasks, you need instructions views
+// NEW
+const begin_information = magpieViews.view_generator("begin", {
+  trials: 1,
+  name: 'begin_information',
+  title: 'General Information',
+  text: `This experiment comprises several parts, each consisting of several trials of similar structure. Before the start of each new part, you will be shown written instructions about the structure of trials in that part and about your precise task.
+            <br />
+            <br />
+            We highly appreciate if you try to complete the whole experiment, i.e. seriously engage with it until you are told that it is completed(it is not really difficult, you can easily make it :) ). Only if you do so, we can make proper sense of the information obtained via the experiment.
+            <br />
+            <br />
+            It will take you in total about 20 minutes to complete the experiment.`
+})
+// Does not work currently, use instructions_compatible/_incompatible instead
+const block_instructions = magpieViews.view_generator("instructions", {
+  trials: 1,
+  name: 'block_instructions',
+  title: 'Instructions for the next part',
+  text: `This part consists of several trials. In each trial you first have to fixate a fixation cross which is placed in the middle of the screen.
+            After some time, the fixation cross will disappear and you are going to see a square instead, which is either small or large (see Fig.1). Your task then is to decide with a <b>key press</b> on your keyboard whether this square is either <b>small</b> or <b>large</b>.
+            <br />
+            <br />
+            Please use the following keys for your decision:
+            <br />
+            Press <b>q</b> when you see a <b>${q_mapping}</b> square and
+            <br />
+            press <b>p</b> when you see a <b>${p_mapping}</b> square.
+            <br />
+            <br />
+            Following these instructions, you will firstly have to complete some practice trials to become familiar with this part's task. In these practice trials, you will additionally receive short feedback messages in each trial, telling you whether your answer was correct.
+            <br />
+            <br />
+            Please try to respond as accurate and as fast as possible. By clicking on the button below, you can proceed to the practice trials.`,
+  buttonText: 'go to practice'
+});
+
 const instructions_compatible = magpieViews.view_generator("instructions", {
+  trials: 1,
+  name: 'instructions_compatible',
+  title: 'Instructions for the next part',
+  text: `This part consists of several trials. In each trial you first have to fixate a fixation cross which is placed in the middle of the screen.
+            After some time, the fixation cross will disappear and you are going to see a square instead, which is either small or large (see Fig.1). Your task then is to decide with a <b>key press</b> on your keyboard whether this square is either <b>small</b> or <b>large</b>.
+            <br />
+            <br />
+            Please use the following keys for your decision:
+            <br />
+            Press <b>q</b> when you see a <b>small</b> square and
+            <br />
+            press <b>p</b> when you see a <b>large</b> square.
+            <br />
+            <br />
+            Following these instructions, you will firstly have to complete some practice trials to become familiar with this part's task. In these practice trials, you will additionally receive short feedback messages in each trial, telling you whether your answer was correct.
+            <br />
+            <br />
+            Please try to respond as accurate and as fast as possible. By clicking on the button below, you can proceed to the practice trials.`,
+  buttonText: 'go to practice'
+});
+
+const instructions_incompatible = magpieViews.view_generator("instructions", {
+  trials: 1,
+  name: 'instructions_incompatible',
+  title: 'Instructions for the next part',
+  text: `This part consists of several trials. In each trial you first have to fixate a fixation cross which is placed in the middle of the screen.
+            After some time, the fixation cross will disappear and you are going to see a square instead, which is either small or large (see Fig.1). Your task then is to decide with a <b>key press</b> on your keyboard whether this square is either <b>small</b> or <b>large</b>.
+            <br />
+            <br />
+            Please use the following keys for your decision:
+            <br />
+            Press <b>p</b> when you see a <b>small</b> square and
+            <br />
+            press <b>q</b> when you see a <b>large</b> square.
+            <br />
+            <br />
+            Following these instructions, you will firstly have to complete some practice trials to become familiar with this part's task. In these practice trials, you will additionally receive short feedback messages in each trial, telling you whether your answer was correct.
+            <br />
+            <br />
+            Please try to respond as accurate and as fast as possible. By clicking on the button below, you can proceed to the practice trials.`,
+  buttonText: 'go to practice'
+});
+
+// config for the following instructions views
+const start_experimental_trial_config = {
+  trials: 1,
+  name: 'start_experimental_trials',
+  title: 'Practice completed',
+  text: `Great! You completed this part's practice trials. Let us start with the main part now, your task is the same as in the practice. The only difference is that you will not receive feedback on the correctness of your answer anymore.
+            <br />
+            <br />
+            You can proceed now by clicking on the button below and <b>remember</b>, please try to respond as accurate and fast as possible.`,
+  buttonText: 'start experimental trials'
+}
+
+// Show in between training and experimental trials
+const start_experimental_trials_instructions1 = magpieViews.view_generator("instructions", start_experimental_trial_config);
+
+const start_experimental_trials_instructions2 = magpieViews.view_generator("instructions", start_experimental_trial_config);
+
+const distractor_task_instructions = magpieViews.view_generator("instructions", {
+  trials: 1,
+  name: 'distractor_task_instructions',
+  title: 'New Task',
+  text: `This part also consists of several trials. In each trial you first have to focus your gaze towards a fixation cross which is placed in the middle of the screen.
+            After some time, the fixation cross will disappear and you are going to see either a circle or a triangle instead. Your task is then to decide whether you see a <b>circle</b> or a <b>triangle</b> by <b>clicking</b> on the respective buttons at the bottom of the screen.
+            <br />
+            <br />
+            There will be no practice trials for this part, just try to answer as fast and accurate as possible. You can start this part by clicking on the button below.`,
+  buttonText: 'start experimental trials'
+},
+{
+    handle_response_function: function(config, CT, magpie, answer_container_generator, startingTime) {
+
+        $(".magpie-view").append(answer_container_generator(config, CT));
+        
+        $("#next").on("click", function() {
+            magpie.findNextView();
+        });
+    }
+});
+// END NEW
+
+// OLD
+const instructions_compatible_old = magpieViews.view_generator("instructions", {
   trials: 1,
   name: 'instructions_compatible',
   title: 'General Instructions',
@@ -56,7 +176,8 @@ const instructions_compatible = magpieViews.view_generator("instructions", {
   buttonText: 'go to practice'
 });
 
-const instructions_incompatible = magpieViews.view_generator("instructions", {
+// OLD
+const instructions_incompatible_old = magpieViews.view_generator("instructions", {
   trials: 1,
   name: 'instructions_incompatible',
   title: 'General Instructions',
@@ -97,7 +218,7 @@ const start_experimental_trials2_instructions = magpieViews.view_generator("inst
   text: `Great! Now you are ready for the second block of our experiment.
             <br />
             <br />
-            Use the same keys as in the practice trail before and <b>remember</b>, please try to respond as accurate and fast as possible.`,
+            Use the same keys as in the practice trial before and <b>remember</b>, please try to respond as accurate and fast as possible.`,
   buttonText: 'start experimental trials'
 });
 
@@ -199,12 +320,12 @@ d
 */
 
 
-const training_trials_compatible = magpieViews.view_generator("key_press", {
+const training_trials_compatible_OLD = magpieViews.view_generator("key_press", {
   // This will use all trials specified in `data`, you can user a smaller value (for testing), but not a larger value
   trials: 10,
   // name should be identical to the variable name
   name: 'training_trials_compatible',
-  data: _.shuffle(compatible_trails),
+  data: _.shuffle(compatible_trials),
   // you can add custom functions at different stages through a view's life cycle
   hook: {
       after_response_enabled: check_response, // currently does not work
@@ -213,7 +334,7 @@ const training_trials_compatible = magpieViews.view_generator("key_press", {
   fix_duration: 1000
 });
 
-const training_trials_incompatible = magpieViews.view_generator("key_press", {
+const training_trials_incompatible_OLD = magpieViews.view_generator("key_press", {
   // This will use all trials specified in `data`, you can user a smaller value (for testing), but not a larger value
   trials: 10,
   // name should be identical to the variable name
@@ -227,12 +348,12 @@ const training_trials_incompatible = magpieViews.view_generator("key_press", {
   fix_duration: 1000
 });
 
-const experimental_trials_compatible = magpieViews.view_generator("key_press", {
+const experimental_trials_compatible_OLD = magpieViews.view_generator("key_press", {
     // This will use all trials specified in `data`, you can user a smaller value (for testing), but not a larger value
-    trials: compatible_trails.length,
+    trials: compatible_trials.length,
     // name should be identical to the variable name
     name: 'experimental_trials_compatible',
-    data: _.shuffle(compatible_trails),
+    data: _.shuffle(compatible_trials),
     // you can add custom functions at different stages through a view's life cycle
     hook: {
       after_stim_shown: time_limit // does not work
@@ -240,7 +361,7 @@ const experimental_trials_compatible = magpieViews.view_generator("key_press", {
     fix_duration: 1000
   });
 
-const experimental_trials_incompatible = magpieViews.view_generator("key_press", {
+const experimental_trials_incompatible_OLD = magpieViews.view_generator("key_press", {
     // This will use all trials specified in `data`, you can user a smaller value (for testing), but not a larger value
     trials: incompatible_trials.length,
     // name should be identical to the variable name
@@ -253,50 +374,113 @@ const experimental_trials_incompatible = magpieViews.view_generator("key_press",
     fix_duration: 1000
   });
 
-// TESTING
-const test_view = custom_views.keypress_rotation_main({
-    trials: 5,
-    // trials: 8,
-    name: 'test_view',
+// NEW
+const experimental_trials_compatible = custom_views.keypress_experimental({
+    trials: 2,
+    name: 'experimental_trials_compatible',
     trial_type: 'experimental_trials_compatible',
     fix_duration: 1000,
-    //pause: 2000,
-    data: _.shuffle(compatible_trails),
+    data: _.shuffle(compatible_trials),
     key1: 'q',
     key2: 'p',
     q: 'small',
     p: 'large'
 });
 
-const test_view_practice = custom_views.keypress_rotation_practice({
-    trials: 1,
-    // trials: 2,
+const experimental_trials_incompatible = custom_views.keypress_experimental({
+    trials: 2,
+    name: 'experimental_trials_incompatible',
+    trial_type: 'experimental_trials_incompatible',
+    fix_duration: 1000,
+    data: _.shuffle(incompatible_trials),
+    key1: 'q',
+    key2: 'p',
+    q: 'large',
+    p: 'small'
+});
+
+const training_trials_compatible = custom_views.keypress_training({
+    trials: 2,
     name: 'test_view_practice',
     trial_type: 'training_trials_compatible',
-    //pause: 500,
     fix_duration: 1000,
-    data: _.shuffle(compatible_trails),
+    data: _.shuffle(compatible_trials),
     key1: "q",
     key2: "p",
     q: 'small',
     p: 'large'
 });
 
-// END TESTING
+const training_trials_incompatible = custom_views.keypress_training({
+    trials: 2,
+    name: 'training_trials_incompatible',
+    trial_type: 'training_trials_incompatible',
+    fix_duration: 1000,
+    data: _.shuffle(incompatible_trials),
+    key1: "q",
+    key2: "p",
+    q: 'large',
+    p: 'small'
+});
 
-// assigning experimental trail order
+const distractor_task = magpieViews.view_generator("forced_choice", {
+    trials: 10,
+    name: "distractor_trials",
+    trial_type: "test",
+    data: _.shuffle(distractor_trials),
+    fix_duration: 1000
+},
+{
+    stimulus_container_generator: stimulus_container_generators.basic_stimulus,
+    answer_container_generator: answer_container_generators.button_choice,
+    handle_response_function: function(config, CT, magpie, answer_container_generator, startingTime) {
+        $(".magpie-view").append(answer_container_generator(config, CT));
+        // set starting time to after the fixation duration is over
+        startingTime = Date.now()
+
+        $("input[name=answer]").on("change", function() {
+            const RT = Date.now() - startingTime;
+            const response = $("input[name=answer]:checked").val();
+            
+            // check for correctness
+            if (config.data[CT].expected === response) {
+                correctness = 1;
+            } else {
+                correctness = 0;
+            }
+            
+            let trial_data = {
+                trial_type: config.trial_type,
+                trial_number: CT + 1,
+                Response: response,
+                correctness: correctness,
+                RT: RT
+            };
+
+            trial_data = magpieUtils.view.save_config_trial_data(config.data[CT], trial_data);
+
+            magpie.trial_data.push(trial_data);
+            magpie.findNextView();
+        });
+    }
+})
+// END NEW
+
+// assigning experimental trial order
 if(first_mapping==='compatible') {
-    general_instruction = instructions_compatible
+    instructions1 = instructions_compatible
     training_trials1 = training_trials_compatible
     experimental_trials1 = experimental_trials_compatible
-    switch_mappings_instructions = switch_mappings_to_incompatible_instructions
+    //switch_mappings_instructions = switch_mappings_to_incompatible_instructions
+    instructions2 = instructions_incompatible
     training_trials2 = training_trials_incompatible
     experimental_trials2 = experimental_trials_incompatible
 } else {
-    general_instruction = instructions_incompatible
+    instructions1 = instructions_incompatible
     training_trials1 = training_trials_incompatible
     experimental_trials1 = experimental_trials_incompatible
-    switch_mappings_instructions = switch_mappings_to_compatible_instructions
+    //switch_mappings_instructions = switch_mappings_to_compatible_instructions
+    instructions2 = instructions_compatible
     training_trials2 = training_trials_compatible
     experimental_trials2 = experimental_trials_compatible
 }

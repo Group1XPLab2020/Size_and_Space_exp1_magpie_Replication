@@ -16,21 +16,23 @@ $("document").ready(function() {
         // You have to specify all views you want to use in this experiment and the order of them
         views_seq: [
             intro,
-            general_instruction,
-            // TESTING
-            test_view_practice,
-            //start_experimental_trials1_instructions,
-           // test_view,
-            // END TESTING
-        /*  training_trials1,
-            start_experimental_trials1_instructions,
+            begin_information,
+            // 1st block
+            instructions1,
+            training_trials1,
+            start_experimental_trials_instructions1, 
             experimental_trials1,
-            switch_mappings_instructions,
+            // Distractor task
+            distractor_task_instructions,
+            distractor_task,
+            // 2nd block
+            instructions2,
             training_trials2,
-            start_experimental_trials2_instructions,
-            experimental_trials2, */
+            start_experimental_trials_instructions2,
+            experimental_trials2,
+            // post-questionnaire
             handedness_post_test,
-            //post_test,
+            post_test,
             thanks,
         ],
         // Here, you can specify all information for the deployment
@@ -50,6 +52,7 @@ $("document").ready(function() {
                 // list the view-names of the views for which you want a progress bar
                 training_trials1.name,
                 experimental_trials1.name,
+                distractor_task.name,
                 training_trials2.name, // does not yet work after switching mapping for some reason ??
                 experimental_trials2.name
             ],
