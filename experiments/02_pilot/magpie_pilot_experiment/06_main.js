@@ -17,33 +17,34 @@ $("document").ready(function() {
         views_seq: [
             intro,
             begin_information,
-            // 1st block
+            
+            // 1st block:
             instructions1,
             training_trials1,
-            // start_experimental_trials_instructions1, 
+            start_experimental_trials_instructions1, 
             experimental_trials1,
-            // Distractor task
+            
+            // distractor task:
             distractor_task_instructions,
             distractor_task,
-            // 2nd block
+            
+            // 2nd block:
             instructions2,
             training_trials2,
             start_experimental_trials_instructions2,
             experimental_trials2,
-            //post-questionnaires
+            
+            // post-questionnaires:
             handedness_post_test,
             optional_post_test,
             thanks,
         ],
         // Specify deployement information
         deploy: {
-            experimentID: "INSERT_A_NUMBER",
+            experimentID: "165",
             serverAppURL: "https://magpie-demo.herokuapp.com/api/submit_experiment/",
-            // Possible deployment methods are:
-            // "debug" and "directLink"
-            // As well as "MTurk", "MTurkSandbox" and "Prolific"
-            deployMethod: "debug",
-            contact_email: "YOUREMAIL@wherelifeisgreat.you",
+            deployMethod: "directLink", // "debug" or "directLink"
+            contact_email: "aprochnow@uos.de",
             prolificURL: "https://app.prolific.ac/submissions/complete?cc=SAMPLE1234"
         },
         // Specify progress bars
