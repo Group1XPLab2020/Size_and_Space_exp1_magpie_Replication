@@ -39,7 +39,7 @@ scale_fill_discrete <- function(...) {
 ## Import data
 
 ```{r}
-raw_data <- read.csv('sample_results.csv')
+raw_data <- read.csv('results_165_pilot_Size_and_Space_exp1_replication_Group1XPLab2020.csv')
 glimpse(raw_data)
 ```
 
@@ -52,26 +52,31 @@ data <- raw_data %>%
   filter(RT>=100) %>% 
   filter(RT<=1500) %>% 
   mutate(logRT = log(RT)) %>% 
-  select(trial_type, trial_number, key_pressed, Response, correctness, RT, logRT, Mapping, q, p, expected) %>% 
-  mutate(Participant=1) # only for testing, will be changed to rename(Participant=submission_id) in final analysis 
+  select(submission_id, trial_type, trial_number, key_pressed, Response, correctness, RT, logRT, Mapping, expected, handedness) %>% 
+  rename(Participant=submission_id)
 ```
 
 ## Plotting Mean RTs 
 
 ```{r}
 data_agg <- data %>% 
-  group_by(Mapping, Response) %>% 
+  group_by(Mapping, Response, handedness) %>% 
   summarize(meanRT = mean(RT),
             variance = var(RT),
             sd = sd(RT),
-            se = sqrt(variance / length(RT)))
+            se = sqrt(variance / length(RT))) # standard error = standard deviation of the sampling distribution
 
-ggplot(data = data_agg, aes(x=Response, y=meanRT, fill=Mapping)) +
+ggplot(data=data_agg, aes(x=Response, y=meanRT, fill=Mapping)) +
   geom_errorbar(aes(ymin=meanRT-se, ymax=meanRT+se), width=0.5, position=position_dodge2(padding=0.5)) +
   geom_col(position="dodge", width=0.5) +
-  coord_cartesian(ylim=c(350, 450))
-  
+  coord_cartesian(ylim=c(350, 600)) +
+  facet_wrap(. ~ handedness) + 
+  ylab("meanRT and SE") + 
+  ggtitle("Mean Reaction Time by Handedness", subtitle="Error Bars represent the Standard Error") +
+  theme(plot.title = element_text(hjust = 0.5), plot.subtitle=element_text(hjust = 0.5)) # center titles
+
 ```
+
 
 # Hypothesis testing
 
