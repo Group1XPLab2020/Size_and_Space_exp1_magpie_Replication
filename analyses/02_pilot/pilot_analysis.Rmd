@@ -43,6 +43,58 @@ raw_data <- read.csv('results_165_pilot_Size_and_Space_exp1_replication_Group1XP
 glimpse(raw_data)
 ```
 
+## Optional data summary
+
+```{r}
+# comments
+raw_data %>% 
+  pull(comments) %>% 
+  unique
+
+# age statistics
+raw_data %>% 
+  select(age) %>% 
+  summarize(minAge = min(age),
+            meanAge = mean(age),
+            maxAge = max(age))
+
+# languages
+raw_data %>% 
+  pull(languages) %>% 
+  unique
+
+# number of participants reporting technical issues
+raw_data %>%
+  filter(technical_issues=="Yes") %>% 
+  select(submission_id) %>% 
+  unique %>% 
+  count
+
+# gender
+raw_data %>% 
+  group_by(submission_id) %>% 
+  select(gender) %>% 
+  unique %>% 
+  group_by(gender) %>% 
+  count
+
+# education
+raw_data %>% 
+  group_by(submission_id) %>% 
+  select(education) %>% 
+  unique %>% 
+  group_by(education) %>% 
+  count
+
+# handedness
+raw_data %>% 
+  group_by(submission_id) %>% 
+  select(handedness) %>% 
+  unique %>% 
+  group_by(handedness) %>% 
+  count
+```
+
 ## Preprocessing
 
 ```{r}
