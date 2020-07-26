@@ -250,46 +250,12 @@ const training_trials_incompatible = custom_views.keypress_training({
 
 // The distractor task, showing participants either a circle or a triangle
 // and have them respond by mouse click on the corresponding button
-const distractor_trials = magpieViews.view_generator("forced_choice", {
+const distractor_trials = custom_views.distractor_task({
     trials: 1, // 20,
     name: "distractor_trials",
     trial_type: "distractor_trials",
     data: _.shuffle(distractor_trial),
     fix_duration: 1000
-},
-{
-    stimulus_container_generator: stimulus_container_generators.basic_stimulus,
-    answer_container_generator: answer_container_generators.button_choice,
-    handle_response_function: function(config, CT, magpie, answer_container_generator, startingTime) {
-        $(".magpie-view").append(answer_container_generator(config, CT));
-        // set starting time to after the fixation duration is over
-        startingTime = Date.now()
-
-        $("input[name=answer]").on("change", function() {
-            const RT = Date.now() - startingTime;
-            const response = $("input[name=answer]:checked").val();
-
-            // check for correctness
-            if (config.data[CT].expected === response) {
-                correctness = 1;
-            } else {
-                correctness = 0;
-            }
-
-            let trial_data = {
-                trial_type: config.trial_type,
-                trial_number: CT + 1,
-                Response: response,
-                correctness: correctness,
-                RT: RT
-            };
-
-            trial_data = magpieUtils.view.save_config_trial_data(config.data[CT], trial_data);
-
-            magpie.trial_data.push(trial_data);
-            magpie.findNextView();
-        });
-    }
 })
 
 // Add start button prior to each distractor trial

@@ -456,6 +456,47 @@ custom_views.optional_post_test = function(config) {
     return optional_post_test_instance;
 }
 
+custom_views.distractor_task = function(config) {
+    
+    // generate forced choice template view
+    const forced_choice_instance = magpieViews.view_generator('forced_choice', config, {
+        
+        // customize handle response element
+        handle_response_function: function(config, CT, magpie, answer_container_generator, startingTime) {
+            $(".magpie-view").append(answer_container_generator(config, CT));
+            // set starting time to after the fixation duration is over
+            startingTime = Date.now()
+
+            $("input[name=answer]").on("change", function() {
+                const RT = Date.now() - startingTime;
+                const response = $("input[name=answer]:checked").val();
+
+                // check for correctness
+                if (config.data[CT].expected === response) {
+                    correctness = 1;
+                } else {
+                    correctness = 0;
+                }
+
+                let trial_data = {
+                    trial_type: config.trial_type,
+                    trial_number: CT + 1,
+                    Response: response,
+                    correctness: correctness,
+                    RT: RT
+                };
+
+                trial_data = magpieUtils.view.save_config_trial_data(config.data[CT], trial_data);
+
+                magpie.trial_data.push(trial_data);
+                magpie.findNextView();
+            });
+        }
+    })
+    
+    return forced_choice_instance;
+};
+
 
 custom_views.distractor_start_button = function(config) {
     const view = {
