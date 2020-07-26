@@ -250,11 +250,11 @@ const training_trials_incompatible = custom_views.keypress_training({
 
 // The distractor task, showing participants either a circle or a triangle
 // and have them respond by mouse click on the corresponding button
-const distractor_task = magpieViews.view_generator("forced_choice", {
+const distractor_trials = magpieViews.view_generator("forced_choice", {
     trials: 1, // 20,
     name: "distractor_trials",
     trial_type: "distractor_trials",
-    data: _.shuffle(distractor_trials),
+    data: _.shuffle(distractor_trial),
     fix_duration: 1000
 },
 {
@@ -293,18 +293,18 @@ const distractor_task = magpieViews.view_generator("forced_choice", {
 })
 
 // Add start button prior to each distractor trial
-const test_view = custom_views.test_distractor({
+const distractor_start_button = custom_views.distractor_start_button({
     trials: 1,
-    name: "test_view"
+    name: "distractor_start_button"
 });
 
 // initialize distractor trials view array
-distractor_test = new Array(num_distractor_trials*2);
+distractor_task = new Array(num_distractor_trials*2);
 
 // create start button + distractor trial combination
 for(i = 0; i < num_distractor_trials*2; i+=2) {
-    distractor_test[i] = test_view
-    distractor_test[i+1] = distractor_task
+    distractor_task[i] = distractor_start_button;
+    distractor_task[i+1] = distractor_trials;
 }
 
 // assigning experimental trial order based on randomly determined initial mapping

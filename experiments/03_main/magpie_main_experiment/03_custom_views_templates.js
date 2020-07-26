@@ -457,7 +457,7 @@ custom_views.optional_post_test = function(config) {
 }
 
 
-custom_views.test_distractor = function(config) {
+custom_views.distractor_start_button = function(config) {
     const view = {
         name: config.name,
         CT: 0,

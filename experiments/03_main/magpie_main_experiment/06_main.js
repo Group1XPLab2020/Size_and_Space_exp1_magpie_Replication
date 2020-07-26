@@ -26,7 +26,7 @@ $("document").ready(function() {
             
             // distractor task:
             distractor_task_instructions,
-            _.flatten(distractor_test),
+            _.flatten(distractor_task),
             
             // 2nd block:
             instructions2,
@@ -41,7 +41,7 @@ $("document").ready(function() {
         ],
         // Specify deployement information
         deploy: {
-            experimentID: "165",
+            experimentID: "TBD",
             serverAppURL: "https://magpie-demo.herokuapp.com/api/submit_experiment/",
             deployMethod: "debug", // "debug" or "directLink"
             contact_email: "aprochnow@uos.de",

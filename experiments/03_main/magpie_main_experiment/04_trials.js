@@ -65,10 +65,6 @@ triangle_trial = {
     expected: "triangle"
 }
 
-distractor_trials = new Array(20)
-
-for(let i=0; i<10; i++) {
-    distractor_trials[i] = circle_trial
-    distractor_trials[i+10] =  triangle_trial
-}
+// participants can be presented with either one of the stimuli (shuffled in view.js)
+distractor_trial = [circle_trial, triangle_trial]
 
