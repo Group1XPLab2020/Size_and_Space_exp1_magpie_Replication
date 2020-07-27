@@ -9,5 +9,9 @@ This folder contains all files for communicating, i.e. reporting information abo
         + trial_sequence_example_illustration.jpg
     - replication_design.docx
     
-* 02_termPaper
+* 02_preregistration_report
+    - preregistration_report.doc
+    - preregistration_report.pdf
+    - preregistration_report.docx
+* 03_termPaper
     - termPaper.Rmd
