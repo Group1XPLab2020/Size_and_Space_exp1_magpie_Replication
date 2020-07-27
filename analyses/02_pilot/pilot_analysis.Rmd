@@ -98,14 +98,27 @@ raw_data %>%
 ## Preprocessing
 
 ```{r}
-# Filter out reaction times below 100ms and above 1500ms
+
 data <- raw_data %>%
+  # filter out test trials and distraction task
   filter(trial_type=="experimental_trials_compatible" | trial_type=="experimental_trials_incompatible") %>% 
+  # filter out reaction times below 100ms and above 1500ms
   filter(RT>=100) %>% 
   filter(RT<=1500) %>% 
+  # log-transform reaction time
   mutate(logRT = log(RT)) %>% 
+  # select only factors important for further study
   select(submission_id, trial_type, trial_number, key_pressed, Response, correctness, RT, logRT, Mapping, expected, handedness) %>% 
+  # rename participant column
   rename(Participant=submission_id)
+
+# extract data coming from right-handed participants only
+data_right <- data %>% 
+  filter(handedness == "right-handed")
+
+# extract data coming from left-handed participants only
+data_left <- data %>% 
+  filter(handedness == "left-handed")
 ```
 
 ## Plotting Mean RTs 
@@ -132,30 +145,70 @@ ggplot(data=data_agg, aes(x=Response, y=meanRT, fill=Mapping)) +
 
 # Hypothesis testing
 
-```{r}
+```{r, results='hide'}
 
-model <- brm(
+# create brm to check for hypothesis 1-3 (right-handed participants)
+model_right <- brm(
   formula = logRT ~ Mapping * Response +
            (Response || Participant),
-  data = data
+  data = data_right
 )
 
-model
+model_right_student <- brm(
+  formula = logRT ~ Mapping * Response +
+           (Response || Participant),
+  data = data_right,
+  family = "student"
+)
+
+model_left <- brm(
+  formula = logRT ~ Mapping * Response +
+           (Response || Participant),
+  data = data_left
+)
+
+model_both <- brm(
+  formula = logRT ~ Mapping * Response * handedness +
+           (Response || Participant),
+  data = data,
+  family = "student"
+)
+
+```
+
+```{r}
+
+model_both
+
+# verify model fit
+
+pp_check(model_right)
+
+pp_check(model_right_student)
+
+gaussian_loo <- loo(model_right)
+student_loo <- loo(model_right_student)
+
+loo_comp <- loo_compare(list(gaussian = gaussian_loo, student = student_loo))
+
+loo_comp
+
+pnorm(-loo_comp[2,1], loo_comp[2,2])
 
 ```
 
 ```{r}
 
 # H1: Response times for right-hand responses are faster to the larger stimulus than to the smaller stimulus.
-h1 <- hypothesis(model, "Intercept + Responseright < Intercept + Mappingincompatible + Responseright + Mappingincompatible:Responseright")
+h1 <- hypothesis(model_right, "Intercept + Responseright < Intercept + Mappingincompatible + Responseright + Mappingincompatible:Responseright")
 print(h1, digits = 4)
 
 # H2: Left-hand responses are faster to the smaller stimulus than to the larger stimulus.
-h2 <- hypothesis(model, "Intercept < Intercept + Mappingincompatible")
+h2 <- hypothesis(model_right, "Intercept < Intercept + Mappingincompatible")
 print(h2, digits = 4)
 
 # H3: The stimulus size – response location compatibility effect is larger for right-hand responses than for left-hand responses.
-h3 <- hypothesis(model, "Intercept + Mappingincompatible + Responseright + Mappingincompatible:Responseright - (Intercept + Responseright) > Intercept + Mappingincompatible - (Intercept)")
+h3 <- hypothesis(model_right, "Intercept + Mappingincompatible + Responseright + Mappingincompatible:Responseright - (Intercept + Responseright) > Intercept + Mappingincompatible - (Intercept)")
 print(h3, digits = 4)
 
 ```
