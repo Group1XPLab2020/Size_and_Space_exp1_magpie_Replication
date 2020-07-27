@@ -383,15 +383,6 @@ custom_views.optional_post_test = function(config) {
                             </select>
                         </p>
                         <p class='magpie-view-text'>
-                            <label for="education">${quest.edu.title}:</label>
-                            <select id="education" name="education">
-                                <option></option>
-                                <option value="${quest.edu.graduated_high_school}">${quest.edu.graduated_high_school}</option>
-                                <option value="${quest.edu.graduated_college}">${quest.edu.graduated_college}</option>
-                                <option value="${quest.edu.higher_degree}">${quest.edu.higher_degree}</option>
-                            </select>
-                        </p>
-                        <p class='magpie-view-text'>
                             <label for="languages" name="languages">${quest.langs.title}:<br /><span>${quest.langs.text}</</span></label>
                             <input type="text" id="languages"/>
                         </p>
@@ -422,7 +413,6 @@ custom_views.optional_post_test = function(config) {
                 magpie.global_data.technical_issues = $("#technical_issues").val();
                 magpie.global_data.age = $("#age").val();
                 magpie.global_data.gender = $("#gender").val();
-                magpie.global_data.education = $("#education").val();
                 magpie.global_data.languages = $("#languages").val();
                 magpie.global_data.comments = $("#comments")
                 .val()
