@@ -12,9 +12,6 @@ custom_views.keypress_training = function(config) {
         title: magpieUtils.view.setter.title(config.title, ""),
         render: function(CT, magpie) {
             let startingTime;
-            const question = magpieUtils.view.setter.question(
-                config.data[CT].question
-            );
             const key1 = config.key1;
             const key2 = config.key2;
             const value1 = config[key1];
@@ -27,9 +24,6 @@ custom_views.keypress_training = function(config) {
                         <div class='magpie-view-stimulus magpie-nodisplay'></div>
                     </div>
                 </div>`;
-            const answerContainerElem = `<div class='magpie-view-answer-container'>
-                        <p class='magpie-view-question'>${question}</p>
-                          </div>`;
 
             $("#main").html(viewTemplate);
 
@@ -126,7 +120,6 @@ custom_views.keypress_training = function(config) {
             const enableResponse = function() {
                 // set starting time to be after the fixation period, i.e. once the response is enabled
                 startingTime = Date.now();
-                $(".magpie-view").append(answerContainerElem);
                 $("body").on("keydown", handleKeyPress);
             };
 
@@ -161,9 +154,6 @@ custom_views.keypress_experimental = function(config) {
         title: magpieUtils.view.setter.title(config.title, ""),
         render: function(CT, magpie) {
             let startingTime;
-            const question = magpieUtils.view.setter.question(
-                config.data[CT].question
-            );
             const key1 = config.key1;
             const key2 = config.key2;
             const value1 = config[key1];
@@ -176,10 +166,7 @@ custom_views.keypress_experimental = function(config) {
                         <div class='magpie-view-stimulus magpie-nodisplay'></div>
                     </div>
                 </div>`;
-            const answerContainerElem = `<div class='magpie-view-answer-container'>
-                        <p class='magpie-view-question'>${question}</p>
-                          </div>`;
-
+            
             $("#main").html(viewTemplate);
 
             const handleKeyPress = function(e) {
@@ -279,7 +266,6 @@ custom_views.keypress_experimental = function(config) {
             const enableResponse = function() {
                 // set starting time to be after the fixation period, i.e. once the response is enabled
                 startingTime = Date.now();
-                $(".magpie-view").append(answerContainerElem);
                 $("body").on("keydown", handleKeyPress);
             };
 
@@ -460,8 +446,8 @@ custom_views.distractor_task = function(config) {
     
     // generate forced choice template view
     const forced_choice_instance = magpieViews.view_generator('forced_choice', config, {
-        
-        // customize handle response element
+               
+        // custom handle response element
         handle_response_function: function(config, CT, magpie, answer_container_generator, startingTime) {
             $(".magpie-view").append(answer_container_generator(config, CT));
             // set starting time to after the fixation duration is over

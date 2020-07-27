@@ -7,8 +7,10 @@
 const intro = magpieViews.view_generator("intro", {
   trials: 1,
   name: 'intro',
-  // If you use JavaScripts Template String `I am a Template String`, you can use HTML <></> and javascript ${} inside
   text: `Welcome to our experiment and thank you for participating!
+            <br />
+            <br />
+            The data recorded in the following experiment will be completely anonymous and only used within the context of the course Experiment Psychology Lab.
             <br />
             <br />
             Please click the button below to get started.`,
@@ -26,7 +28,7 @@ const begin_information = magpieViews.view_generator("begin", {
             We highly appreciate if you try to complete the whole experiment, i.e. seriously engage with it until you are told that it is completed(it is not really difficult, you can easily make it :) ). Only if you do so, we can make proper sense of the information obtained via the experiment.
             <br />
             <br />
-            It will take you in total about 20 minutes to complete the experiment.`
+            It will take you in total about 10 minutes to complete the experiment.`
 });
 
 // Does not work currently, use instructions_compatible/_incompatible instead
@@ -34,7 +36,7 @@ const block_instructions = magpieViews.view_generator("instructions", {
   trials: 1,
   name: 'block_instructions',
   title: 'Instructions for the next part',
-  text: `This part consists of several trials. In each trial you first have to fixate a fixation cross which is placed in the middle of the screen.
+  text: `This part consists of several trials. In each trial you first have to look at a fixation cross which is placed in the middle of the screen.
             After some time, the fixation cross will disappear and you are going to see a square instead, which is either small or large (see Fig.1). Your task then is to decide with a <b>key press</b> on your keyboard whether this square is either <b>small</b> or <b>large</b>.
             <br />
             <br />
@@ -71,7 +73,7 @@ const instructions_compatible = magpieViews.view_generator("instructions", {
   trials: 1,
   name: 'instructions_compatible',
   title: 'Instructions for the next part',
-  text: `This part consists of several trials. In each trial you first have to fixate a fixation cross which is placed in the middle of the screen.
+  text: `This part consists of several trials. In each trial you first have to look at a fixation cross which is placed in the middle of the screen.
             After some time, the fixation cross will disappear and you are going to see a square instead, which is either small or large (see figure below). Your task then is to decide with a <b>key press</b> on your keyboard whether this square is either <b>small</b> (a) or <b>large</b> (b).
             <br />
             <br />
@@ -97,7 +99,7 @@ const instructions_incompatible = magpieViews.view_generator("instructions", {
   trials: 1,
   name: 'instructions_incompatible',
   title: 'Instructions for the next part',
-  text: `This part consists of several trials. In each trial you first have to fixate a fixation cross which is placed in the middle of the screen.
+  text: `This part consists of several trials. In each trial you first have to look at a fixation cross which is placed in the middle of the screen.
             After some time, the fixation cross will disappear and you are going to see a square instead, which is either small or large (see figure below). Your task then is to decide with a <b>key press</b> on your keyboard whether this square is either <b>small</b> (a) or <b>large</b> (b).
             <br />
             <br />
@@ -141,7 +143,7 @@ const distractor_task_instructions = magpieViews.view_generator("instructions", 
   trials: 1,
   name: 'distractor_task_instructions',
   title: 'New Task',
-  text: `This part also consists of several trials. In each trial you first have to focus your gaze towards a fixation cross which is placed in the middle of the screen.
+  text: `This part also consists of several trials. In each trial you first have to click on a start button, then focus your gaze towards a fixation cross which is placed in the middle of the screen.
             After some time, the fixation cross will disappear and you are going to see either a circle or a triangle instead. Your task is then to decide whether you see a <b>circle</b> or a <b>triangle</b> by <b>clicking</b> on the respective buttons at the bottom of the screen.
             <br />
             <br />

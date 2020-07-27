@@ -13,7 +13,7 @@ $("document").ready(function() {
     // e.g. >> window.magpie_monitor or window.magpie_monitor.findNextView()
     // in all other modes null will be returned
     window.magpie_monitor = magpieInit({
-        // You have to specify all views you want to use in this experiment and the order of them
+        // The order of views in our experiment
         views_seq: [
             intro,
             begin_information,
@@ -50,7 +50,7 @@ $("document").ready(function() {
         // Specify progress bars
         progress_bar: {
             in: [
-                // list the view-names of the views for which we want a progress bar
+                // list the view-names of the views for which we want a progress bar for
                 training_trials1.name,
                 experimental_trials1.name,
                 training_trials2.name,
