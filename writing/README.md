@@ -39,6 +39,16 @@ This folder contains all files for communicating, i.e. reporting information abo
 
 * 03_termPaper
     - termPaper.Rmd
+        Structure:
+        + introduction
+        + method
+            * participants
+            * materials
+            * procedure
+            * [possibly] data preparation
+        + results
+        + conclusion
+
         + Is the final report self-contained and intelligible to an uninformed reader? [1-10]
         + What is the quality of the language (spelling, grammar, clarity of expression, structured presentation of content)? [1-10]
         + Are the correct technical terms used where possible? [1-10]
