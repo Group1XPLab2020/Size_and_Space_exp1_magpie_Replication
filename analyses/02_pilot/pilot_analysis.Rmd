@@ -102,6 +102,8 @@ raw_data %>%
 data <- raw_data %>%
   # filter out test trials and distraction task
   filter(trial_type=="experimental_trials_compatible" | trial_type=="experimental_trials_incompatible") %>% 
+  # filter out incorrect responses
+  filter(correctness==1) %>% 
   # filter out reaction times below 100ms and above 1500ms
   filter(RT>=100) %>% 
   filter(RT<=1500) %>% 
