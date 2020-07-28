@@ -330,7 +330,7 @@ custom_views.handedness_post_test = function(config) {
             e.preventDefault();
 
             // records the post test info
-            magpie.global_data.handedness = $("#handedness").val();
+            magpie.global_data.Handedness = $("#handedness").val();
             magpie.global_data.endTime = Date.now();
             magpie.global_data.timeSpent =
                 (magpie.global_data.endTime -
@@ -480,6 +480,7 @@ custom_views.distractor_start_button = function(config) {
         CT: 0,
         trials: config.trials,
         render: function (CT, magpie) {
+            // add start button to main 
             $("main").html(`<div class='magpie-view'>
                 <button id="first" class='magpie-view-button' style='margin-top: 50%'>start</button>
                 </div>`);
