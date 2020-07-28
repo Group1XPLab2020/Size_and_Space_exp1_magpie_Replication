@@ -39,6 +39,7 @@ This folder contains all files for communicating, i.e. reporting information abo
 
 * 03_termPaper
     - termPaper.Rmd
+        
         Structure:
         + introduction
         + method
