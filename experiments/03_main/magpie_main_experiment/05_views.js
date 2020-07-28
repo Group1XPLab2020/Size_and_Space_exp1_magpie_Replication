@@ -28,7 +28,7 @@ const begin_information = magpieViews.view_generator("begin", {
             We highly appreciate if you try to complete the whole experiment, i.e. seriously engage with it until you are told that it is completed(it is not really difficult, you can easily make it :) ). Only if you do so, we can make proper sense of the information obtained via the experiment.
             <br />
             <br />
-            It will take you in total about 10 minutes to complete the experiment.`
+            It will take you in total about 15 minutes to complete the experiment.`
 });
 
 // Does not work currently, use instructions_compatible/_incompatible instead
