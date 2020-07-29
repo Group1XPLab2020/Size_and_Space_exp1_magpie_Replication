@@ -22,6 +22,9 @@ library(brms)
 # use the aida-theme for plotting
 theme_set(theme_aida())
 
+# these options help Stan run faster
+options(mc.cores = parallel::detectCores())
+
 # global color scheme / non-optimized
 project_colors = c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7", "#000000")
 
@@ -121,6 +124,95 @@ data_right <- data %>%
 # extract data coming from left-handed participants only
 data_left <- data %>% 
   filter(handedness == "left-handed")
+
+
+# create dataset which contains the same number of right- and left-handed participants (for hypothesis 7): 
+
+# number of left-handed participants
+n_left <- data_left %>%
+  select(Participant) %>% 
+  unique() %>% 
+  count() %>% 
+  as.numeric()
+
+# number of participants
+n <- data %>%
+  select(Participant) %>% 
+  unique() %>% 
+  count() %>% 
+  as.numeric()
+
+# select n_left random right-handed participants
+rnd_slice <- sample(1:(n-n_left), n_left, replace = F)
+
+selected_right_participants <- data_right %>%
+  select(Participant) %>% 
+  unique() %>% 
+  slice(rnd_slice) %>% 
+  as.list()
+
+# merge the n_left right-handed participants and the n_left left-handed participants
+data_both <- data %>% filter(Participant == -1)
+
+for (p in unlist(selected_right_participants)){
+  data_both <- rbind(data_both, data %>% filter(Participant == p))
+}
+
+data_both <- rbind(data_both, data_left)
+
+```
+
+```{r}
+
+# power analysis
+
+power_n <- 2
+
+power_data <- tibble(Participant = rep(1:power_n, 2, each=60),
+       trial_number = rep(1:60, power_n*2),
+       Mapping = rep(c("compatible", "incompatible"), each=60*power_n),
+       Response = rep(c("left", "right"), 60*power_n),
+       RT = c(rgamma(60*power_n, shape=76.3425, rate=0.2025), rgamma(60*power_n, shape=41.1075, rate=0.10125))) %>% mutate(logRT = log(RT))
+
+ggplot(data = power_data, aes(x=(RT), color=Mapping)) + 
+  geom_density()
+
+#model_power
+
+model_power <- brm(
+  formula = logRT ~ Mapping * Response +
+           (Response || Participant),
+  data = power_data,
+  family = "student",
+  control = list(adapt_delta = 0.9)
+)
+
+n_accepted <- 0
+
+for (s in 1:100) {
+  set.seed(s)
+  print(s)
+  
+  power_data <- tibble(Participant = rep(1:power_n, 2, each=60),
+       trial_number = rep(1:60, power_n*2),
+       Mapping = rep(c("compatible", "incompatible"), each=60*power_n),
+       Response = rep(c("left", "right"), 60*power_n),
+       RT = c(rgamma(60*power_n, shape=76.3425, rate=0.2025), rgamma(60*power_n, shape=41.1075, rate=0.10125))) %>% mutate(logRT = log(RT))
+  
+  print(power_data$RT[1])
+  
+  model_power_update <- update(model_power,
+                        newdata = power_data)
+  
+  h2 <- hypothesis(model_power_update, "exp(Intercept + Responseright) < exp(Intercept + Mappingincompatible + Responseright + Mappingincompatible:Responseright)")
+  ifelse(h2$hypothesis$Evid.Ratio > 25, n_accepted <- n_accepted + 1, n_accepted <- n_accepted)
+  
+  print(h2$hypothesis$Evid.Ratio)
+  print(n_accepted)
+}
+
+n_accepted / 100
+
 ```
 
 ## Plotting Mean RTs 
@@ -149,69 +241,79 @@ ggplot(data=data_agg, aes(x=Response, y=meanRT, fill=Mapping)) +
 
 ```{r, results='hide'}
 
-# create brm to check for hypothesis 1-3 (right-handed participants)
+# create brm to check for hypotheses 1-3 (right-handed participants)
 model_right <- brm(
-  formula = logRT ~ Mapping * Response +
-           (Response || Participant),
-  data = data_right
-)
-
-model_right_student <- brm(
   formula = logRT ~ Mapping * Response +
            (Response || Participant),
   data = data_right,
   family = "student"
 )
 
+# create brm to check for hypotheses 4-6 (left-handed participants)
 model_left <- brm(
   formula = logRT ~ Mapping * Response +
            (Response || Participant),
-  data = data_left
+  data = data_left,
+  family = "student"
 )
 
+# create brm to check for hypothesis 7
 model_both <- brm(
-  formula = logRT ~ Mapping * Response * handedness +
-           (Response || Participant),
-  data = data,
+  formula = logRT ~ Mapping * handedness +
+           (1 || Participant),
+  data = data_both,
   family = "student"
 )
 
 ```
 
 ```{r}
+# inspect model output:
 
+model_right
+model_left
 model_both
 
-# verify model fit
+# verify model fit:
 
 pp_check(model_right)
 
-pp_check(model_right_student)
+pp_check(model_left)
 
-gaussian_loo <- loo(model_right)
-student_loo <- loo(model_right_student)
-
-loo_comp <- loo_compare(list(gaussian = gaussian_loo, student = student_loo))
-
-loo_comp
-
-pnorm(-loo_comp[2,1], loo_comp[2,2])
+pp_check(model_both)
 
 ```
 
 ```{r}
 
-# H1: Response times for right-hand responses are faster to the larger stimulus than to the smaller stimulus.
-h1 <- hypothesis(model_right, "Intercept + Responseright < Intercept + Mappingincompatible + Responseright + Mappingincompatible:Responseright")
+# H1: Right-handed participants response times' for right-hand responses are faster to the larger stimulus than to the smaller stimulus.
+h1 <- hypothesis(model_right, "exp(Intercept + Responseright) < exp(Intercept + Mappingincompatible + Responseright + Mappingincompatible:Responseright)")
 print(h1, digits = 4)
 
-# H2: Left-hand responses are faster to the smaller stimulus than to the larger stimulus.
-h2 <- hypothesis(model_right, "Intercept < Intercept + Mappingincompatible")
+# H2: Right-handed participants left-hand responses' are faster to the smaller stimulus than to the larger stimulus.
+h2 <- hypothesis(model_right, "exp(Intercept) < exp(Intercept + Mappingincompatible)")
 print(h2, digits = 4)
 
-# H3: The stimulus size – response location compatibility effect is larger for right-hand responses than for left-hand responses.
-h3 <- hypothesis(model_right, "Intercept + Mappingincompatible + Responseright + Mappingincompatible:Responseright - (Intercept + Responseright) > Intercept + Mappingincompatible - (Intercept)")
+# H3: The stimulus size – response location compatibility effect in right-handed participants is larger for right-hand responses than for left-hand responses.
+h3 <- hypothesis(model_right, "exp(Intercept + Mappingincompatible + Responseright + Mappingincompatible:Responseright) - exp(Intercept + Responseright) > exp(Intercept + Mappingincompatible) - exp(Intercept)")
 print(h3, digits = 4)
+
+# H4: Left-handed participants response times' for left-hand responses are faster to the larger stimulus than to the smaller stimulus.
+h4 <- hypothesis(model_left, "exp(Intercept + Mappingincompatible) < exp(Intercept)")
+print(h4, digits = 4)
+
+# H5: Left-handed participants response times' for right-hand responses are faster to the smaller stimulus than to the larger stimulus.
+h5 <- hypothesis(model_left, "exp(Intercept + Mappingincompatible + Responseright + Mappingincompatible:Responseright) < exp(Intercept + Responseright)")
+print(h5, digits = 4)
+
+# H6: The stimulus size – response location compatibility effect in left-handed participants is larger for left-hand responses than for right-hand responses.
+h6 <- hypothesis(model_left, "exp(Intercept) - exp(Intercept + Mappingincompatible) > exp(Intercept + Responseright) - exp(Intercept + Mappingincompatible + Responseright + Mappingincompatible:Responseright)")
+print(h6, digits = 4)
+
+# H7: The stimulus size- response location compatibility effect is not equally large for left- and righthanded people. I.e., the absolute difference between response times in the compatible condition and response times in the incompatible condition is not similar for right-handed and left-handed people.
+h7 <- hypothesis(model_both, "abs(exp(Intercept + Mappingincompatible) - exp(Intercept)) < abs(exp(Intercept + Mappingincompatible + handednessrightMhanded + Mappingincompatible:handednessrightMhanded) - exp(Intercept + handednessrightMhanded))")
+print(h7, digits = 4)
+
 
 ```
 
