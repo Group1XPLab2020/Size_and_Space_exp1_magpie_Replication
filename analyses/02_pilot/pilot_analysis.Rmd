@@ -167,15 +167,16 @@ data_both <- rbind(data_both, data_left)
 # power analysis
 
 power_n <- 2
+trials <- 100
 
-power_data <- tibble(Participant = rep(1:power_n, 2, each=60),
-       trial_number = rep(1:60, power_n*2),
-       Mapping = rep(c("compatible", "incompatible"), each=60*power_n),
-       Response = rep(c("left", "right"), 60*power_n),
-       RT = c(rgamma(60*power_n, shape=76.3425, rate=0.2025), rgamma(60*power_n, shape=41.1075, rate=0.10125))) %>% mutate(logRT = log(RT))
+power_data <- tibble(Participant = rep(1:power_n, 2, each=trials/2),
+       trial_number = rep(1:(trials/2), power_n*2),
+       Mapping = rep(c("compatible", "incompatible"), each=(trials/2)*power_n),
+       Response = rep(c("left", "right"), (trials/2)*power_n),
+       RT = c(rgamma((trials/2)*power_n, shape=76.3425, rate=0.2025), rgamma((trials/2)*power_n, shape=41.1075, rate=0.10125))) %>% mutate(logRT = log(RT))
 
-ggplot(data = power_data, aes(x=(RT), color=Mapping)) + 
-  geom_density()
+#ggplot(data = power_data, aes(x=(RT), color=Mapping)) + 
+  #geom_density()
 
 #model_power
 
@@ -184,31 +185,31 @@ model_power <- brm(
            (Response || Participant),
   data = power_data,
   family = "student",
-  control = list(adapt_delta = 0.9)
+  control = list(adapt_delta = 0.9),
+  chains = 0
 )
 
 n_accepted <- 0
 
 for (s in 1:100) {
   set.seed(s)
-  print(s)
   
-  power_data <- tibble(Participant = rep(1:power_n, 2, each=60),
-       trial_number = rep(1:60, power_n*2),
-       Mapping = rep(c("compatible", "incompatible"), each=60*power_n),
-       Response = rep(c("left", "right"), 60*power_n),
-       RT = c(rgamma(60*power_n, shape=76.3425, rate=0.2025), rgamma(60*power_n, shape=41.1075, rate=0.10125))) %>% mutate(logRT = log(RT))
-  
-  print(power_data$RT[1])
+  power_data <- tibble(Participant = rep(1:power_n, 2, each=trials/2),
+       trial_number = rep(1:(trials/2), power_n*2),
+       Mapping = rep(c("compatible", "incompatible"), each=(trials/2)*power_n),
+       Response = rep(c("left", "right"), (trials/2)*power_n),
+       RT = c(rgamma((trials/2)*power_n, shape=76.3425, rate=0.2025), rgamma((trials/2)*power_n, shape=41.1075, rate=0.10125))) %>% mutate(logRT = log(RT))
   
   model_power_update <- update(model_power,
-                        newdata = power_data)
+                        newdata = power_data,
+                        chains = 4)
   
-  h2 <- hypothesis(model_power_update, "exp(Intercept + Responseright) < exp(Intercept + Mappingincompatible + Responseright + Mappingincompatible:Responseright)")
-  ifelse(h2$hypothesis$Evid.Ratio > 25, n_accepted <- n_accepted + 1, n_accepted <- n_accepted)
+  h1 <- hypothesis(model_power_update, "exp(Intercept + Responseright) < exp(Intercept + Mappingincompatible + Responseright + Mappingincompatible:Responseright)")
+  ifelse(h1$hypothesis$Evid.Ratio > 25, n_accepted <- n_accepted + 1, n_accepted <- n_accepted)
   
+  print(s)
   print(h2$hypothesis$Evid.Ratio)
-  print(n_accepted)
+  print(n_accepted/s)
 }
 
 n_accepted / 100
