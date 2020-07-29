@@ -208,7 +208,7 @@ for (s in 1:100) {
   ifelse(h1$hypothesis$Evid.Ratio > 25, n_accepted <- n_accepted + 1, n_accepted <- n_accepted)
   
   print(s)
-  print(h2$hypothesis$Evid.Ratio)
+  print(h1$hypothesis$Evid.Ratio)
   print(n_accepted/s)
 }
 
