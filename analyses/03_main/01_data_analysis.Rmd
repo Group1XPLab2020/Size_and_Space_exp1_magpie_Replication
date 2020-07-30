@@ -43,7 +43,7 @@ scale_fill_discrete <- function(...) {
 
 ```{r}
 # insert the actual data here after the main experiment finished
-raw_data <- read.csv('results_165_pilot_Size_and_Space_exp1_replication_Group1XPLab2020.csv')
+raw_data <- read.csv('../02_pilot/results_165_pilot_Size_and_Space_exp1_replication_Group1XPLab2020.csv')
 glimpse(raw_data)
 ```
 
