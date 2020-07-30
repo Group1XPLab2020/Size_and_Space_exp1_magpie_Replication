@@ -166,7 +166,7 @@ data_both <- rbind(data_both, data_left)
 
 # power analysis
 
-power_n <- 2
+power_n <- 3
 trials <- 100
 
 power_data <- tibble(Participant = rep(1:power_n, 2, each=trials/2),
@@ -191,7 +191,7 @@ model_power <- brm(
 
 n_accepted <- 0
 
-for (s in 1:100) {
+for (s in 1:30) {
   set.seed(s)
   
   power_data <- tibble(Participant = rep(1:power_n, 2, each=trials/2),
@@ -208,11 +208,9 @@ for (s in 1:100) {
   ifelse(h1$hypothesis$Evid.Ratio > 25, n_accepted <- n_accepted + 1, n_accepted <- n_accepted)
   
   print(s)
-  print(h2$hypothesis$Evid.Ratio)
+  print(h1$hypothesis$Evid.Ratio)
   print(n_accepted/s)
 }
-
-n_accepted / 100
 
 ```
 
