@@ -98,10 +98,32 @@ model <- brm(
   data = data
 )
 
+model_right <- brm(
+  formula = logRT ~ Mapping * Response +
+           (Response || Participant),
+  data = data,
+  family = "student"
+)
+
 model
 
-pp_check(model_bad)
+pp_check(model_right)
 pp_check(model)
+
+m1_loo <- loo(model)
+m2_loo <- loo(model_right)
+
+# compare the two models based on loo-CV:
+
+loo_comp <- loo_compare(list(mGaussian = m1_loo, mStudent = m2_loo))
+
+# show the results of comparison:
+
+loo_comp
+
+# calculate the significance of the difference:
+
+pnorm(-loo_comp[2,1], loo_comp[2,2])
 
 
 ```
