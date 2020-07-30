@@ -371,7 +371,7 @@ custom_views.optional_post_test = function(config) {
             return `<form>
                         <p class='magpie-view-text'>
                             <label for="age">${quest.age.title}:</label>
-                            <input type="number" name="age" min="18" max="110" id="age" />
+                            <input type="number" name="age" min="14" max="110" id="age" />
                         </p>
                         <p class='magpie-view-text'>
                             <label for="gender">${quest.gender.title}:</label>
