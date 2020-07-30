@@ -1,0 +1,104 @@
+---
+title: "Power analysis"
+author: "Paul Jänsch, Alexander Prochnow, Ludger Masch, Pia Stermann"
+date: '`r format(Sys.Date(), "%d.%m.%Y")`'
+output: html_document
+---
+
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  warning = FALSE, 
+  message = FALSE 
+)
+```
+
+```{r echo=FALSE}
+library(tidyverse)
+
+library(aida)
+
+library(brms)
+
+# use the aida-theme for plotting
+theme_set(theme_aida())
+
+# these options help Stan run faster
+options(mc.cores = parallel::detectCores())
+
+# global color scheme / non-optimized
+project_colors = c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7", "#000000")
+
+# setting theme colors globally
+scale_colour_discrete <- function(...) {
+  scale_colour_manual(..., values = project_colors)
+}
+scale_fill_discrete <- function(...) {
+   scale_fill_manual(..., values = project_colors)
+} 
+```
+
+
+
+
+```{r}
+
+# performing power analysis
+
+# number of participants
+power_n <- 4
+# trials per participants
+trials <- 100
+
+# simulate fake reaction time data
+power_data <- tibble(Participant = rep(1:power_n, 2, each=trials/2),
+       trial_number = rep(1:(trials/2), power_n*2),
+       Mapping = rep(c("compatible", "incompatible"), each=(trials/2)*power_n),
+       Response = rep(c("left", "right"), (trials/2)*power_n),
+       RT = c(rgamma((trials/2)*power_n, shape=76.3425, rate=0.2025), rgamma((trials/2)*power_n, shape=41.1075, rate=0.10125))) %>% mutate(logRT = log(RT))
+
+# pre-compile model
+model_power <- brm(
+  formula = logRT ~ Mapping * Response +
+           (Response || Participant),
+  data = power_data,
+  family = "student",
+  control = list(adapt_delta = 0.9),
+  chains = 0
+)
+
+# counter for accepted hypothesis
+n_accepted <- 0
+
+for (s in 1:30) {
+  # set new random seed in each run
+  set.seed(s+300)
+  
+  # simulate fake reaction time data
+  power_data <- tibble(Participant = rep(1:power_n, 2, each=trials/2),
+       trial_number = rep(1:(trials/2), power_n*2),
+       Mapping = rep(c("compatible", "incompatible"), each=(trials/2)*power_n),
+       Response = rep(c("left", "right"), (trials/2)*power_n),
+       RT = c(rgamma((trials/2)*power_n, shape=76.3425, rate=0.2025), rgamma((trials/2)*power_n, shape=41.1075, rate=0.10125))) %>% mutate(logRT = log(RT))
+  
+  # update the pre-compiled model with new data
+  model_power_update <- update(model_power,
+                        newdata = power_data,
+                        chains = 4)
+  
+  # test the hypothesis 1
+  h1 <- hypothesis(model_power_update, "exp(Intercept + Responseright) < exp(Intercept + Mappingincompatible + Responseright + Mappingincompatible:Responseright)")
+  # if the Bayes factor exceeds a certain threshold the hypothesis is accepted
+  ifelse(h1$hypothesis$Evid.Ratio > 25, n_accepted <- n_accepted + 1, n_accepted <- n_accepted)
+  
+  # print run's number
+  print(s)
+  # print this run's Bayes factor
+  print(h1$hypothesis$Evid.Ratio)
+  # print current power
+  print(n_accepted/s)
+  cat("\n")
+}
+
+```
