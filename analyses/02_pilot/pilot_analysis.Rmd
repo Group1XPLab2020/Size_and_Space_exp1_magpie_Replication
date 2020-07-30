@@ -263,7 +263,7 @@ print(h5, digits = 4)
 h6 <- hypothesis(model_left, "exp(Intercept) - exp(Intercept + Mappingincompatible) > exp(Intercept + Responseright) - exp(Intercept + Mappingincompatible + Responseright + Mappingincompatible:Responseright)")
 print(h6, digits = 4)
 
-# H7: The stimulus size- response location compatibility effect is not equally large for left- and righthanded people. I.e., the absolute difference between response times in the compatible condition and response times in the incompatible condition is not similar for right-handed and left-handed people.
+# H7: The stimulus size- response location compatibility effect is larger for right-handed compared to left-handed people. I.e., the absolute difference between response times in the compatible condition and response times in the incompatible condition is larger for right-handed compared to left-handed people.
 h7 <- hypothesis(model_both, "abs(exp(Intercept + Mappingincompatible) - exp(Intercept)) < abs(exp(Intercept + Mappingincompatible + handednessrightMhanded + Mappingincompatible:handednessrightMhanded) - exp(Intercept + handednessrightMhanded))")
 print(h7, digits = 4)
 
