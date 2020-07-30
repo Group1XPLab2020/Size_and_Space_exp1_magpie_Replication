@@ -162,61 +162,11 @@ data_both <- rbind(data_both, data_left)
 
 ```
 
-```{r}
-
-# power analysis
-
-power_n <- 3
-trials <- 100
-
-power_data <- tibble(Participant = rep(1:power_n, 2, each=trials/2),
-       trial_number = rep(1:(trials/2), power_n*2),
-       Mapping = rep(c("compatible", "incompatible"), each=(trials/2)*power_n),
-       Response = rep(c("left", "right"), (trials/2)*power_n),
-       RT = c(rgamma((trials/2)*power_n, shape=76.3425, rate=0.2025), rgamma((trials/2)*power_n, shape=41.1075, rate=0.10125))) %>% mutate(logRT = log(RT))
-
-#ggplot(data = power_data, aes(x=(RT), color=Mapping)) + 
-  #geom_density()
-
-#model_power
-
-model_power <- brm(
-  formula = logRT ~ Mapping * Response +
-           (Response || Participant),
-  data = power_data,
-  family = "student",
-  control = list(adapt_delta = 0.9),
-  chains = 0
-)
-
-n_accepted <- 0
-
-for (s in 1:30) {
-  set.seed(s)
-  
-  power_data <- tibble(Participant = rep(1:power_n, 2, each=trials/2),
-       trial_number = rep(1:(trials/2), power_n*2),
-       Mapping = rep(c("compatible", "incompatible"), each=(trials/2)*power_n),
-       Response = rep(c("left", "right"), (trials/2)*power_n),
-       RT = c(rgamma((trials/2)*power_n, shape=76.3425, rate=0.2025), rgamma((trials/2)*power_n, shape=41.1075, rate=0.10125))) %>% mutate(logRT = log(RT))
-  
-  model_power_update <- update(model_power,
-                        newdata = power_data,
-                        chains = 4)
-  
-  h1 <- hypothesis(model_power_update, "exp(Intercept + Responseright) < exp(Intercept + Mappingincompatible + Responseright + Mappingincompatible:Responseright)")
-  ifelse(h1$hypothesis$Evid.Ratio > 25, n_accepted <- n_accepted + 1, n_accepted <- n_accepted)
-  
-  print(s)
-  print(h1$hypothesis$Evid.Ratio)
-  print(n_accepted/s)
-}
-
-```
-
 ## Plotting Mean RTs 
 
 ```{r}
+
+# aggregating dataset
 data_agg <- data %>% 
   group_by(Mapping, Response, handedness) %>% 
   summarize(meanRT = mean(RT),
@@ -224,6 +174,8 @@ data_agg <- data %>%
             sd = sd(RT),
             se = sqrt(variance / length(RT))) # standard error = standard deviation of the sampling distribution
 
+
+# plotting the maen reaction times and the stadard errors for each combination of mapping, handedness and response side
 ggplot(data=data_agg, aes(x=Response, y=meanRT, fill=Mapping)) +
   geom_errorbar(aes(ymin=meanRT-se, ymax=meanRT+se), width=0.5, position=position_dodge2(padding=0.5)) +
   geom_col(position="dodge", width=0.5) +
