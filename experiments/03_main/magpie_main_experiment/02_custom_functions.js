@@ -22,6 +22,8 @@ if (first_mapping === "incompatible") {
     p_mapping = "small";
 }
 
+// trial counter for the distractor task
+var distractor_CT = 1 
 
 
 /* Helper functions

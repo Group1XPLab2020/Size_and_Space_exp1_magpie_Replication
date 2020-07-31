@@ -250,17 +250,8 @@ const training_trials_incompatible = custom_views.keypress_training({
     p: 'small'
 });
 
-// The distractor task, showing participants either a circle or a triangle
-// and have them respond by mouse click on the corresponding button
-const distractor_trials = custom_views.distractor_task({
-    trials: 1, // 20,
-    name: "distractor_trials",
-    trial_type: "distractor_trials",
-    data: _.shuffle(distractor_trial),
-    fix_duration: 1000
-})
 
-// Add start button prior to each distractor trial
+// Adds start button prior to each distractor trial
 const distractor_start_button = custom_views.distractor_start_button({
     trials: 1,
     name: "distractor_start_button"
@@ -272,7 +263,15 @@ distractor_task = new Array(num_distractor_trials*2);
 // create start button + distractor trial combination
 for(i = 0; i < num_distractor_trials*2; i+=2) {
     distractor_task[i] = distractor_start_button;
-    distractor_task[i+1] = distractor_trials;
+    // The distractor task, showing participants either a circle or a triangle
+    // and have them respond by mouse click on the corresponding button
+    distractor_task[i+1] = custom_views.distractor_task({
+        trials: 1,
+        name: "distractor_trials",
+        trial_type: "distractor_trials",
+        data: _.shuffle(distractor_trial),
+        fix_duration: 1000
+    });
 }
 
 // assigning experimental trial order based on randomly determined initial mapping
