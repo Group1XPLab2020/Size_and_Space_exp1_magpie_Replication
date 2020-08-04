@@ -44,7 +44,7 @@ scale_fill_discrete <- function(...) {
 ```{r}
 # insert the actual data here after the main experiment finished
 raw_data <- read.csv('../../data/03_main/results_169_main_Size_and_Space_exp1_replication_Group1XPLab2020.csv')
-View(raw_data)
+glimpse(raw_data)
 ```
 
 ## Optional data summary
@@ -127,17 +127,66 @@ timeData %>%
   xlab("Participant") +
   geom_hline(aes(yintercept=25))
 
-
-# time > 25
-raw_data %>% 
-  filter(timeSpent>25) %>%
-  pull(timeSpent) %>% unique
-  ggplot(aes(x=trial_number, y=RT, color=submission_id)) +
-  geom_line() +
-  facet_wrap(. ~ trial_type) +
-  theme_classic() +
-  geom_hline(aes(yintercept=median(RT)), color="red")
 ```
+
+## Term paper plots
+
+```{r}
+# gender statistics
+gender_data <- raw_data %>% 
+  group_by(gender) %>% 
+  select(submission_id, gender) %>% 
+  unique %>% 
+  count
+gender_summary<- gender_data %>% 
+  pivot_wider(names_from=gender, values_from=n)
+
+# age statistics
+age_data <- raw_data %>% 
+  group_by(submission_id) %>% 
+  select(submission_id, age, Handedness) %>% 
+  unique
+age_summary <- raw_data %>% 
+  select(age) %>% 
+  summarize(minAge = min(age),
+            meanAge = round(mean(age), digits=2),
+            maxAge = max(age))
+
+# handedness statistics
+handedness_data <- raw_data %>% 
+  group_by(Handedness) %>% 
+  select(submission_id, Handedness) %>% 
+  unique %>% 
+  count
+handedness_summary <- handedness_data %>% 
+  pivot_wider(names_from=Handedness, values_from=n)
+
+# example barplots:
+
+# gender barplot
+gender_data %>% 
+  ggplot(aes(x=gender, y=n, fill=gender)) + 
+  geom_col(width=0.5) +
+  geom_text(aes(y=n+5, label=n), color="black", size=6) + # str_c(n, , substr(gender, 1, 1))
+  ggtitle("Gender distribution") +
+  theme(plot.title = element_text(hjust = 0.5), legend.position = "none")
+  
+# handedness barplot
+handedness_data %>% 
+  ggplot(aes(x=Handedness, y=n, fill=Handedness)) + # to order after value use x=reorder(Handedness, -n)
+  geom_col(width=0.5) +
+  geom_text(aes(y=n+5, label=n), color="black", size=6) + 
+  ggtitle("Handedness distribution") +
+  theme(plot.title = element_text(hjust = 0.5), legend.position = "none")
+
+# age plot
+age_data %>% 
+  ggplot(aes(x=age, fill=Handedness)) +
+  geom_histogram(binwidth = 0.5) +
+  ggtitle("Age distribution") +
+  theme(plot.title = element_text(hjust = 0.5))
+```
+
 
 ## Preprocessing
 
