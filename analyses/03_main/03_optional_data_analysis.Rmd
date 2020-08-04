@@ -1,0 +1,230 @@
+---
+title: "Data Analysis Experiment 1"
+author: "Paul Jänsch, Alexander Prochnow, Ludger Masch, Pia Stermann"
+date: '`r format(Sys.Date(), "%d.%m.%Y")`'
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  warning = FALSE, 
+  message = FALSE 
+)
+```
+
+```{r echo=FALSE}
+library(tidyverse)
+
+library(aida)
+
+library(brms)
+
+# use the aida-theme for plotting
+theme_set(theme_aida())
+
+# these options help Stan run faster
+options(mc.cores = parallel::detectCores())
+
+# global color scheme / non-optimized
+project_colors = c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7", "#000000")
+
+# setting theme colors globally
+scale_colour_discrete <- function(...) {
+  scale_colour_manual(..., values = project_colors)
+}
+scale_fill_discrete <- function(...) {
+   scale_fill_manual(..., values = project_colors)
+} 
+```
+
+# Optional data summary for main experiment
+
+## Import data
+
+```{r}
+# insert the actual data here after the main experiment finished
+raw_data <- read.csv('../../data/03_main/results_169_main_Size_and_Space_exp1_replication_Group1XPLab2020.csv')
+View(raw_data)
+```
+
+## Optional data summary
+
+```{r}
+# comments
+raw_data %>% 
+  pull(comments) %>% 
+  unique
+
+# age statistics
+raw_data %>% 
+  select(age) %>% 
+  summarize(minAge = min(age),
+            meanAge = mean(age),
+            maxAge = max(age))
+
+# average time spent
+raw_data %>% 
+  select(timeSpent) %>% 
+  summarize(minTimeSpent = min(timeSpent),
+            meanTimeSpent = mean(timeSpent),
+            maxTimeSpent = max(timeSpent))
+
+# languages
+raw_data %>% 
+  pull(languages) %>% 
+  unique
+
+# number of participants reporting technical issues
+raw_data %>%
+  group_by(technical_issues) %>% 
+  select(submission_id, technical_issues) %>% 
+  unique %>% 
+  count
+
+# description of technical problems
+raw_data %>% 
+  filter(technical_issues=="Yes") %>% 
+  pull(comments) %>% 
+  unique
+
+# gender
+raw_data %>% 
+  group_by(gender) %>% 
+  select(submission_id, gender) %>% 
+  unique %>% 
+  count
+
+# handedness
+raw_data %>% 
+  group_by(Handedness) %>% 
+  select(submission_id, Handedness) %>% 
+  unique %>% 
+  count
+
+raw_data %>% 
+  filter(str_detect(comments, "toaster"))
+
+raw_data %>% 
+  filter(Handedness=="mixed-handedness") %>% 
+  pull(submission_id) %>% unique
+
+below25 <- function(val) {
+  return(map_lgl(val, function(input) {
+    if(input<25) return(TRUE) else return(FALSE)
+  }))
+}
+
+
+timeData <- raw_data %>% 
+  select(timeSpent) %>% 
+  unique %>% 
+  mutate(below25=below25(timeSpent))
+
+timeData %>% 
+  ggplot(aes(x=seq(1,72,1),y=timeSpent)) + 
+  geom_point(aes(color=below25)) +
+  geom_line() + 
+  xlab("Participant") +
+  geom_hline(aes(yintercept=25))
+
+
+# time > 25
+raw_data %>% 
+  filter(timeSpent>25) %>%
+  pull(timeSpent) %>% unique
+  ggplot(aes(x=trial_number, y=RT, color=submission_id)) +
+  geom_line() +
+  facet_wrap(. ~ trial_type) +
+  theme_classic() +
+  geom_hline(aes(yintercept=median(RT)), color="red")
+```
+
+## Preprocessing
+
+```{r}
+
+data <- raw_data %>%
+  # filter out test trials and distraction task
+  filter(trial_type=="experimental_trials_compatible" | trial_type=="experimental_trials_incompatible") %>% 
+  # filter out incorrect responses
+  filter(correctness==1) %>% 
+  # filter out reaction times below 100ms and above 1500ms
+  filter(RT>=100) %>% 
+  filter(RT<=1500) %>% 
+  # log-transform reaction time
+  mutate(logRT = log(RT)) %>% 
+  # select only factors important for further study
+  select(submission_id, trial_type, trial_number, key_pressed, Response, correctness, RT, logRT, Mapping, expected, Handedness) %>% 
+  # rename participant column
+  rename(Participant=submission_id)
+
+# extract data coming from right-handed participants only
+data_right <- data %>% 
+  filter(Handedness == "right-handed")
+
+# extract data coming from left-handed participants only
+data_left <- data %>% 
+  filter(Handedness == "left-handed")
+
+
+# create dataset which contains the same number of right- and left-handed participants (for hypothesis 7): 
+
+# number of left-handed participants
+n_left <- data_left %>%
+  select(Participant) %>% 
+  unique() %>% 
+  count() %>% 
+  as.numeric()
+
+# number of participants
+n <- data %>%
+  select(Participant) %>% 
+  unique() %>% 
+  count() %>% 
+  as.numeric()
+
+# select n_left random right-handed participants
+rnd_slice <- sample(1:(n-n_left), n_left, replace = F)
+
+selected_right_participants <- data_right %>%
+  select(Participant) %>% 
+  unique() %>% 
+  slice(rnd_slice) %>% 
+  as.list()
+
+# merge the n_left right-handed participants and the n_left left-handed participants
+data_both <- data %>% filter(Participant == -1)
+
+for (p in unlist(selected_right_participants)){
+  data_both <- rbind(data_both, data %>% filter(Participant == p))
+}
+
+data_both <- rbind(data_both, data_left)
+
+```
+
+## Plotting Mean RTs 
+
+```{r}
+
+# aggregating dataset
+data_agg <- data %>% 
+  group_by(Mapping, Response, Handedness) %>% 
+  summarize(meanRT = mean(RT),
+            variance = var(RT),
+            sd = sd(RT),
+            se = sqrt(variance / length(RT))) # standard error = standard deviation of the sampling distribution
+
+
+# plotting the maen reaction times and the stadard errors for each combination of mapping, handedness and response side
+ggplot(data=data_agg, aes(x=Response, y=meanRT, fill=Mapping)) +
+  geom_errorbar(aes(ymin=meanRT-se, ymax=meanRT+se), width=0.5, position=position_dodge2(padding=0.5)) +
+  geom_col(position="dodge", width=0.5) +
+  coord_cartesian(ylim=c(350, 600)) +
+  facet_wrap(. ~ Handedness) + 
+  ylab("meanRT and SE") + 
+  ggtitle("Mean Reaction Time by Handedness", subtitle="Error Bars represent the Standard Error") +
+  theme(plot.title = element_text(hjust = 0.5), plot.subtitle=element_text(hjust = 0.5)) # center titles
+
+```
+
