@@ -41,9 +41,9 @@ $("document").ready(function() {
         ],
         // Specify deployement information
         deploy: {
-            experimentID: "TBD",
+            experimentID: "169",
             serverAppURL: "https://magpie-demo.herokuapp.com/api/submit_experiment/",
-            deployMethod: "debug", // "debug" or "directLink"
+            deployMethod: "directLink", // "debug" or "directLink"
             contact_email: "aprochnow@uos.de",
             prolificURL: "https://app.prolific.ac/submissions/complete?cc=SAMPLE1234"
         },

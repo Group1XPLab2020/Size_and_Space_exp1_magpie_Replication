@@ -371,7 +371,7 @@ custom_views.optional_post_test = function(config) {
             return `<form>
                         <p class='magpie-view-text'>
                             <label for="age">${quest.age.title}:</label>
-                            <input type="number" name="age" min="18" max="110" id="age" />
+                            <input type="number" name="age" min="14" max="110" id="age" />
                         </p>
                         <p class='magpie-view-text'>
                             <label for="gender">${quest.gender.title}:</label>
@@ -456,7 +456,7 @@ custom_views.distractor_task = function(config) {
 
                 let trial_data = {
                     trial_type: config.trial_type,
-                    trial_number: CT + 1,
+                    trial_number: distractor_CT,
                     Response: response,
                     correctness: correctness,
                     RT: RT
@@ -465,6 +465,7 @@ custom_views.distractor_task = function(config) {
                 trial_data = magpieUtils.view.save_config_trial_data(config.data[CT], trial_data);
 
                 magpie.trial_data.push(trial_data);
+                distractor_CT = distractor_CT + 1;
                 magpie.findNextView();
             });
         }

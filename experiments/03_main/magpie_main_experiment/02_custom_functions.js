@@ -5,9 +5,9 @@
 *
 */
 
-const num_training_trials = 1;
-const num_experimental_trials = 1;
-const num_distractor_trials = 2;
+const num_training_trials = 10;
+const num_experimental_trials = 60;
+const num_distractor_trials = 20;
 
 // determine which mapping to present first 
 const first_mapping = _.sample(["compatible", "incompatible"]); 
@@ -22,6 +22,8 @@ if (first_mapping === "incompatible") {
     p_mapping = "small";
 }
 
+// trial counter for the distractor task
+var distractor_CT = 1 
 
 
 /* Helper functions

@@ -93,9 +93,9 @@ raw_data %>%
 # handedness
 raw_data %>% 
   group_by(submission_id) %>% 
-  select(handedness) %>% 
+  select(Handedness) %>% 
   unique %>% 
-  group_by(handedness) %>% 
+  group_by(Handedness) %>% 
   count
 ```
 
@@ -114,17 +114,17 @@ data <- raw_data %>%
   # log-transform reaction time
   mutate(logRT = log(RT)) %>% 
   # select only factors important for further study
-  select(submission_id, trial_type, trial_number, key_pressed, Response, correctness, RT, logRT, Mapping, expected, handedness) %>% 
+  select(submission_id, trial_type, trial_number, key_pressed, Response, correctness, RT, logRT, Mapping, expected, Handedness) %>% 
   # rename participant column
   rename(Participant=submission_id)
 
 # extract data coming from right-handed participants only
 data_right <- data %>% 
-  filter(handedness == "right-handed")
+  filter(Handedness == "right-handed")
 
 # extract data coming from left-handed participants only
 data_left <- data %>% 
-  filter(handedness == "left-handed")
+  filter(Handedness == "left-handed")
 
 
 # create dataset which contains the same number of right- and left-handed participants (for hypothesis 7): 
@@ -169,7 +169,7 @@ data_both <- rbind(data_both, data_left)
 
 # aggregating dataset
 data_agg <- data %>% 
-  group_by(Mapping, Response, handedness) %>% 
+  group_by(Mapping, Response, Handedness) %>% 
   summarize(meanRT = mean(RT),
             variance = var(RT),
             sd = sd(RT),
@@ -181,7 +181,7 @@ ggplot(data=data_agg, aes(x=Response, y=meanRT, fill=Mapping)) +
   geom_errorbar(aes(ymin=meanRT-se, ymax=meanRT+se), width=0.5, position=position_dodge2(padding=0.5)) +
   geom_col(position="dodge", width=0.5) +
   coord_cartesian(ylim=c(350, 600)) +
-  facet_wrap(. ~ handedness) + 
+  facet_wrap(. ~ Handedness) + 
   ylab("meanRT and SE") + 
   ggtitle("Mean Reaction Time by Handedness", subtitle="Error Bars represent the Standard Error") +
   theme(plot.title = element_text(hjust = 0.5), plot.subtitle=element_text(hjust = 0.5)) # center titles
@@ -211,7 +211,7 @@ model_left <- brm(
 
 # create brm to check for hypothesis 7
 model_both <- brm(
-  formula = logRT ~ Mapping * handedness +
+  formula = logRT ~ Mapping * Handedness +
            (1 || Participant),
   data = data_both,
   family = "student"
@@ -265,7 +265,7 @@ h6 <- hypothesis(model_left, "exp(Intercept) - exp(Intercept + Mappingincompatib
 print(h6, digits = 4)
 
 # H7: The stimulus size- response location compatibility effect is larger for right-handed compared to left-handed people. I.e., the absolute difference between response times in the compatible condition and response times in the incompatible condition is larger for right-handed compared to left-handed people.
-h7 <- hypothesis(model_both, "abs(exp(Intercept + Mappingincompatible) - exp(Intercept)) < abs(exp(Intercept + Mappingincompatible + handednessrightMhanded + Mappingincompatible:handednessrightMhanded) - exp(Intercept + handednessrightMhanded))")
+h7 <- hypothesis(model_both, "abs(exp(Intercept + Mappingincompatible) - exp(Intercept)) < abs(exp(Intercept + Mappingincompatible + HandednessrightMhanded + Mappingincompatible:HandednessrightMhanded) - exp(Intercept + HandednessrightMhanded))")
 print(h7, digits = 4)
 
 
