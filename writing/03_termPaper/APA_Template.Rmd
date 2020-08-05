@@ -67,6 +67,38 @@ r_refs("r-references.bib")
 
 ```
 
+```{r echo=FALSE, warning=FALSE}
+# general library imports
+library(tidyverse)
+
+library(aida)
+
+library(brms)
+
+library(broom)
+
+library(knitr)
+
+library(papaja)
+
+# use the aida-theme for plotting
+theme_set(theme_aida())
+
+# these options help Stan run faster
+options(mc.cores = parallel::detectCores())
+
+# global color scheme / non-optimized
+project_colors = c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7", "#000000")
+
+# setting theme colors globally
+scale_colour_discrete <- function(...) {
+  scale_colour_manual(..., values = project_colors)
+}
+scale_fill_discrete <- function(...) {
+   scale_fill_manual(..., values = project_colors)
+} 
+```
+
 ```{r analysis-preferences}
 # Seed for random number generation
 set.seed(42)
@@ -98,6 +130,11 @@ raw_data <- read.csv('../../data/03_main/results_169_main_Size_and_Space_exp1_re
 We report how we determined our sample size, all data exclusions (if any), all manipulations, and all measures in the study. <!-- 21-word solution (Simmons, Nelson & Simonsohn, 2012; retrieved from http://ssrn.com/abstract=2160588) -->
 
 ```{r echo=FALSE}
+n <- raw_data %>% 
+  select(submission_id) %>% 
+  unique %>% 
+  count
+
 # gender statistics
 gender_summary <- raw_data %>% 
   group_by(gender) %>% 
@@ -124,7 +161,7 @@ handedness_summary <- raw_data %>%
 
 ## Participants
 
-We recruited N participants (`r gender_summary$female` woman, `r gender_summary$male` men, `r gender_summary$other` others, `r age_summary$meanAge` = mean, age range: `r age_summary$minAge`-`r age_summary$maxAge` years) by distributing the link to the experiment via social media, mainly WhatsApp, Facebook and Reddit (see Table 1 for demographics). `r handedness_summary$"right-handed"` of the participants were right-handed and `r handedness_summary$"left-handed"` were left-handed, as well as `r handedness_summary$"mixed-handedness"` participant indicating mixed-handedness. They were advised to take part only once, however, we did not control for this. The link was available for four days until we closed collection of data (from the 31st of July 2020 until the 3rd of August 2020). Before taking part, the participants declared to have normal or corrected-to-normal visual acuity and should be naive with respect to the purpose of the study. Participation was voluntary and not rewarded with money or material things but with our deep gratitude.
+We recruited N = `r n` participants (`r gender_summary$female` woman, `r gender_summary$male` men, `r gender_summary$other` others, `r age_summary$meanAge` = mean, age range: `r age_summary$minAge`-`r age_summary$maxAge` years) by distributing the link to the experiment via social media, mainly WhatsApp, Facebook and Reddit (see Table 1 for demographics). `r handedness_summary$"right-handed"` of the participants were right-handed and `r handedness_summary$"left-handed"` were left-handed, as well as `r handedness_summary$"mixed-handedness"` participant indicating mixed-handedness. They were advised to take part only once, however, we did not control for this. The link was available for four days until we closed collection of data (from the 31st of July 2020 until the 3rd of August 2020). Before taking part, the participants declared to have normal or corrected-to-normal visual acuity and should be naive with respect to the purpose of the study. Participation was voluntary and not rewarded with money or material things but with our deep gratitude.
 
 ## Material
 
