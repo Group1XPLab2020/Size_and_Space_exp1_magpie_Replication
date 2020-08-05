@@ -74,6 +74,12 @@ raw_data %>%
   unique %>% 
   count
 
+# comments of technical issue participants
+raw_data %>% 
+  filter(technical_issues == "Yes") %>% 
+  pull(comments) %>% 
+  unique()
+
 # gender
 raw_data %>% 
   group_by(submission_id) %>% 
@@ -83,12 +89,12 @@ raw_data %>%
   count
 
 # education
-raw_data %>% 
-  group_by(submission_id) %>% 
-  select(education) %>% 
-  unique %>% 
-  group_by(education) %>% 
-  count
+#raw_data %>% 
+#  group_by(submission_id) %>% 
+#  select(education) %>% 
+#  unique %>% 
+#  group_by(education) %>% 
+#  count
 
 # handedness
 raw_data %>% 
@@ -113,6 +119,10 @@ data <- raw_data %>%
   filter(RT<=1500) %>% 
   # log-transform reaction time
   mutate(logRT = log(RT)) %>% 
+  # filter out participants who spent more than 25min on the entire experiment (post-prereg decision)
+  filter(timeSpent <= 25) %>% 
+  # filter out participants with mixed-handedness (post-prereg decision)
+  filter(Handedness != "mixed-handedness") %>% 
   # select only factors important for further study
   select(submission_id, trial_type, trial_number, key_pressed, Response, correctness, RT, logRT, Mapping, expected, Handedness) %>% 
   # rename participant column
@@ -269,7 +279,7 @@ h7 <- hypothesis(model_both, "abs(exp(Intercept + Mappingincompatible) - exp(Int
 print(h7, digits = 4)
 
 
-# exploratory hypotheses for left-handed participants:
+# exploratory hypotheses for left-handed participants to quantify the effect size:
 
 # H8: Left-handed participants left-hand responses' are faster to the smaller stimulus than to the larger stimulus
 h8 <- hypothesis(model_left, "exp(Intercept) < exp(Intercept + Mappingincompatible)")
