@@ -201,7 +201,7 @@ All experimental trials were structured as follows. Each trial started with the 
 
 ## Data Preparation
 
-Originally, our data contained 3 participants who needed drastically longer for the experiment than the average participant. We filtered out these 3 participants by choosing a threshold of 25 minutes, which these participants were well above. Figure X shows our rationale for choosing the threshold quite clearly, as these three participants likely took a break during the experiment or performed another activity, which was not intended by our experimental design.
+Originally, our data contained 3 participants who needed drastically longer for the experiment than the average participant. We filtered out these 3 participants by choosing a threshold of 25 minutes, which these participants were well above. Figure X shows our rationale for choosing the threshold quite clearly, as these three participants likely took a break during the experiment or performed another activity, which was not intended by our experimental design. This additional data exclusion criterion was not stated in our preregistration report, because we had not forseen this unintended effect of conducting an online experiment, however the longer break in between trial blocks might cause those participants to perform differently in the following trials. To be on the safe side we therefore excluded these participant's data from our analyses.
 
 ```{r}
 # timeSpent filtering rational plot
@@ -225,6 +225,9 @@ timeData %>%
   labs(title="Time Spent with the Experiment for each Participant", subtitle="Threshold line at 25 minutes", caption="Figure X") +
   theme(legend.position = "none", plot.title=element_text(hjust = 0.5, size=16), plot.subtitle = element_text(hjust=0.5, size=14), plot.caption = element_text(hjust = 0.95))
 ```
+
+Additionally, we filtered out 1 mixed-handed participant, since their data does not fit into our hypotheses, however we wanted to include the option in our post-experiment survey to not classify data incorrectly. We made this decision after submitting the preregistration report, but think this exclusion follows naturally from our hypotheses, since they only specify to use data from either left- or right-handed participants or both.
+
 
 ## Data analysis
 We used `r cite_r("r-references.bib")` for all our analyses.
