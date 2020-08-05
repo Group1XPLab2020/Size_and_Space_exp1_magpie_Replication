@@ -6,7 +6,7 @@ output:
 <center> <h1>Conceptual Replication of "Compatibility between Physical Stimulus Size and Left-right Responses: Small is Left and Large is Right"</h1> </center>
 <br>
 <center> <h3>Alexander Prochnow, Paul Jänsch, Pia Stermann and Ludger Masch</h3> </center>
-<center> <h5>Universität Osnabrück</h5> </center>
+<center> <h5>University of Osnabrück</h5> </center>
 <br>
 <br>
 
@@ -133,4 +133,5 @@ During the training phases participants accustomed to the task, specifically to 
 The order in which individual trials are presented in the training and experimental phases is determined uniformly at random and on the fly for each participant.
 <br> 
 All experimental trials were structured as follows. Each trial started with the presentation of a fixation point (a small black "x" sign) for 1000 ms in the center of the screen. Afterwards one of the two stimulus objects were displayed until a keypress (experimental blocks) or button click (intermediate block) occurred. In the experimental blocks, participants responded by pressing the left “q” key or the right “p” key on their keyboard. Participants should operate the left key (“q”) with the index finger of their left hand and the right key (“p”) with the index finger of their right hand. In the intermediate task, participants responded by clicking on the “circle” or “triangle” button at the bottom the screen. A correct response with a response time below 2000 ms after stimulus presentation was followed by a blank screen for 1500 ms. If the “q” or the “p” key was pressed after the maximum response period of 2000 ms, a corresponding error message (precisely: “Try to respond more quickly!”) was shown for 1500 ms in black color. In the intermediate block however each of the trials had to be initiated by clicking on a "start" button in the middle of the screen. In the main experimental blocks the next trial started automatically after the "p" or "q" key was pressed. Finally, the experiment terminated with a post-experiment survey asking participants for their preferred handedness (participants could choose between “right-handed” (default option), “left-handed” and “no preference”) and to optionally supply socio-demographic information (age, gender, level of education, native languages, whether there were any technical issues experienced during the experiment). Participants were able to leave comments on the experiment by entering them in a text field.
+
 
