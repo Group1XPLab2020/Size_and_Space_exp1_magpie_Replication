@@ -108,9 +108,9 @@ raw_data %>%
   filter(Handedness=="mixed-handedness") %>% 
   pull(submission_id) %>% unique
 
-below25 <- function(val) {
+below <- function(threshold, val) {
   return(map_lgl(val, function(input) {
-    if(input<25) return(TRUE) else return(FALSE)
+    if(input<threshold) return(TRUE) else return(FALSE)
   }))
 }
 
@@ -118,7 +118,7 @@ below25 <- function(val) {
 timeData <- raw_data %>% 
   select(timeSpent) %>% 
   unique %>% 
-  mutate(below25=below25(timeSpent))
+  mutate(below25=below(25, timeSpent))
 
 timeData %>% 
   ggplot(aes(x=seq(1,72,1),y=timeSpent)) + 
@@ -185,6 +185,62 @@ age_data %>%
   geom_histogram(binwidth = 0.5) +
   ggtitle("Age distribution") +
   theme(plot.title = element_text(hjust = 0.5))
+
+base_data <- raw_data %>% 
+  filter(trial_type=="experimental_trials_compatible" | trial_type=="experimental_trials_incompatible") %>% 
+  filter(correctness==1) %>% 
+  filter(timeSpent<25) %>% 
+  filter(Handedness!="mixed-handedness")
+
+RT_range <- function(val) {
+  return(map_lgl(val, function(v) {
+    if(v>100 & v<1500) return(TRUE) else return(FALSE)
+  }))
+}
+
+base_data$in_range <- base_data$RT %>% 
+  RT_range()
+
+n_in_range <- base_data %>% 
+  group_by(in_range) %>% 
+  count %>% 
+  pivot_wider(names_from = in_range, values_from = n)
+
+
+
+base_data %>% 
+  ggplot(aes(x=age, y=RT, color=in_range)) + 
+  geom_point() + 
+  labs(title="RT by Age", subtitle=str_c("Filtered out ", n_in_range$"FALSE", ", Kept ", n_in_range$"TRUE"))
+
+age_count <- base_data %>% 
+  group_by(age) %>% 
+  select(age, submission_id) %>% 
+  unique %>% 
+  count
+# examples for meanRT by Age:
+meanRT_summary <- base_data %>% 
+  group_by(age) %>% 
+  summarize(meanRT=mean(RT))
+# suggestion1
+meanRT_summary %>% 
+  merge(age_count) %>% 
+  ggplot(aes(x=age, y=meanRT)) + 
+  geom_line() +
+  geom_point(aes(color=n)) +
+  labs(title="Mean Reaction Time by Age", subtitle="n indicates number of participants of that age") + 
+  theme(plot.title = element_text(hjust = 0.5), plot.subtitle=element_text(hjust = 0.5)) # center titles
+
+# suggestion2
+base_data %>% 
+  ggplot(aes(x=age, y=RT), group=age) +
+  geom_point(alpha=0.05) +
+  ylim(100, 1500) +
+  geom_line(data=meanRT_summary, mapping=aes(x=age, y=meanRT), color="orange") +
+  labs(title="RT of all experimental trials and Mean RT by Age") +
+  annotate("text", x=30, y=650, label="meanRT", size=3) + 
+  annotate("rect", xmin=28, xmax=32, ymin=620, ymax=680, alpha=0.1, color="orange")
+
 ```
 
 
@@ -194,7 +250,12 @@ age_data %>%
 
 data <- raw_data %>%
   # filter out test trials and distraction task
-  filter(trial_type=="experimental_trials_compatible" | trial_type=="experimental_trials_incompatible") %>% 
+  filter(trial_type=="experimental_trials_compatible" | trial_type=="experimental_trials_incompatible") %>%
+  # filter out mixed-handed participants (1 participant)
+  filter(Handedness!="mixed-handedness") %>% 
+  # filter out participants that spent 25 minutes or more on the experiment
+  # (3 participants: 42.1min, 142.49min, 245.54min)
+  filter(timeSpent<25) %>% 
   # filter out incorrect responses
   filter(correctness==1) %>% 
   # filter out reaction times below 100ms and above 1500ms
