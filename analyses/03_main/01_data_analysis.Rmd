@@ -37,7 +37,7 @@ scale_fill_discrete <- function(...) {
 } 
 ```
 
-# Analysis experiment 1
+# Analysis main experiment
 
 ## Import data
 
@@ -47,6 +47,7 @@ raw_data <- read.csv('../../data/03_main/results_169_main_Size_and_Space_exp1_re
 glimpse(raw_data)
 ```
 
+<<<<<<< HEAD
 ## Optional data summary
 
 ```{r}
@@ -105,13 +106,15 @@ raw_data %>%
   count
 ```
 
+=======
+>>>>>>> 338558fcbca2427e21d8fb14466fe9328ad935f4
 ## Preprocessing
 
 ```{r}
 
 data <- raw_data %>%
   # filter out test trials and distraction task
-  filter(trial_type=="experimental_trials_compatible" | trial_type=="experimental_trials_incompatible") %>% 
+  filter(trial_type=="experimental_trials_compatible" | trial_type=="experimental_trials_incompatible") %>%
   # filter out incorrect responses
   filter(correctness==1) %>% 
   # filter out reaction times below 100ms and above 1500ms
@@ -119,9 +122,10 @@ data <- raw_data %>%
   filter(RT<=1500) %>% 
   # log-transform reaction time
   mutate(logRT = log(RT)) %>% 
-  # filter out participants who spent more than 25min on the entire experiment (post-prereg decision)
-  filter(timeSpent <= 25) %>% 
-  # filter out participants with mixed-handedness (post-prereg decision)
+  # filter out participants that spent 25 minutes or more on the experiment
+  # (3 participants: 42.1min, 142.49min, 245.54min) (post-prereg decision)
+  filter(timeSpent < 25) %>% 
+  # filter out mixed-handed participants (1 participant) (post-prereg decision)
   filter(Handedness != "mixed-handedness") %>% 
   # select only factors important for further study
   select(submission_id, trial_type, trial_number, key_pressed, Response, correctness, RT, logRT, Mapping, expected, Handedness) %>% 
