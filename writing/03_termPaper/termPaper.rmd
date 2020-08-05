@@ -24,6 +24,12 @@ library(aida)
 
 library(brms)
 
+library(broom)
+
+library(knitr)
+
+library(papaja)
+
 # use the aida-theme for plotting
 theme_set(theme_aida())
 
@@ -134,4 +140,151 @@ The order in which individual trials are presented in the training and experimen
 <br> 
 All experimental trials were structured as follows. Each trial started with the presentation of a fixation point (a small black "x" sign) for 1000 ms in the center of the screen. Afterwards one of the two stimulus objects were displayed until a keypress (experimental blocks) or button click (intermediate block) occurred. In the experimental blocks, participants responded by pressing the left “q” key or the right “p” key on their keyboard. Participants should operate the left key (“q”) with the index finger of their left hand and the right key (“p”) with the index finger of their right hand. In the intermediate task, participants responded by clicking on the “circle” or “triangle” button at the bottom the screen. A correct response with a response time below 2000 ms after stimulus presentation was followed by a blank screen for 1500 ms. If the “q” or the “p” key was pressed after the maximum response period of 2000 ms, a corresponding error message (precisely: “Try to respond more quickly!”) was shown for 1500 ms in black color. In the intermediate block however each of the trials had to be initiated by clicking on a "start" button in the middle of the screen. In the main experimental blocks the next trial started automatically after the "p" or "q" key was pressed. Finally, the experiment terminated with a post-experiment survey asking participants for their preferred handedness (participants could choose between “right-handed” (default option), “left-handed” and “no preference”) and to optionally supply socio-demographic information (age, gender, level of education, native languages, whether there were any technical issues experienced during the experiment). Participants were able to leave comments on the experiment by entering them in a text field.
 
+
+<h4>Results</h4>
+
+When setting a random seed of 42 our analysis script yields the following results for our hypotheses.
+
+```{r, echo=F}
+
+raw_data <- read.csv('../../data/03_main/results_169_main_Size_and_Space_exp1_replication_Group1XPLab2020.csv')
+
+set.seed(42)
+
+data <- raw_data %>%
+  # filter out test trials and distraction task
+  filter(trial_type=="experimental_trials_compatible" | trial_type=="experimental_trials_incompatible") %>%
+  # filter out incorrect responses
+  filter(correctness==1) %>% 
+  # filter out reaction times below 100ms and above 1500ms
+  filter(RT>=100) %>% 
+  filter(RT<=1500) %>% 
+  # log-transform reaction time
+  mutate(logRT = log(RT)) %>% 
+  # filter out participants that spent 25 minutes or more on the experiment
+  # (3 participants: 42.1min, 142.49min, 245.54min) (post-prereg decision)
+  filter(timeSpent < 25) %>% 
+  # filter out mixed-handed participants (1 participant) (post-prereg decision)
+  filter(Handedness != "mixed-handedness") %>% 
+  # select only factors important for further study
+  select(submission_id, trial_type, trial_number, key_pressed, Response, correctness, RT, logRT, Mapping, expected, Handedness) %>% 
+  # rename participant column
+  rename(Participant=submission_id)
+
+# extract data coming from right-handed participants only
+data_right <- data %>% 
+  filter(Handedness == "right-handed")
+
+# extract data coming from left-handed participants only
+data_left <- data %>% 
+  filter(Handedness == "left-handed")
+
+
+# create dataset which contains the same number of right- and left-handed participants (for hypothesis 7): 
+
+# number of left-handed participants
+n_left <- data_left %>%
+  select(Participant) %>% 
+  unique() %>% 
+  count() %>% 
+  as.numeric()
+
+# number of participants
+n <- data %>%
+  select(Participant) %>% 
+  unique() %>% 
+  count() %>% 
+  as.numeric()
+
+# select n_left random right-handed participants
+rnd_slice <- sample(1:(n-n_left), n_left, replace = F)
+
+selected_right_participants <- data_right %>%
+  select(Participant) %>% 
+  unique() %>% 
+  slice(rnd_slice) %>% 
+  as.list()
+
+# merge the n_left right-handed participants and the n_left left-handed participants
+data_both <- data %>% filter(Participant == -1)
+
+for (p in unlist(selected_right_participants)){
+  data_both <- rbind(data_both, data %>% filter(Participant == p))
+}
+
+data_both <- rbind(data_both, data_left)
+
+# create brm to check for hypotheses 1-3 (right-handed participants)
+model_right <- brm(
+  formula = logRT ~ Mapping * Response +
+           (Response || Participant),
+  data = data_right,
+  family = "student",
+  seed = 42
+  
+)
+
+# create brm to check for hypotheses 4-6 (left-handed participants)
+model_left <- brm(
+  formula = logRT ~ Mapping * Response +
+           (Response || Participant),
+  data = data_left,
+  family = "student",
+  seed = 42
+)
+
+# create brm to check for hypothesis 7
+model_both <- brm(
+  formula = logRT ~ Mapping * Handedness +
+           (1 || Participant),
+  data = data_both,
+  family = "student",
+  seed = 42
+)
+
+# H1: Right-handed participants response times' for right-hand responses are faster to the larger stimulus than to the smaller stimulus.
+h1 <- hypothesis(model_right, "exp(Intercept + Responseright) < exp(Intercept + Mappingincompatible + Responseright + Mappingincompatible:Responseright)")
+print(h1, digits = 4)
+
+# H2: Right-handed participants left-hand responses' are faster to the smaller stimulus than to the larger stimulus.
+h2 <- hypothesis(model_right, "exp(Intercept) < exp(Intercept + Mappingincompatible)")
+print(h2, digits = 4)
+
+# H3: The stimulus size – response location compatibility effect in right-handed participants is larger for right-hand responses than for left-hand responses.
+h3 <- hypothesis(model_right, "exp(Intercept + Mappingincompatible + Responseright + Mappingincompatible:Responseright) - exp(Intercept + Responseright) > exp(Intercept + Mappingincompatible) - exp(Intercept)")
+print(h3, digits = 4)
+
+# H4: Left-handed participants response times' for left-hand responses are faster to the larger stimulus than to the smaller stimulus.
+h4 <- hypothesis(model_left, "exp(Intercept + Mappingincompatible) < exp(Intercept)")
+print(h4, digits = 4)
+
+# H5: Left-handed participants response times' for right-hand responses are faster to the smaller stimulus than to the larger stimulus.
+h5 <- hypothesis(model_left, "exp(Intercept + Mappingincompatible + Responseright + Mappingincompatible:Responseright) < exp(Intercept + Responseright)")
+print(h5, digits = 4)
+
+# H6: The stimulus size – response location compatibility effect in left-handed participants is larger for left-hand responses than for right-hand responses.
+h6 <- hypothesis(model_left, "exp(Intercept) - exp(Intercept + Mappingincompatible) > exp(Intercept + Responseright) - exp(Intercept + Mappingincompatible + Responseright + Mappingincompatible:Responseright)")
+print(h6, digits = 4)
+
+# H7: The stimulus size- response location compatibility effect is larger for right-handed compared to left-handed people. I.e., the absolute difference between response times in the compatible condition and response times in the incompatible condition is larger for right-handed compared to left-handed people.
+h7 <- hypothesis(model_both, "abs(exp(Intercept + Mappingincompatible) - exp(Intercept)) < abs(exp(Intercept + Mappingincompatible + HandednessrightMhanded + Mappingincompatible:HandednessrightMhanded) - exp(Intercept + HandednessrightMhanded))")
+print(h7, digits = 4)
+
+
+```
+
+```{r}
+
+h_testing <- tibble(Hypothesis = c(1,2,3,4,5,6,7),
+       Bayes_factor = c(h1$hypothesis$Evid.Ratio,h2$hypothesis$Evid.Ratio,h3$hypothesis$Evid.Ratio,h4$hypothesis$Evid.Ratio,h5$hypothesis$Evid.Ratio,h6$hypothesis$Evid.Ratio,h7$hypothesis$Evid.Ratio),
+       Post_prob = c(h1$hypothesis$Post.Prob,h2$hypothesis$Post.Prob,h3$hypothesis$Post.Prob,h4$hypothesis$Post.Prob,h5$hypothesis$Post.Prob,h6$hypothesis$Post.Prob,h7$hypothesis$Post.Prob)
+       )
+
+apa_table(h_testing, caption = "Results of hypothesis testing"
+, note = "For each hypothesis the respective Bayes factor and posterior probability is displayed."
+)
+
+h_testing
+
+```
 

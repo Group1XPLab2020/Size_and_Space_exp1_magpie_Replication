@@ -19,6 +19,9 @@ library(aida)
 
 library(brms)
 
+# set random seed to make results reproducible
+set.seed(42)
+
 # use the aida-theme for plotting
 theme_set(theme_aida())
 
@@ -151,7 +154,9 @@ model_right <- brm(
   formula = logRT ~ Mapping * Response +
            (Response || Participant),
   data = data_right,
-  family = "student"
+  family = "student",
+  seed = 42
+  
 )
 
 # create brm to check for hypotheses 4-6 (left-handed participants)
@@ -159,7 +164,8 @@ model_left <- brm(
   formula = logRT ~ Mapping * Response +
            (Response || Participant),
   data = data_left,
-  family = "student"
+  family = "student",
+  seed = 42
 )
 
 # create brm to check for hypothesis 7
@@ -167,7 +173,8 @@ model_both <- brm(
   formula = logRT ~ Mapping * Handedness +
            (1 || Participant),
   data = data_both,
-  family = "student"
+  family = "student",
+  seed = 42
 )
 
 ```
