@@ -47,67 +47,6 @@ raw_data <- read.csv('../../data/03_main/results_169_main_Size_and_Space_exp1_re
 glimpse(raw_data)
 ```
 
-<<<<<<< HEAD
-## Optional data summary
-
-```{r}
-# comments
-raw_data %>% 
-  pull(comments) %>% 
-  unique
-
-# age statistics
-raw_data %>% 
-  select(age) %>% 
-  summarize(minAge = min(age),
-            meanAge = mean(age),
-            maxAge = max(age))
-
-# languages
-raw_data %>% 
-  pull(languages) %>% 
-  unique
-
-# number of participants reporting technical issues
-raw_data %>%
-  filter(technical_issues=="Yes") %>% 
-  select(submission_id) %>% 
-  unique %>% 
-  count
-
-# comments of technical issue participants
-raw_data %>% 
-  filter(technical_issues == "Yes") %>% 
-  pull(comments) %>% 
-  unique()
-
-# gender
-raw_data %>% 
-  group_by(submission_id) %>% 
-  select(gender) %>% 
-  unique %>% 
-  group_by(gender) %>% 
-  count
-
-# education
-#raw_data %>% 
-#  group_by(submission_id) %>% 
-#  select(education) %>% 
-#  unique %>% 
-#  group_by(education) %>% 
-#  count
-
-# handedness
-raw_data %>% 
-  group_by(submission_id) %>% 
-  select(Handedness) %>% 
-  unique %>% 
-  group_by(Handedness) %>% 
-  count
-```
-
-=======
->>>>>>> 338558fcbca2427e21d8fb14466fe9328ad935f4
 ## Preprocessing
 
 ```{r}
