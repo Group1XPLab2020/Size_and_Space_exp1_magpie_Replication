@@ -20,7 +20,8 @@ library(aida)
 library(brms)
 
 # set random seed to make results reproducible
-set.seed(42)
+seed <- 42
+set.seed(seed)
 
 # use the aida-theme for plotting
 theme_set(theme_aida())
@@ -155,7 +156,7 @@ model_right <- brm(
            (Response || Participant),
   data = data_right,
   family = "student",
-  seed = 42
+  seed = seed
   
 )
 
@@ -165,7 +166,7 @@ model_left <- brm(
            (Response || Participant),
   data = data_left,
   family = "student",
-  seed = 42
+  seed = seed
 )
 
 # create brm to check for hypothesis 7
@@ -174,7 +175,7 @@ model_both <- brm(
            (1 || Participant),
   data = data_both,
   family = "student",
-  seed = 42
+  seed = seed
 )
 
 ```
@@ -228,16 +229,17 @@ print(h6, digits = 4)
 h7 <- hypothesis(model_both, "abs(exp(Intercept + Mappingincompatible) - exp(Intercept)) < abs(exp(Intercept + Mappingincompatible + HandednessrightMhanded + Mappingincompatible:HandednessrightMhanded) - exp(Intercept + HandednessrightMhanded))")
 print(h7, digits = 4)
 
+# inverse hypotheses:
 
-# exploratory hypotheses for left-handed participants to quantify the effect size:
+h2_inv <- hypothesis(model_right, "exp(Intercept) > exp(Intercept + Mappingincompatible)")
 
-# H8: Left-handed participants left-hand responses' are faster to the smaller stimulus than to the larger stimulus
-h8 <- hypothesis(model_left, "exp(Intercept) < exp(Intercept + Mappingincompatible)")
-print(h8, digits = 4)
+h4_inv <- hypothesis(model_left, "exp(Intercept + Mappingincompatible) > exp(Intercept)")
 
-# H9: Left-handed participants response times' for right-hand responses are faster to the larger stimulus than to the smaller stimulus.
-h9 <- hypothesis(model_left, "exp(Intercept + Responseright) < exp(Intercept + Mappingincompatible + Responseright + Mappingincompatible:Responseright)")
-print(h9, digits = 4)
+h5_inv <- hypothesis(model_left, "exp(Intercept + Mappingincompatible + Responseright + Mappingincompatible:Responseright) > exp(Intercept + Responseright)")
+
+h6_inv <- hypothesis(model_left, "exp(Intercept) - exp(Intercept + Mappingincompatible) < exp(Intercept + Responseright) - exp(Intercept + Mappingincompatible + Responseright + Mappingincompatible:Responseright)")
+
+h7_inv <- hypothesis(model_both, "abs(exp(Intercept + Mappingincompatible) - exp(Intercept)) > abs(exp(Intercept + Mappingincompatible + HandednessrightMhanded + Mappingincompatible:HandednessrightMhanded) - exp(Intercept + HandednessrightMhanded))")
 
 
 ```

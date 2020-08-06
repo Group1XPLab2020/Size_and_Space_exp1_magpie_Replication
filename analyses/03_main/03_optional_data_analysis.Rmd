@@ -336,19 +336,21 @@ ggplot(data=data_agg, aes(x=Response, y=meanRT, fill=Mapping)) +
   ggtitle("Mean Reaction Time by Handedness", subtitle="Error Bars represent the Standard Error") +
   theme(plot.title = element_text(hjust = 0.5), plot.subtitle=element_text(hjust = 0.5)) # center titles
 
+# using Local Polynomial Regression Fitting (loess) to fit curves to reaction time data
 data %>% 
   filter(Handedness=="left-handed") %>% 
   ggplot(aes(x=trial_number, y=RT, color=Mapping)) +
-  geom_smooth(alpha=0.1) +
+  geom_smooth(alpha=0.1, method="loess") +
   facet_wrap(. ~ Response) +
   labs(title="Left-handed")
 
 data %>% 
   filter(Handedness=="right-handed") %>% 
   ggplot(aes(x=trial_number, y=RT, color=Mapping)) +
-  geom_smooth(alpha=0.1) +
+  geom_smooth(alpha=0.1, method="loess") +
   facet_wrap(. ~ Response) +
-  labs(title="Right-handed")
+  labs(title="Right-handed") 
+
 ```
 
 ## Inspecting mixed-handedness
