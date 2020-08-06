@@ -22,6 +22,19 @@ authornote: |
   Group 1 of the Experimental Psychology Lab class of 2020.
 
 abstract: |
+  The study is a conceptual replication of an experiment 1 from Wühr and Seegelke (2018) "Compatibility between Physical Stimulus Size and Left-right Responses: Small is Left and Large is Right". We investigate stimulus-size-horizontal-response mapping compatibility effects by means of an online experiment.
+  
+  For example, Wühr and Seegelke(2018) found that participants in their experiment 1 were faster to respond to a large stimulus object with a key that is on the right of the keyboard (e.g. "Backspace", pressed with the right hand), than with a key that is on the left of the keyboard (e.g. "Tabulator", pressed with the left hand). For small stimulus objects, they found that reaction times were numerically faster for left-hand responses than for right-hand responses. 
+  
+  The background of this study is “A theory of magnitude” (ATOM), which was proposed by Walsh (2003). The theory basically claims that there exist certain relations between the cortical representations  of “time, space and quantity”. 
+  
+  In this paper we present findings that deviate from those of Wühr and Seegelke, namely that right-handed participants (N=59) respond more slowly to a small stimulus object with their left hand than with their right. Additionally, when presented a large stimulus object the right-handed participants responded slower with the right hand to it than with the left. Further, we found a compatiblity effect as described by Wühr and Seegelke for left-handed participants (N=12).
+  
+  These results generally support ATOM, but put into question the extent of the compatibility effect, since our findings in part contradict previous findings.
+
+  TODO: Broader perspective
+  
+  GUIDE: 
   One or two sentences providing a **basic introduction** to the field,  comprehensible to a scientist in any discipline.
   
   Two to three sentences of **more detailed background**, comprehensible  to scientists in related disciplines.
@@ -196,7 +209,7 @@ age_data %>%
 
 ## Material
 
-In each trial, a visual stimulus object was presented in the center of the screen with white background. A stimulus object in the experimental block was a simple black square, which was either small (about 3 x 3 cm, depending on the size of the screen) or large (edges twice as long as those of the small stimulus, i.e. about 6 x 6 cm, depending on the size of the screen). We used information about the stimulus objects (i.e. information about how they are to be displayed concerning their form, size and position on the display) as provided by Wühr and Seegelke (2018), however we could not guarantee an exact same formatting of stimuli for each participant in terms of equal edge lengths, but only in terms of relations between edge lengths, since the size of the displayed stimulus was relative to the screen on which it was presented. The 2 different types of stimulus objects were used for training trials and main trials in both experimental blocks. Additionally to the original study we included an intermediate block which was intended as a distraction. A stimulus object in this block was either a simple black circle or a simple black triangle, both of small to intermediate size - regarding the small and large square stimulus objects’ edge lengths- in terms of the circle’s diameter or the triangle’s height.
+In each trial, a visual stimulus object was presented in the center of the screen with white background. A stimulus object in the experimental block was a simple black square, which was either small (about 3 x 3 cm, depending on the size of the screen) or large (edges twice as long as those of the small stimulus, i.e. about 6 x 6 cm, depending on the size of the screen). We used information about the stimulus objects (i.e. information about how they are to be displayed concerning their form, size and position on the display) as provided by Wühr and Seegelke (2018), however we could not guarantee an exact same formatting of stimuli for each participant in terms of equal edge lengths, but only in terms of relations between edge lengths, since the size of the displayed stimulus was relative to the screen on which it was presented. The 2 different types of stimulus objects were used for training trials and main trials in both experimental blocks. Additionally to the original study we included an intermediate block which was intended as a distraction. A stimulus object in this block was either a simple black circle or a simple black triangle, both of small to intermediate size - regarding the small and large square stimulus objects’ edge lengths- in terms of the circle’s diameter or the triangle’s height. All materials can be found in our GitHub repository under [experiment/00_materials](https://github.com/Group1XPLab2020/Size_and_Space_exp1_magpie_Replication/tree/master/experiments/00_materials).
 &nbsp;
 
 ## Procedure

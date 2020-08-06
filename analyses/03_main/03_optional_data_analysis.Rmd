@@ -336,5 +336,52 @@ ggplot(data=data_agg, aes(x=Response, y=meanRT, fill=Mapping)) +
   ggtitle("Mean Reaction Time by Handedness", subtitle="Error Bars represent the Standard Error") +
   theme(plot.title = element_text(hjust = 0.5), plot.subtitle=element_text(hjust = 0.5)) # center titles
 
+data %>% 
+  filter(Handedness=="left-handed") %>% 
+  ggplot(aes(x=trial_number, y=RT, color=Mapping)) +
+  geom_smooth(alpha=0.1) +
+  facet_wrap(. ~ Response) +
+  labs(title="Left-handed")
+
+data %>% 
+  filter(Handedness=="right-handed") %>% 
+  ggplot(aes(x=trial_number, y=RT, color=Mapping)) +
+  geom_smooth(alpha=0.1) +
+  facet_wrap(. ~ Response) +
+  labs(title="Right-handed")
+```
+
+## Inspecting mixed-handedness
+
+```{r}
+mixed_handed_data <- raw_data %>% 
+  filter(Handedness=="mixed-handedness") %>% 
+   # filter out test trials and distraction task
+  filter(trial_type=="experimental_trials_compatible" | trial_type=="experimental_trials_incompatible") %>%
+  # filter out participants that spent 25 minutes or more on the experiment
+  # (3 participants: 42.1min, 142.49min, 245.54min)
+  filter(timeSpent<25) %>% 
+  # filter out incorrect responses
+  filter(correctness==1) %>% 
+  # filter out reaction times below 100ms and above 1500ms
+  filter(RT>=100) %>% 
+  filter(RT<=1500) %>% 
+  # select only factors important for further study
+  select(submission_id, trial_type, trial_number, key_pressed, Response, correctness, RT, Mapping, expected, Handedness) %>% 
+  # rename participant column
+  rename(Participant=submission_id)
+
+mixed_handed_summary <- mixed_handed_data %>% 
+  group_by(trial_type, Response) %>% 
+  summarize(meanRT=mean(RT),
+            medRT=median(RT))
+
+mixed_handed_data %>% 
+  ggplot(aes(x=trial_number, y=RT, color=trial_type)) +
+  geom_point() +
+  geom_line() +
+  geom_hline(data=mixed_handed_summary, aes(yintercept=medRT, color=trial_type), linetype="dashed") +
+  labs(title="Reaction Time accross experimental trials", subtitle="separate for both conditions, dashed lines signifying medianRT per condition") +
+  facet_wrap(. ~ Response)
 ```
 
