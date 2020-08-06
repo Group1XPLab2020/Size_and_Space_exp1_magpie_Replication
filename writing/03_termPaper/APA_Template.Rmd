@@ -2,7 +2,7 @@
 title             : "Conceptual Replication of \"Compatibility between Physical Stimulus Size and Left-right Responses: Small is Left and Large is Right\""
 shorttitle        : "Conceptual Replication"
 
-author: 
+author:
   - name          : "Paul Jänsch, Alexander Prochnow, Pia Stermann and Ludger Masch"
     corresponding : yes    # Define only one corresponding author
     address       : "Osnabrück"
@@ -22,37 +22,37 @@ authornote: |
   Group 1 of the Experimental Psychology Lab class of 2020.
 
 abstract: |
-  The study is a conceptual replication of an experiment 1 from Wühr and Seegelke (2018) "Compatibility between Physical Stimulus Size and Left-right Responses: Small is Left and Large is Right". We investigate stimulus-size-horizontal-response mapping compatibility effects by means of an online experiment.
-  
-  For example, Wühr and Seegelke(2018) found that participants in their experiment 1 were faster to respond to a large stimulus object with a key that is on the right of the keyboard (e.g. "Backspace", pressed with the right hand), than with a key that is on the left of the keyboard (e.g. "Tabulator", pressed with the left hand). For small stimulus objects, they found that reaction times were numerically faster for left-hand responses than for right-hand responses. 
-  
-  The background of this study is “A theory of magnitude” (ATOM), which was proposed by Walsh (2003). The theory basically claims that there exist certain relations between the cortical representations  of “time, space and quantity”. 
-  
-  In this paper we present findings that deviate from those of Wühr and Seegelke, namely that right-handed participants (N=59) respond more slowly to a small stimulus object with their left hand than with their right. Additionally, when presented a large stimulus object the right-handed participants responded slower with the right hand to it than with the left. Further, we found a compatiblity effect as described by Wühr and Seegelke for left-handed participants (N=12).
-  
+  The study is a conceptual replication of experiment 1 from @Wuehr_Segeelke "Compatibility between Physical Stimulus Size and Left-right Responses: Small is Left and Large is Right". We investigate stimulus-size-horizontal-response mapping compatibility effects by means of an online experiment.
+ 
+  For example, @Wuehr_Segeelke found that participants in their experiment 1 were faster to respond to a large stimulus object with a key that is on the right of the keyboard (e.g. "Backspace", pressed with the right hand), than with a key that is on the left of the keyboard (e.g. "Tabulator", pressed with the left hand). For small stimulus objects, they found that reaction times were numerically faster for left-hand responses than for right-hand responses.
+ 
+  The background of their study is “A theory of magnitude” (ATOM), which was proposed by @Walsh. The theory basically claims that there exist certain relations between the cortical representations  of “time, space and quantity”.
+ 
+  In this paper we present findings that deviate from those of @Wuehr_Segeelke, in that right-handed participants (N=57) in our study responded more slowly to a small stimulus object with their left hand than to a large stimulus object. Additionally, when presented with a large stimulus object, right-handed participants responded slower with the right hand than with the left hand. Remarkably, results from our study indicate a compatibility effect as described by @Wuehr_Segeelke for left-handed participants (N=11) rather than for right-handed participants.
+ 
   These results generally support ATOM, but put into question the extent of the compatibility effect, since our findings in part contradict previous findings.
 
   TODO: Broader perspective
-  
-  GUIDE: 
+ 
+  GUIDE:
   One or two sentences providing a **basic introduction** to the field,  comprehensible to a scientist in any discipline.
-  
+ 
   Two to three sentences of **more detailed background**, comprehensible  to scientists in related disciplines.
-  
+ 
   One sentence clearly stating the **general problem** being addressed by  this particular study.
-  
+ 
   One sentence summarizing the main result (with the words "**here we show**" or their equivalent).
-  
+ 
   Two or three sentences explaining what the **main result** reveals in direct comparison to what was thought to be the case previously, or how the  main result adds to previous knowledge.
-  
+ 
   One or two sentences to put the results into a more **general context**.
-  
+ 
   Two or three sentences to provide a **broader perspective**, readily comprehensible to a scientist in any discipline.
-  
+ 
   pne two
-  
+ 
   <!-- https://tinyurl.com/ybremelq -->
-  
+ 
 keywords          : "ATOM; compatibility; stimulus size; response location"
 wordcount         : "X"
 
@@ -111,7 +111,7 @@ scale_colour_discrete <- function(...) {
 }
 scale_fill_discrete <- function(...) {
    scale_fill_manual(..., values = project_colors)
-} 
+}
 ```
 
 ```{r analysis-preferences}
@@ -119,13 +119,20 @@ scale_fill_discrete <- function(...) {
 set.seed(42)
 knitr::opts_chunk$set(cache.extra = knitr::rand_seed)
 ```
-ATOM ("A theory of magnitude") is a theory proposed by @Walsh, which basically assumes a generalized magnitude-processing system in the brain where relations between the cortical representations of "time, space and quantity" exist. The theory predicts that if there were such relations then there must be interference and congruency effects in experimental research investigating stimulus-response tendencies comprising different numerical, temporal or spatial properties. <br>
-Many studies have investigated different aspects and proposals of this theory in terms of Stimulus-response (S-R) compatibility, where S-R compatibility refers to how “natural” it is for a certain required response (or action) to follow a given stimulus type. Typically, such compatibility effects are investigated by comparing reaction times for a required action or response in experimental tasks with a specifically defined Stimulus-Response mapping that is varied within the experiment. In other words response times are faster in the compatible Stimulus-Response mapping compared to the incompatible Stimulus-Response mapping. For example @Dehaene_1990 found compatibility effects between numerical size and horizontal response location, which @Dehaene_1993 later coined as “Spatial-Numerical Association of Response Codes” (SNARC) effect. The SNARC effect is interpreted as a spatial mapping of numbers to horizontal locations. The study of @Sellaro also gave rise to a SNARC-like effect, the results showed typical compatibility effects, namely that responses with the left hand were faster when the target was a small-sized entity and responses with the right hand were faster for large-sized entities. <br>
-In 2011, @Ren have also analogously investigated the relationship between physical stimulus size and horizontal response location. Their results show similar compatibility effects of stimulus size and horizontal response location, but only for right hand responses. In 2018, @Wuehr_Segeelke attempted a conceptual replication and extension of this study. They claimed that their results indicate the existence of a general magnitude code, as proposed in ATOM in that we might intrinsically associate small objects with the left side and large objects with the right. <br>
-In their experiment, subjects were presented with "small" or "large" stimulus objects (squares) and were required to judge their size as "small" or "large". The keys for subjects to communicate these judgments were mapped to either left- or right-hand responses and these mappings were switched once within the experiment. @Wuehr_Segeelke found, that participants were faster to respond to a large stimulus object with a key that is on the right of the keyboard (e.g. "Backspace", pressed with the right hand), than with a key that is on the left of the keyboard (e.g. "Tabulator", pressed with the left hand). For small stimulus objects, they found that reaction times were numerically faster for left-hand responses than for right-hand responses. <br>
-For participants to judge whether the stimulus is a small or large object, ATOM would propose that subjects need to mentally activate an internal representation of size and the corresponding spatial response mapping in order to generate an action as response according to their judgment about stimulus size, and that these representations are linked. @Ren and @Wuehr_Segeelke showed that stimulus size and horizontal response location indeed exhibit compatibility effects, which can be regarded as evidence for this sub-aspect of ATOM. They found that the horizontal response mapping (key press with either left or right hand) to judgments about stimuli of different size influences response behavior and matters for success and swiftness of judgments of ‘small’ or ‘large’ stimulus objects. <br>
-We here aimed to assess the findings of @Wuehr_Segeelke via a conceptual replication of the first experiment. Because the compatibility effect was only shown for right-handed participants here the question remained if we can also find this or another effect in left-handed participants. So we extended the study by also recruiting and separately testing left-handed participants. In our experiment a simple black square, which could be either large or small, was presented in each trial. The participants had to decide with a keypress whether the displayed square was large or small. The reaction time was measured from stimulus onset until the keypress occurred. Our hypotheses were based on the results of @Wuer_Segeelke that small stimuli are associated with left-hand responses, whereas large stimuli are associated with right-hand responses. We sought to replicate similar stimulus size - response location compatibility effects as those reported by @Wuehr_Segeelke, that means we wanted to find out whether different stimulus-response mapping conditions have an effect on participant's reaction time to a specific type of stimulus (in this case large or small square). Additionally we aimed to investigate whether we can find compatibility effects in opposite direction for left-handed participants. <br>
-In particular we tested for right-handed participants if response times for right-hand responses are faster to the larger stimulus than to the smaller stimulus and similarly if response times for left-hand responses are faster to the smaller stimulus than to the larger stimulus. Furthermore we investigated if the stimulus size – response location compatibility effect is larger for right-hand responses than for left-hand responses. This would mean that the difference in response times for right-hand responses to be faster to the larger stimulus than to the smaller stimulus is larger than the difference in response times for left-hand responses to be faster to the smaller stimulus than to the larger stimulus. <br>
+ATOM ("A theory of magnitude") is a theory proposed by @Walsh, which basically assumes a generalized magnitude-processing system in the brain where relations between the cortical representations of "time, space and quantity" exist. The theory predicts that if there were such relations then there must be interference and congruency effects in experimental research investigating stimulus-response tendencies comprising different numerical, temporal or spatial properties.
+
+Many studies have investigated different aspects and proposals of this theory in terms of Stimulus-response (S-R) compatibility, where S-R compatibility refers to how “natural” it is for a certain required response (or action) to follow a given stimulus type. Typically, such compatibility effects are investigated by comparing reaction times for a required action or response in experimental tasks with a specifically defined Stimulus-Response mapping that is varied within the experiment. In other words response times are faster in the compatible Stimulus-Response mapping compared to the incompatible Stimulus-Response mapping. For example @Dehaene_1990 found compatibility effects between numerical size and horizontal response location, which @Dehaene_1993 later coined as “Spatial-Numerical Association of Response Codes” (SNARC) effect. The SNARC effect is interpreted as a spatial mapping of numbers to horizontal locations. The study of @Sellaro also gave rise to a SNARC-like effect, the results showed typical compatibility effects, namely that responses with the left hand were faster when the target was a small-sized entity and responses with the right hand were faster for large-sized entities.
+
+In 2011, @Ren have also analogously investigated the relationship between physical stimulus size and horizontal response location. Their results show similar compatibility effects of stimulus size and horizontal response location, but only for right hand responses. In 2018, @Wuehr_Segeelke attempted a conceptual replication and extension of this study. They claimed that their results indicate the existence of a general magnitude code, as proposed in ATOM in that we might intrinsically associate small objects with the left side and large objects with the right.
+
+In their experiment, subjects were presented with "small" or "large" stimulus objects (squares) and were required to judge their size as "small" or "large". The keys for subjects to communicate these judgments were mapped to either left- or right-hand responses and these mappings were switched once within the experiment. @Wuehr_Segeelke found, that participants were faster to respond to a large stimulus object with a key that is on the right of the keyboard (e.g. "Backspace", pressed with the right hand), than with a key that is on the left of the keyboard (e.g. "Tabulator", pressed with the left hand). For small stimulus objects, they found that reaction times were numerically faster for left-hand responses than for right-hand responses.
+
+For participants to judge whether the stimulus is a small or large object, ATOM would propose that subjects need to mentally activate an internal representation of size and the corresponding spatial response mapping in order to generate an action as response according to their judgment about stimulus size, and that these representations are linked. @Ren and @Wuehr_Segeelke showed that stimulus size and horizontal response location indeed exhibit compatibility effects, which can be regarded as evidence for this sub-aspect of ATOM. They found that the horizontal response mapping (key press with either left or right hand) to judgments about stimuli of different size influences response behavior and matters for success and swiftness of judgments of ‘small’ or ‘large’ stimulus objects.
+
+We here aimed to assess the findings of @Wuehr_Segeelke via a conceptual replication of the first experiment. Because the compatibility effect was only shown for right-handed participants here the question remained if we can also find this or another effect in left-handed participants. So we extended the study by also recruiting and separately testing left-handed participants. In our experiment a simple black square, which could be either large or small, was presented in each trial. The participants had to decide with a keypress whether the displayed square was large or small. The reaction time was measured from stimulus onset until the keypress occurred. Our hypotheses were based on the results of @Wuer_Segeelke that small stimuli are associated with left-hand responses, whereas large stimuli are associated with right-hand responses. We sought to replicate similar stimulus size - response location compatibility effects as those reported by @Wuehr_Segeelke, that means we wanted to find out whether different stimulus-response mapping conditions have an effect on participant's reaction time to a specific type of stimulus (in this case large or small square). Additionally we aimed to investigate whether we can find compatibility effects in opposite direction for left-handed participants.
+
+In particular we tested for right-handed participants if response times for right-hand responses are faster to the larger stimulus than to the smaller stimulus and similarly if response times for left-hand responses are faster to the smaller stimulus than to the larger stimulus. Furthermore we investigated if the stimulus size – response location compatibility effect is larger for right-hand responses than for left-hand responses. This would mean that the difference in response times for right-hand responses to be faster to the larger stimulus than to the smaller stimulus is larger than the difference in response times for left-hand responses to be faster to the smaller stimulus than to the larger stimulus.
+
 Correspondingly we tested the former hypotheses in the opposite direction for left-handed participants. In other words we assumed that the response times for left-hand responses are faster to the larger stimulus than to the smaller stimulus as well as that the response times for right-hand responses are faster to the smaller stimulus than to the larger stimulus. Analogously we hypothesized that here the stimulus size - response location compatibility effect will be larger for the left-hand responses instead of right-hand responses. In the end we compared the size of possible compatibility effects regarding people’s handedness and assumed that the stimulus size- response location compatibility effect is larger for right-handed people than for left-handed people. I.e., the absolute difference between response times in the compatible condition and response times in the incompatible condition is larger for right-handed than for left-handed people.
 
 ```{r echo=FALSE}
@@ -138,56 +145,56 @@ We report demographics of our participants, all used materials, the experimental
 ```{r echo=FALSE}
 
 # applying basic preprocessing filters to extract relevant data
-base_data <- raw_data %>% 
-  filter(trial_type=="experimental_trials_compatible" | trial_type=="experimental_trials_incompatible") %>% 
-  filter(correctness==1) %>% 
-  filter(timeSpent<25) %>% 
+base_data <- raw_data %>%
+  filter(trial_type=="experimental_trials_compatible" | trial_type=="experimental_trials_incompatible") %>%
+  filter(correctness==1) %>%
+  filter(timeSpent<25) %>%
   filter(Handedness!="mixed-handedness")
 
 # extract number of participants
-n <- raw_data %>% 
-  select(submission_id) %>% 
-  unique %>% 
+n <- raw_data %>%
+  select(submission_id) %>%
+  unique %>%
   count
 
 # gender statistics
-gender_summary <- raw_data %>% 
-  group_by(gender) %>% 
-  select(submission_id, gender) %>% 
-  unique %>% 
-  count %>% 
+gender_summary <- raw_data %>%
+  group_by(gender) %>%
+  select(submission_id, gender) %>%
+  unique %>%
+  count %>%
   pivot_wider(names_from=gender, values_from=n)
 
 # age statistics
-age_summary <- raw_data %>% 
-  select(age) %>% 
+age_summary <- raw_data %>%
+  select(age) %>%
   summarize(minAge = min(age),
             meanAge = round(mean(age), digits=2),
             maxAge = max(age))
 
-age_data <- raw_data %>% 
-  group_by(submission_id) %>% 
-  select(submission_id, age, Handedness) %>% 
+age_data <- raw_data %>%
+  group_by(submission_id) %>%
+  select(submission_id, age, Handedness) %>%
   unique
 
 # handedness statistics
-handedness_summary <- raw_data %>% 
-  group_by(Handedness) %>% 
-  select(submission_id, Handedness) %>% 
-  unique %>% 
-  count %>% 
+handedness_summary <- raw_data %>%
+  group_by(Handedness) %>%
+  select(submission_id, Handedness) %>%
+  unique %>%
+  count %>%
   pivot_wider(names_from=Handedness, values_from=n)
 
 # average time spent before preprocessing
-timeSpent_summary <- raw_data %>% 
-  select(timeSpent) %>% 
+timeSpent_summary <- raw_data %>%
+  select(timeSpent) %>%
   summarize(minTimeSpent = min(timeSpent),
             meanTimeSpent = mean(timeSpent),
             maxTimeSpent = max(timeSpent))
 
 # average time spent after preprocessing
-timeSpent_filtered_summary <- base_data %>% 
-  select(timeSpent) %>% 
+timeSpent_filtered_summary <- base_data %>%
+  select(timeSpent) %>%
   summarize(minTimeSpent = min(timeSpent),
             meanTimeSpent = mean(timeSpent),
             maxTimeSpent = max(timeSpent))
@@ -199,7 +206,7 @@ We recruited N = `r n` participants (`r gender_summary$female` woman, `r gender_
 
 ```{r}
 # age plot
-age_data %>% 
+age_data %>%
   ggplot(aes(x=age, fill=Handedness)) +
   geom_histogram(binwidth = 0.5) +
   labs(title="Age and Handedness distribution", subtitle="Data shows left-handed participants similarly distributed to right-handed participants", caption="Figure 1") +
@@ -209,30 +216,30 @@ age_data %>%
 
 ## Material
 
-In each trial, a visual stimulus object was presented in the center of the screen with white background. A stimulus object in the experimental block was a simple black square, which was either small (about 3 x 3 cm, depending on the size of the screen) or large (edges twice as long as those of the small stimulus, i.e. about 6 x 6 cm, depending on the size of the screen). We used information about the stimulus objects (i.e. information about how they are to be displayed concerning their form, size and position on the display) as provided by Wühr and Seegelke (2018), however we could not guarantee an exact same formatting of stimuli for each participant in terms of equal edge lengths, but only in terms of relations between edge lengths, since the size of the displayed stimulus was relative to the screen on which it was presented. The 2 different types of stimulus objects were used for training trials and main trials in both experimental blocks. Additionally to the original study we included an intermediate block which was intended as a distraction. A stimulus object in this block was either a simple black circle or a simple black triangle, both of small to intermediate size - regarding the small and large square stimulus objects’ edge lengths- in terms of the circle’s diameter or the triangle’s height. All materials can be found in our GitHub repository under [experiment/00_materials](https://github.com/Group1XPLab2020/Size_and_Space_exp1_magpie_Replication/tree/master/experiments/00_materials).
-&nbsp;
+In each trial, a visual stimulus object was presented in the center of the screen with white background. A stimulus object in the experimental block was a simple black square, which was either small (about 3 x 3 cm, depending on the size of the screen) or large (edges twice as long as those of the small stimulus, i.e. about 6 x 6 cm, depending on the size of the screen). We used information about the stimulus objects (i.e. information about how they are to be displayed concerning their form, size and position on the display) as provided by @Wuehr_Segeelke, however we could not guarantee an exact same formatting of stimuli for each participant in terms of equal edge lengths, but only in terms of relations between edge lengths, since the size of the displayed stimulus was relative to the screen on which it was presented. The 2 different types of stimulus objects were used for training trials and main trials in both experimental blocks. Additionally to the original study we included an intermediate block which was intended as a distraction. A stimulus object in this block was either a simple black circle or a simple black triangle, both of small to intermediate size - regarding the small and large square stimulus objects’ edge lengths- in terms of the circle’s diameter or the triangle’s height. All materials can be found in our GitHub repository under [experiment/00_materials](https://github.com/Group1XPLab2020/Size_and_Space_exp1_magpie_Replication/tree/master/experiments/00_materials).
+
 
 ## Procedure
 
 The experiment consisted of 10 parts. These parts comprised the two main experimental blocks, one for each of the two S-R mapping conditions, and one intermediate block with the distraction tasks. We varied the stimulus size - response (key) location mapping (S-R mapping) for the experimental blocks once over the course of the experiment. The order of S-R mapping conditions for the first and second experimental blocks (first = compatible – second = incompatible or first = incompatible – second = compatible) was determined experiment initially, uniformly at random once for each participant. In the compatible mapping condition, the small stimulus required a response with the left (“q”) key, whereas the large stimulus required a response with the right (“p”) key. The mapping was reversed in the incompatible mapping condition.
-<br>
+
 At the beginning of the experiment, participants were welcomed and given (not further specified) information about the general procedure, namely, that the experiment will consist of several parts, which again consist of several trials of tasks of similar structure. It was recommended to the participants to complete the whole experiment (to prevent dropouts from the beginning on), and they were given information about the approximate duration of the experiment (about 15 minutes).
-<br>
+
 More precise descriptions of the participant’s task were presented at the beginning of each block. These specific instructions included information about the sequence of events in a trial (fixation - stimulus presentation - key press or button click given the assigned S-R mapping), i.e. which keys to press for "small" or "large" stimuli (corresponding to the respective S-R mapping condition) in the experimental task blocks, or which buttons to click on for “circle” or “triangle” in the distracting task block, as well as information on whether the next part belongs to training (for the experimental blocks) or experimental phase (as in the intermediate block). Additionally, all instructions emphasized that participants should strive to optimize speed and accuracy (this was not mentioned in the original paper but seemed appropriate in this context, since a time-out occurred and an error message was displayed after the key press when participants' response time(RT) exceeded a period of 2000 ms).
-<br>
+
 After having read the initial instructions of a new experimental block, participants firstly performed a training trial phase (10 trials) before they proceeded with the main experimental trial phase for the respective S-R mapping condition(2 stimuli × 30 repetitions = 60 trials). The first experimental block was followed by written instructions about the intermediate task, in which participants were shown either a circle or a triangle and had to classify the presented stimulus as “circle” or “triangle” by clicking on the respective button at the bottom of the screen. The intermediate task had (2 stimuli × 10 repetitions =) 20 main trials. The specific number of the intermediate task’s trials was not necessarily optimal, but we decided on this as a -hopefully well - balanced compromise between effective distraction and no unnecessary prolonging of the experiment. The order in which participants were shown either of the two stimuli in the intermediate task was determined uniformly at random. After completion of the intermediate block’s trials, participants were shown written instructions of the following experimental block (similar to the initial experimental block’s instructions, only different in the description of the S-R mapping, since it was reversed here). They then performed a training block (10 trials) and an experimental block with the respective second S-R mapping (2 stimuli × 30 repetitions).
-<br>
+
 During the training phases participants accustomed to the task, specifically to the respective S-R mapping, by completing the given amount of practice trials. Practice trials differed from main trials in that participants received a short feedback message, telling them whether their answer was correct (namely: “Correct!” or “Incorrect!”).
-<br>
+
 The order in which individual trials are presented in the training and experimental phases is determined uniformly at random and on the fly for each participant.
-<br> 
+
 All experimental trials were structured as follows. Each trial started with the presentation of a fixation point (a small black "x" sign) for 1000 ms in the center of the screen. Afterwards one of the two stimulus objects were displayed until a keypress (experimental blocks) or button click (intermediate block) occurred. In the experimental blocks, participants responded by pressing the left “q” key or the right “p” key on their keyboard. Participants should operate the left key (“q”) with the index finger of their left hand and the right key (“p”) with the index finger of their right hand. In the intermediate task, participants responded by clicking on the “circle” or “triangle” button at the bottom the screen. A correct response with a response time below 2000 ms after stimulus presentation was followed by a blank screen for 1500 ms. If the “q” or the “p” key was pressed after the maximum response period of 2000 ms, a corresponding error message (precisely: “Try to respond more quickly!”) was shown for 1500 ms in black color. In the intermediate block however each of the trials had to be initiated by clicking on a "start" button in the middle of the screen. In the main experimental blocks the next trial started automatically after the "p" or "q" key was pressed. Finally, the experiment terminated with a post-experiment survey asking participants for their preferred handedness (participants could choose between “right-handed” (default option), “left-handed” and “no preference”/"mixed-handedness") and to optionally supply socio-demographic information (age, gender, native languages, whether there were any technical issues experienced during the experiment). Participants were able to leave comments on the experiment by entering them in a text field.
 
 ## Data Preparation
 
 First, we applied basic exclusions, namely only using experimental trials (not training or distractor trials) and only using trials where participants responded correctly to the stimulus by pressing the correct key. Second, we filtered out participants that responded faster than 100ms or slower than 1500ms. Third, we log transformed the reaction times for use in our Bayesian regression models. The following part will describe two data exclusions which we did not state in our preregistration report that filtered out 3 and 1 participant, respectively. We aim to be transparent with the following two decisions and hope our rationale for them is understandable despite them being made after having seen the data.
 
-Originally, our data contained 3 participants who needed drastically longer for the experiment than the average participant. We filtered out these 3 participants by choosing a threshold of 25 minutes, which these participants were well above. Figure 2 shows our rationale for choosing the threshold, as these three participants likely took a break during the experiment or performed another activity, which was not intended by our experimental design. This additional data exclusion criterion was not stated in our preregistration report, because we had not forseen this unintended effect of conducting an online experiment, however the longer break in between trial blocks might cause those participants to perform differently in the following trials. To be on the safe side we therefore excluded these participant's data from our analyses.
+Originally, our data contained 3 participants who needed drastically longer for the experiment than the average participant. We filtered out these 3 participants by choosing a threshold of 25 minutes, which these participants were well above. Figure 2 shows our rationale for choosing the threshold, as these three participants likely took a break during the experiment or performed another activity, which was not intended by our experimental design. This additional data exclusion criterion was not stated in our preregistration report, because we had not foreseen this unintended effect of conducting an online experiment, however the longer break in between trial blocks might cause those participants to perform differently in the following trials. To be on the safe side we therefore excluded these participant's data from our analyses.
 
 ```{r echo=FALSE}
 # timeSpent filtering rational plot
@@ -242,15 +249,15 @@ below <- function(threshold, val) {
   }))
 }
 
-timeData <- raw_data %>% 
-  select(timeSpent) %>% 
-  unique %>% 
+timeData <- raw_data %>%
+  select(timeSpent) %>%
+  unique %>%
   mutate(below25=below(25, timeSpent))
 
-timeData %>% 
-  ggplot(aes(x=seq(1,72,1),y=timeSpent)) + 
+timeData %>%
+  ggplot(aes(x=seq(1,72,1),y=timeSpent)) +
   geom_point(aes(color=below25)) +
-  geom_line() + 
+  geom_line() +
   xlab("Participant") +
   geom_hline(aes(yintercept=25), linetype="dashed") +
   labs(title="Time Spent with the Experiment for each Participant", subtitle="Threshold line at 25 minutes", caption="Figure 2", y="time spent in minutes") +
@@ -260,22 +267,47 @@ timeData %>%
 Additionally, we filtered out one mixed-handed participant, since their data does not fit into our hypotheses, however we wanted to include the option in our post-experiment survey to not classify data incorrectly. We made this decision after submitting the preregistration report, but think this exclusion follows naturally from our hypotheses, since they only specify to use data from either left- or right-handed participants or both.
 
 ## Data analysis
-We used `r cite_r("r-references.bib")` for all our analyses. 
+We used `r cite_r("r-references.bib")` for all our analyses.
 
 We analyzed our data with regard to the seven hypotheses we defined previously. To assess hypotheses 1-6 we defined two identical Bayesian regression models. They analyzed the influence of the factors S-R Mapping and Response separately on the (log-)Reaction Time as well as the interaction effect of S-R Mapping and Response on (log-)Reaction Time. We additionally accounted for group level variation between participants by adding random effects, namely random intercepts and slopes for the factor Response. We used the R package ‘brms’. Our first two models (model_right and model_left) were defined by the formula: <br>
 
-logRT ~ Mapping * Response + (Response || Participant) 
+logRT ~ Mapping * Response + (Response || Participant)
 
 For both models, the data is assumed to be Student-t-distributed and we did not replace the flat priors. Every other parameter of the models remained on the default setting. The models ran on the preprocessed data as described in section 22. data exclusion, however model_right was only fitted with data from right-handed
 participants, while model_left only used data from left-handed participants for fitting. The exact analysis can be found in the attached script. To assess hypothesis 7 we defined an additional model (model_both) which only slightly differed from the two previous models and was defined by the formula: <br>
 
 logRT ~ Mapping * Handedness + (1 || Participant)
 
-The handedness of the participants replaced the response location as a factor influencing (log-)Reaction time. Random effects now only comprised a random intercept. This model used as dataset containing the exact same number of left- and righthanded participants. The family again was set to Student-t and the priors were left on the default setting (flat priors). The independent, manipulated variable was the S-R Mapping with levels compatible and incompatible, the further independent variable Response with levels left and right. These factors were encoded using the default dummy/treatment coding with the group level combination “compatible” and “left” as the reference level. For Model 3, a further independent variable was the Handedness, dummy coded with reference level “righthanded”. The dependent variable was the (log-)Reaction Time.
+The handedness of the participants replaced the response location as a factor influencing (log-)Reaction time. Random effects now only comprised a random intercept. This model used as dataset containing the exact same number of left- and right-handed participants. The family again was set to Student-t and the priors were left on the default setting (flat priors). The independent, manipulated variable was the S-R Mapping with levels compatible and incompatible, the further independent variable Response with levels left and right. These factors were encoded using the default dummy/treatment coding with the group level combination “compatible” and “left” as the reference level. For Model 3, a further independent variable was the Handedness, dummy coded with reference level “right-handed”. The dependent variable was the (log-)Reaction Time.
 
 # Results
 
 # Discussion
+
+The results of the present study are in line with the hypothesis that for right-handed people, right hand responses are faster to larger stimulus objects than small ones. However (first surprise), we did not find evidence for a similar stimulus-size dependent facilitation effect for small objects and left-hand responses. Contrarily, we rather found a tendency in the opposite direction of our second hypothesis, namely that left-hand responses were faster to larger stimuli as well. Thus, our third hypothesis, namely that the effect for right-hand responses to be faster to the larger stimulus than left hand responses to be faster to the smaller stimulus is not applicable anymore. Surprisingly (second surprise), we found that for left-handed people, the results of this study do not provide evidence for a stimulus-response compatibility effect in the proposed direction, but show a rather strong effect in opposite direction, i.e. in the same direction as suggested for right-handed people. In our study, left-handed people were faster when responding to a large stimulus with the right hand than to a small stimulus. Furthermore, we could even find a tendency of left-hand responses in left-handed people to be faster to the smaller stimulus than to the larger stimulus. These results let us reject our hypotheses concerning the effect and its direction for left-handed people but would match well with our first three hypotheses which we originally proposed in order to investigate the effect for right-handed people. Moreover (third surprise), opposing to our last hypothesis about the size of the effect being larger for right- than for left-handed people, we found that the common aspect of the effect between the two groups, namely right-hand responses to be faster to larger stimuli, was apparently larger for left-handed people than for right-handed people.
+## Comparison to previous studies
+
+This pattern of results is partly consistent with the original experiment’s results from @Wuehr_Segeelke which we aimed to replicate in the present study. Specifically, we successfully replicated their finding that right-hand responses were faster to the larger stimulus than to the smaller stimulus for right-handed people. Interestingly, in the present study, results indicate that for left-handed people, the effect was even more consistent with the results of their study. Nevertheless, whereas @Wuehr_Segeelke and similarly @Sellaro in their first experiments, respectively, have found, that left-hand responses were faster to smaller visual stimulus objects than to larger visual stimulus objects, we could rather detect a tendency in the opposite direction in the present study, namely left-hand responses being faster to larger stimulus objects as well. In accordance with the findings of @Ren, @Sellaro and @Wuehr_Segeelke, we also found that the stimulus size – response location compatibility effect was larger for right-hand responses than for left-hand responses in right- and left-handed people (when disregarding the reversed direction of the effect for left-hand responses in right-handed people). Thus, the results of the present study represent a first demonstration of a facilitatory effect of large stimuli (in physical size) for left-hand as well as right-hand responses in right handed-people, contrary to the facilitatory effect of small stimuli for left-hand responses which past researchers have found [@Wuehr_Segeelke;@Ren;@ Sellaro]. Interestingly, we could find supporting evidence for their claims, that there might be an implicit association of physical size and horizontal positions in the form of shared mental representations of different physical size and left-right polarities in extension of the SNARC effect, in right-handed people, but only for left-handed people.
+
+## Theoretical implications
+
+Our findings highlight that stimulus size indeed relates to different response latencies depending on the horizontal (i.e. left or right) response location in the sense of a stimulus-response compatibility effect, but only for large stimulus objects and right(-hand) responses. Interestingly, results for left-handed participants in the present study were even more consistent with the proposals for a SNARC-like effect than for right-handed people, which were demonstrated by previous research [@Wuehr_Segeelke; @Ren; @Sellaro]. However, it is interesting that we did not detect a such specific stimulus size-response location compatibility effect for left and right responses in right-handed people as the given previous researchers. Since we found that responses for either (left or right) hand are facilitated by larger stimulus objects for right-handed participants, we would rather suggest that there is an effect of physical stimulus size on response latencies irrespective of the horizontal response location, although we indeed found supporting evidence for a SNARC-like size and space dependent compatibility effect in left-handed participants, i.e. left-hand responses tending to be faster to small stimuli and right hand responses to large stimuli. We will disregard the results of the present study for left-handed people and left hand responses to be faster to the smaller stimulus, because a larger sample size than in the present study (N = 11) would be required to detect effects with more confidence, and because left hand-responses were not significantly faster to small stimuli than to large stimuli (regarding our predefined threshold). This finding of a size-dependent response facilitation effect may be explained by the idea that large stimuli are naturally perceptually more salient than small stimuli and can thus be recognized as such faster than small stimuli, which might facilitate cognitive processes for task-dependent response generation (i.e. enabling faster action preparation and execution in response to the presented stimulus). Taken together, our findings indicate that there is no sure differential effect of physical stimulus size (small or large stimulus objects) and horizontal response location (left or right key press) in left- and right-handed people as proposed by @Wuehr_Segeelke (among others), but rather an effect of physical stimulus size on response time.
+
+## Limitations of the present study
+
+Besides our limited sample size of left-handed participants, there are some other aspects in the design of our study, that might have influenced our results and might account for the previously discussed inconsistencies with findings of research by @Wuehr_Segeelke. Firstly, we effectively had a much larger sample size (N = 57) than @Wuehr_Segeelke (N= 24), meaning that we had more than double the amount of data for right-handed participants than they had in their original study. This difference might also account for the different manifestation of the effect we observed in left-handed participants. Thus, we suggest that left-hand responses might generally not be faster to small stimuli than to large stimuli (if the sample size is large enough), since we did not find compelling evidence from our larger sample of right-handed participants, and observed no significant effect but only a tendency for left-handed participants. However, results from our study might be biased for other reasons as well. Firstly, we probably did not collect a random sample of participants as a good representation of the whole population of left- or right-handed people (irrespective of our sample’s size), since participants were mostly recruited via social media or messenger apps. Thereby, we were able to recruit only a very small subpopulation of people with possibly similar sets of characteristics (e.g. capability of understanding the experiment’s instructions (given in English), access to the required technical necessities (PC/laptop/device with manual keyboard and stable internet connection), willingness to take part in our experiment and thereby support us in our studies, …). Secondly, since we conducted our study as a browser-based experiment, technical differences and differences in the hardware used to execute the experiment between participants, as well as our inability to control for correct understanding or execution of the experiment’s instructions might have influenced the results. Thirdly, we addressed the issue of unequal number of training trials before the first and second S-R mapping condition in the original experiment by @Wuehr_Segeelke by including an intermediate distracting task in our experiment and consequently halving the number of training trials for the second experimental block, such that there were equally many training trials for both S-R mapping conditions. Yet, we cannot imagine how this deviation from the original experiment might have had critical influence on the S-R compatibility effect we aimed to replicate, given that the order of S-R mapping conditions was assigned randomly for each participant. Although we cannot rule out any possible effects of these potential confounders, it seems necessary to point out issues that may conflict with the present study’s results.
+
+## Outlook for future research directions
+
+Because our study just partly supports previous findings, it’s most important contribution may be that it raises a variety of intriguing questions for future study. Another suggestion 
+In terms of future research 
+-          Employ a discrimination task, in which participants indicate via a one sided-response with one hand only if either a small or large stimulus is shown, meaning less cognitive demand on the participants, thereby limiting confusion of stimulus judgment outcomes to keys. We find this idea especially appealing, since it would not require substantially different means of analysis as those we used in our experiment, thus making up but four experimental blocks (one for each mapping condition), possibly fewer training trials required than in the present study)
+-          Conduct study with higher numbers of left-and (similar numbers of) right-handed people
+-          Include crossed-hands condition to investigate whether the effect is related to the response side or the handedness of the person (which we did not find to modulate
+
+# Conclusion
+
+Although the generality of the current results must be established by future research, the present study has provided clear support for right hand reactions to be faster to larger stimulus objects than to smaller stimulus objects. Not only was this observed for right-handed, but also - and possibly even more strongly - for left-handed people. Having said that, we found no clear and (for left- and right-handed people) consistent evidence for the claim, that there is a mapping of small and large objects to distinct horizontal positions. Given our observation that for experimental trials in which large stimuli were presented, participants exhibited faster mean reactions times, we rather suggest a facilitatory effect of the presentation of large objects on cognitive processing, depicted by faster responses with either hand. What is important to note, is that this mostly holds for right handed-participants in our study, whereas tendencies in the results from left-handed participants rather seem to support the idea of a cognitive spatial (horizontal) mapping of size as proposed by previous researchers [@Wuehr_Segeelke; @Ren; @Sellaro]. Though, these are only tendencies. Further research in this field would be required in order to better estimate the specification of a stimulus-size dependent response-position compatibility effect, which we failed to replicate. We hope that the current research will stimulate further investigation of this area.
 
 
 \newpage
@@ -288,3 +320,5 @@ The handedness of the participants replaced the response location as a factor in
 
 <div id="refs" custom-style="Bibliography"></div>
 \endgroup
+
+
