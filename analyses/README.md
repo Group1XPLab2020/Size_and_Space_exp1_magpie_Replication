@@ -4,8 +4,6 @@ This folder contains all analysis scripts for preprocessing, plotting and summar
 - 02_pilot
     - pilot_analysis.Rmd
     - power_analysis.Rmd
-    - results_165_pilot_Size_and_Space_exp1_replication_Group1XPLab2020.csv
-    - sample_results.csv
 - 03_main
     - 01_data_analysis.Rmd
     - 02_power_analysis.Rmd
