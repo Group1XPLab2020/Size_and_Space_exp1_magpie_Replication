@@ -103,7 +103,7 @@ In particular, we tested for right-handed people, if response times for right-ha
 Correspondingly, we tested the former hypotheses in opposite direction for left-handed people. In other words, we assumed that the response times for left-hand responses are faster to the larger stimulus than to the smaller stimulus as well as that the response times for right-hand responses are faster to the smaller stimulus than to the larger stimulus. Analogously we hypothesized that here the stimulus size - response location compatibility effect will be larger for the left-hand responses instead of right-hand responses. Finally, we seeked to compared the size of possible compatibility effects regarding people’s handedness and assumed that the stimulus size - response location compatibility effect would be larger for right-handed people than for left-handed people, i.e. the absolute difference between response times in the compatible condition and response times in the incompatible condition would be larger for right-handed than for left-handed people.
 
 ```{r echo=FALSE}
-raw_data <- read.csv('../../data/03_main/results_169_main_Size_and_Space_exp1_replication_Group1XPLab2020.csv')
+raw_data <- read.csv('../../data/03_main/01_raw_data.csv')
 ```
 
 # Methods
