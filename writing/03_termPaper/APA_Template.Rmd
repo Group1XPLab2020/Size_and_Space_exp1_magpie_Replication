@@ -3,23 +3,23 @@ title             : "Conceptual Replication of \"Compatibility between Physical 
 shorttitle        : "Conceptual Replication"
 
 author: 
-  - name          : "Alexander Prochnow, Paul Jänsch, Pia Stermann and Ludger Masch"
+  - name          : "Paul Jänsch, Alexander Prochnow, Pia Stermann and Ludger Masch"
     corresponding : yes    # Define only one corresponding author
-    address       : "Postal address"
+    address       : "Osnabrück"
     email         : "my@email.com"
-    role:         # Contributorship roles (e.g., CRediT, https://casrai.org/credit/)
+    role:         
       - Conceptualization
-      - Writing - Original Draft Preparation
-      - Writing - Review & Editing
+      - Experimental design and materials
+      - Writing - Preregistration and final report
+      - Implementation - Online experiment and statistical analyses
+      - Execution - Recruiting participants
 
 affiliation:
   - id            : ""
     institution   : "University of Osnabrück"
 
 authornote: |
-  Add complete departmental affiliations for each author here. Each new line herein must be indented, like this line.
-
-  Enter author note here.
+  Group 1 of the Experimental Psychology Lab class of 2020.
 
 abstract: |
   One or two sentences providing a **basic introduction** to the field,  comprehensible to a scientist in any discipline.
@@ -120,7 +120,7 @@ raw_data <- read.csv('../../data/03_main/results_169_main_Size_and_Space_exp1_re
 ```
 
 # Methods
-We report demographics of our participants, all used materials, the experimental procedure, all data exclusions, and all performed data analyses. <!-- 21-word solution (Simmons, Nelson & Simonsohn, 2012; retrieved from http://ssrn.com/abstract=2160588) -->
+We report demographics of our participants, all used materials, the experimental procedure, all data exclusions, and all performed data analyses.
 
 ```{r echo=FALSE}
 
@@ -189,8 +189,8 @@ We recruited N = `r n` participants (`r gender_summary$female` woman, `r gender_
 age_data %>% 
   ggplot(aes(x=age, fill=Handedness)) +
   geom_histogram(binwidth = 0.5) +
-  labs(title="Age and Handedness distribution", subtitle="Data shows a spread-out distribution of left-handed participants", caption="Figure 1") +
-  theme(plot.title=element_text(hjust = 0.5, size=16), plot.subtitle = element_text(hjust=0.5, size=14), plot.caption = element_text(hjust = 0.95))
+  labs(title="Age and Handedness distribution", subtitle="Data shows left-handed participants similarly distributed to right-handed participants", caption="Figure 1") +
+  theme(plot.title=element_text(hjust = 0.5, size=16), plot.subtitle = element_text(hjust=0.5, size=10), plot.caption = element_text(hjust = 0.95))
 ```
 
 
@@ -213,13 +213,13 @@ During the training phases participants accustomed to the task, specifically to 
 <br>
 The order in which individual trials are presented in the training and experimental phases is determined uniformly at random and on the fly for each participant.
 <br> 
-All experimental trials were structured as follows. Each trial started with the presentation of a fixation point (a small black "x" sign) for 1000 ms in the center of the screen. Afterwards one of the two stimulus objects were displayed until a keypress (experimental blocks) or button click (intermediate block) occurred. In the experimental blocks, participants responded by pressing the left “q” key or the right “p” key on their keyboard. Participants should operate the left key (“q”) with the index finger of their left hand and the right key (“p”) with the index finger of their right hand. In the intermediate task, participants responded by clicking on the “circle” or “triangle” button at the bottom the screen. A correct response with a response time below 2000 ms after stimulus presentation was followed by a blank screen for 1500 ms. If the “q” or the “p” key was pressed after the maximum response period of 2000 ms, a corresponding error message (precisely: “Try to respond more quickly!”) was shown for 1500 ms in black color. In the intermediate block however each of the trials had to be initiated by clicking on a "start" button in the middle of the screen. In the main experimental blocks the next trial started automatically after the "p" or "q" key was pressed. Finally, the experiment terminated with a post-experiment survey asking participants for their preferred handedness (participants could choose between “right-handed” (default option), “left-handed” and “no preference”) and to optionally supply socio-demographic information (age, gender, level of education, native languages, whether there were any technical issues experienced during the experiment). Participants were able to leave comments on the experiment by entering them in a text field.
+All experimental trials were structured as follows. Each trial started with the presentation of a fixation point (a small black "x" sign) for 1000 ms in the center of the screen. Afterwards one of the two stimulus objects were displayed until a keypress (experimental blocks) or button click (intermediate block) occurred. In the experimental blocks, participants responded by pressing the left “q” key or the right “p” key on their keyboard. Participants should operate the left key (“q”) with the index finger of their left hand and the right key (“p”) with the index finger of their right hand. In the intermediate task, participants responded by clicking on the “circle” or “triangle” button at the bottom the screen. A correct response with a response time below 2000 ms after stimulus presentation was followed by a blank screen for 1500 ms. If the “q” or the “p” key was pressed after the maximum response period of 2000 ms, a corresponding error message (precisely: “Try to respond more quickly!”) was shown for 1500 ms in black color. In the intermediate block however each of the trials had to be initiated by clicking on a "start" button in the middle of the screen. In the main experimental blocks the next trial started automatically after the "p" or "q" key was pressed. Finally, the experiment terminated with a post-experiment survey asking participants for their preferred handedness (participants could choose between “right-handed” (default option), “left-handed” and “no preference”/"mixed-handedness") and to optionally supply socio-demographic information (age, gender, native languages, whether there were any technical issues experienced during the experiment). Participants were able to leave comments on the experiment by entering them in a text field.
 
 ## Data Preparation
 
 First, we applied basic exclusions, namely only using experimental trials (not training or distractor trials) and only using trials where participants responded correctly to the stimulus by pressing the correct key. Second, we filtered out participants that responded faster than 100ms or slower than 1500ms. Third, we log transformed the reaction times for use in our Bayesian regression models. The following part will describe two data exclusions which we did not state in our preregistration report that filtered out 3 and 1 participant, respectively. We aim to be transparent with the following two decisions and hope our rationale for them is understandable despite them being made after having seen the data.
 
-Originally, our data contained 3 participants who needed drastically longer for the experiment than the average participant. We filtered out these 3 participants by choosing a threshold of 25 minutes, which these participants were well above. Figure X shows our rationale for choosing the threshold, as these three participants likely took a break during the experiment or performed another activity, which was not intended by our experimental design. This additional data exclusion criterion was not stated in our preregistration report, because we had not forseen this unintended effect of conducting an online experiment, however the longer break in between trial blocks might cause those participants to perform differently in the following trials. To be on the safe side we therefore excluded these participant's data from our analyses.
+Originally, our data contained 3 participants who needed drastically longer for the experiment than the average participant. We filtered out these 3 participants by choosing a threshold of 25 minutes, which these participants were well above. Figure 2 shows our rationale for choosing the threshold, as these three participants likely took a break during the experiment or performed another activity, which was not intended by our experimental design. This additional data exclusion criterion was not stated in our preregistration report, because we had not forseen this unintended effect of conducting an online experiment, however the longer break in between trial blocks might cause those participants to perform differently in the following trials. To be on the safe side we therefore excluded these participant's data from our analyses.
 
 ```{r echo=FALSE}
 # timeSpent filtering rational plot
@@ -239,9 +239,9 @@ timeData %>%
   geom_point(aes(color=below25)) +
   geom_line() + 
   xlab("Participant") +
-  geom_hline(aes(yintercept=25)) +
-  labs(title="Time Spent with the Experiment for each Participant", subtitle="Threshold line at 25 minutes", caption="Figure X") +
-  theme(legend.position = "none", plot.title=element_text(hjust = 0.5, size=16), plot.subtitle = element_text(hjust=0.5, size=14), plot.caption = element_text(hjust = 0.95))
+  geom_hline(aes(yintercept=25), linetype="dashed") +
+  labs(title="Time Spent with the Experiment for each Participant", subtitle="Threshold line at 25 minutes", caption="Figure 2", y="time spent in minutes") +
+  theme(legend.position = "none", plot.title=element_text(hjust = 0.5, size=16), plot.subtitle = element_text(hjust=0.5, size=12), plot.caption = element_text(hjust = 0.95))
 ```
 
 Additionally, we filtered out one mixed-handed participant, since their data does not fit into our hypotheses, however we wanted to include the option in our post-experiment survey to not classify data incorrectly. We made this decision after submitting the preregistration report, but think this exclusion follows naturally from our hypotheses, since they only specify to use data from either left- or right-handed participants or both.
