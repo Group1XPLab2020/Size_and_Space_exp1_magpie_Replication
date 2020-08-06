@@ -200,9 +200,11 @@ All experimental trials were structured as follows. Each trial started with the 
 
 ## Data Preparation
 
-Originally, our data contained 3 participants who needed drastically longer for the experiment than the average participant. We filtered out these 3 participants by choosing a threshold of 25 minutes, which these participants were well above. Figure X shows our rationale for choosing the threshold quite clearly, as these three participants likely took a break during the experiment or performed another activity, which was not intended by our experimental design. This additional data exclusion criterion was not stated in our preregistration report, because we had not forseen this unintended effect of conducting an online experiment, however the longer break in between trial blocks might cause those participants to perform differently in the following trials. To be on the safe side we therefore excluded these participant's data from our analyses.
+First, we applied basic exclusions, namely only using experimental trials (not training or distractor trials) and only using trials where participants responded correctly to the stimulus by pressing the correct key. Second, we filtered out participants that responded faster than 100ms or slower than 1500ms. Third, we log transformed the reaction times for use in our Bayesian regression models. The following part will describe two data exclusions which we did not state in our preregistration report that filtered out 3 and 1 participant, respectively. We aim to be transparent with the following two decisions and hope our rationale for them is understandable despite them being made after having seen the data.
 
-```{r}
+Originally, our data contained 3 participants who needed drastically longer for the experiment than the average participant. We filtered out these 3 participants by choosing a threshold of 25 minutes, which these participants were well above. Figure X shows our rationale for choosing the threshold, as these three participants likely took a break during the experiment or performed another activity, which was not intended by our experimental design. This additional data exclusion criterion was not stated in our preregistration report, because we had not forseen this unintended effect of conducting an online experiment, however the longer break in between trial blocks might cause those participants to perform differently in the following trials. To be on the safe side we therefore excluded these participant's data from our analyses.
+
+```{r echo=FALSE}
 # timeSpent filtering rational plot
 below <- function(threshold, val) {
   return(map_lgl(val, function(input) {
@@ -225,8 +227,7 @@ timeData %>%
   theme(legend.position = "none", plot.title=element_text(hjust = 0.5, size=16), plot.subtitle = element_text(hjust=0.5, size=14), plot.caption = element_text(hjust = 0.95))
 ```
 
-Additionally, we filtered out 1 mixed-handed participant, since their data does not fit into our hypotheses, however we wanted to include the option in our post-experiment survey to not classify data incorrectly. We made this decision after submitting the preregistration report, but think this exclusion follows naturally from our hypotheses, since they only specify to use data from either left- or right-handed participants or both.
-
+Additionally, we filtered out one mixed-handed participant, since their data does not fit into our hypotheses, however we wanted to include the option in our post-experiment survey to not classify data incorrectly. We made this decision after submitting the preregistration report, but think this exclusion follows naturally from our hypotheses, since they only specify to use data from either left- or right-handed participants or both.
 
 ## Data analysis
 We used `r cite_r("r-references.bib")` for all our analyses. 
