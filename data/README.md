@@ -3,6 +3,6 @@ This folder contains all files containing raw, preprocessed and derived data for
     - 01_raw_data.csv
     - 02_clean_data.csv
 - 02_pilot
-    - ...
+    - results_165_pilot_Size_and_Space_exp1_replication_Group1XPLab2020.csv
 - 03_main
     - results_169_main_Size_and_Space_exp1_replication_Group1XPLab2020.csv
