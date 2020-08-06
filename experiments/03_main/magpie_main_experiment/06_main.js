@@ -17,23 +17,23 @@ $("document").ready(function() {
         views_seq: [
             intro,
             begin_information,
-                    
+
             // 1st block:
             instructions1,
             training_trials1,
-            start_experimental_trials_instructions1, 
+            start_experimental_trials_instructions1,
             experimental_trials1,
-            
+
             // distractor task:
             distractor_task_instructions,
             _.flatten(distractor_task),
-            
+
             // 2nd block:
             instructions2,
             training_trials2,
             start_experimental_trials_instructions2,
             experimental_trials2,
-            
+
             // post-questionnaires:
             handedness_post_test,
             optional_post_test,
@@ -43,7 +43,7 @@ $("document").ready(function() {
         deploy: {
             experimentID: "169",
             serverAppURL: "https://magpie-demo.herokuapp.com/api/submit_experiment/",
-            deployMethod: "directLink", // "debug" or "directLink"
+            deployMethod: "debug", // "debug" or "directLink"
             contact_email: "aprochnow@uos.de",
             prolificURL: "https://app.prolific.ac/submissions/complete?cc=SAMPLE1234"
         },
