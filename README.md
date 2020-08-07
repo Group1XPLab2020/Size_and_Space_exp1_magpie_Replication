@@ -78,7 +78,7 @@ including a description and discussion of possible design alternatives), our pre
     - preregistrationReport.docx
     - preregistrationReport.pdf
   - 03_termPaper
-    - termPaper.rmd
+    - termPaper.Rmd
     - termPaper.pdf
     - references.bib
     
