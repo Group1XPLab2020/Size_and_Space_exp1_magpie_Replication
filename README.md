@@ -41,7 +41,7 @@ We used R for all our analyses. Analysis files we used for analysing the data fr
     - 02_power_analysis.Rmd
     - 03_optional_data_analysis.Rmd
     
-All data we obtained and analysed from the original experiment by Wühr and Seegelke, as well as from our pilot and main experiment before (`01_raw_data`) and after (`02_clean_data`) preprocessing can be accessed in `*.csv` format in the `data` folder:
+All data we obtained and analysed from the original experiment by Wühr and Seegelke, as well as from our pilot and main experiment before (`01_raw_data`) and after (`02_clean_data`) preprocessing can be accessed in `*.csv` format from the respective `data` subfolders:
 - **data**
   - 01_original
     - 01_raw_data.csv
@@ -66,15 +66,17 @@ The `notes` folder is just intended for group-intern communication of (general) 
 - **notes**
   - StimulusMaterial_tutor_feedback.txt
   
-The `writing` folder contains all documents describing our experiment/study: the experimental design paper (including a description and discussion of possible design alternatives), our preregistartion report and final paper (different formats in the respective subfolders, but of the same version).
+The `writing` folder contains all documents describing our experiment/study: the experimental design paper (
+`writing/01_experimentalDesign/experimentalDesign.pdf`,
+including a description and discussion of possible design alternatives), our preregistartion report(`writing/02_preregistrationReport/preregistrationReport.pdf`) and final paper (`writing/03_termPaper/termPaper.pdf`). Documents of different formats (`.docx`,`.pdf`,`.Rmd`) of within the respective subfolders are of the same version.
 - **writing**
   - 01_experimentalDesign
     - images
-    - replication_design.docx
-    - replication_design.pdf
-  - 02_preregistration_report
-    - preregistration_report.doc
-    - preregistration_report.pdf
+    - experimentalDesign.docx
+    - experimentalDesign.pdf
+  - 02_preregistrationReport
+    - preregistrationReport.docx
+    - preregistrationReport.pdf
   - 03_termPaper
     - termPaper.rmd
     - termPaper.pdf
