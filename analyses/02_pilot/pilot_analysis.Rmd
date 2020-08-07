@@ -42,7 +42,7 @@ scale_fill_discrete <- function(...) {
 ## Import data
 
 ```{r}
-raw_data <- read.csv('results_165_pilot_Size_and_Space_exp1_replication_Group1XPLab2020.csv')
+raw_data <- read.csv('../../data/02_pilot/01_raw_data.csv')
 glimpse(raw_data)
 ```
 
@@ -116,6 +116,10 @@ data <- raw_data %>%
   select(submission_id, trial_type, trial_number, key_pressed, Response, correctness, RT, logRT, Mapping, expected, handedness) %>% 
   # rename participant column
   rename(Participant=submission_id)
+
+write_csv(data, "../../data/02_pilot/02_clean_data.csv")
+
+
 
 # extract data coming from right-handed participants only
 data_right <- data %>% 
