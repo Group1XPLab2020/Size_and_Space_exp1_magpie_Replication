@@ -1,7 +1,6 @@
-This folder contains code used for implementing the respective experiments with \_magpie, along with participant information, stimulus material and other files needed for running the experiment orgnaized in the following way:
- - 00_materials
-    - ...
- - 01_original/stimulus_material
+# Implementation of the experiment
+This folder contains code used for implementing the respective experiments with [\_magpie](https://github.com/magpie-ea), along with stimulus materials and other files needed for running the experiment. This folder is organized in the following way:
+- 01_materials
     - ...
 - 02_pilot/magpie_pilot_experiment
     - ...
