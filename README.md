@@ -1,10 +1,10 @@
 # Magnitude perception: Small is Left and Large is Right.?
 
 ## Overview
-- Description (of the study)
-- Running the experiment (how to try out the experiment online or offline)
-- Navigating through this repository's folder structure (where to find what you are looking for)
-(- References)
+1. Description (of the study)
+2. Running the experiment (how to try out the experiment online or offline)
+3. Navigating through this repository's folder structure (where to find what you are looking for)
+4. References
 
 ## Description
 This repository contains all our R-analyses scripts, additional code, design information, data, experiment information and implementation files, notes and writing files involved in or needed for our conceptual replication study of experiment 1 by [Wühr and Seegelke (2018)](https://doi.org/10.5334/joc.19): "Compatibility between Physical Stimulus Size and Left-right Responses: Small is Left and Large is Right" / Journal of Cognition
