@@ -14,6 +14,6 @@ Here you can access our Preregistration:
      
 Find our final report here:
 - **03_termPaper**
-     - termPaper.rmd
+     - termPaper.Rmd
      - termPaper.pdf
      - references.bib
