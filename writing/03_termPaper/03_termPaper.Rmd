@@ -291,7 +291,7 @@ ggplot(data=data_agg, aes(x=Response, y=meanRT, fill=Mapping)) +
   theme(plot.title = element_text(hjust = 0.5), plot.subtitle=element_text(hjust = 0.5)) # center titles
 ```
 
-```{r, echo=FALSE}
+```{r, include=FALSE}
 # data analysis
 # seed set in knitr options in the analysis-preferences chunk
 
@@ -402,9 +402,27 @@ h7_inv <- hypothesis(model_both, "abs(exp(Intercept + Mappingincompatible) - exp
 
 ```
 
-When setting a random seed of 42 our analysis script yields the following results for our hypotheses (Table 1).
+When setting a random seed of 42 our analysis script yields the following results for our hypotheses (Table 1). Our hypotheses, as described before, are:
 
-```{r, echo=FALSE}
+(1) Response times for right-hand responses are faster to the larger stimulus than to the smaller stimulus.
+
+(2) Response times for left-hand responses are faster to the smaller stimulus than to the larger stimulus.
+
+(3) The stimulus size – response location compatibility effect is larger for right-hand responses than for left-hand responses. This means, the difference in response times for right-hand responses to be faster to the larger stimulus than to the smaller stimulus is larger than the difference in response times for left-hand responses to be faster to the smaller stimulus than to the larger stimulus. 
+
+Hypotheses (1)-(3) will be tested for right-handed participants only. Additionally, we will test the following hypotheses for left-handed participants, to investigate whether we can find a compatibility effect in opposite direction for left-handed people (opposing direction to Hypotheses (1)-(3)): 
+
+(4) Response times for left-hand responses are faster to the larger stimulus than to the smaller stimulus.
+
+(5) Response times for right-hand responses are faster to the smaller stimulus than to the larger stimulus. 
+
+(6) The stimulus size – response location compatibility effect is larger for left-hand responses than for right-hand responses. This means, the difference in response times for left-hand responses to be faster to the larger stimulus than to the smaller stimulus is larger than the difference in response times for right-hand responses to be faster to the smaller stimulus than to the larger stimulus. 
+
+Finally, we will compare the size of possible compatibility effects regarding people’s handedness under the following hypothesis: 
+
+(7) The stimulus size- response location compatibility effect is larger for right-handed than for left-handed people. I.e., the absolute difference between response times in the compatible condition and response times in the incompatible condition is larger for right-handed than for left-handed people.
+
+```{r, include=FALSE}
 
 h_testing <- tibble(Hypothesis = c("1","2", "2_inv","3","4","4_inv","5","5_inv","6", "6_inv","7","7_inv"),
        Bayes_factor = c(h1$hypothesis$Evid.Ratio,
@@ -444,13 +462,20 @@ apa_table(h_testing, digits = 4)
 A Bayes factor above our predefined threshold of 25 is interpreted as a sufficiently large support in favor of our hypotheses.
 A Bayes factor below 1 should be interpreted as negative support or support for the inverse hypothesis. The inverse hypothesis here is defined by simply switching '>' to '<' or vice versa in the equation for the hypothesis testing. The posterior probability of the inverse hypothesis is simply defined by (1 - the probability of the original hypothesis). To also quantify the Bayes factor and therefore the support for the inverse hypothesis, we will also explicitly test for the inverse hypothesis.
 
-According to these rules we can conclude the following for our hypotheses: <br>
-Hypothesis 1 receives enough support to be accepted.<br>
-Hypothesis 2 receives no support at all. The inverse of hypothesis 2 receives enough support to be accepted. We therefore conclude that right-handed participants left-hand responses' are faster to the larger stimulus than to the smaller stimulus.<br>
-Hypothesis 3 receives enough support to be accepted. However since we did not find the assumed effect for left-hand responses (H2), the result of H3 is not very useful either.<br>
-Hypothesis 4 receives not enough support to be accepted. There is stronger evidence for the inverse of hypothesis 4, however this support is not above our threshold. This means we can only report a tendency to the inverse of hypothesis 4, namely that left-handed participants response times' for left-hand responses are faster to the smaller stimulus than to the larger stimulus.<br>
-Hypothesis 5 receives no support at all. The inverse of hypothesis 5 receives enough support to be accepted. We therefore conclude that left-handed participants response times' for right-hand responses are faster to the larger stimulus than to the smaller stimulus.<br>
-Hypothesis 6 receives enough support to be accepted. However since we did not find the assumed effect in left-handed participants (H4,H5) and since we have rather strong evidence for the inverse effect, we should rather inspect the inverse of hypothesis 6. The inverse of hypothesis 6 receives not enough support to be accepted. Therefore we should conclude that the stimulus size – response location compatibility effect in left-handed participants is larger for right-hand responses than for left-hand responses.<br>
+According to these rules we can conclude the following for our hypotheses:
+
+Hypothesis 1 receives enough support to be accepted.
+
+Hypothesis 2 receives no support at all. The inverse of hypothesis 2 receives enough support to be accepted. We therefore conclude that right-handed participants left-hand responses' are faster to the larger stimulus than to the smaller stimulus.
+
+Hypothesis 3 receives enough support to be accepted. However since we did not find the assumed effect for left-handed responses (H2), the result of H3 is not very useful either.
+
+Hypothesis 4 receives not enough support to be accepted. There is stronger evidence for the inverse of hypothesis 4, however this support is not above our threshold. This means we can only report a tendency to the inverse of hypothesis 4, namely that left-handed participants response times' for left-hand responses are faster to the smaller stimulus than to the larger stimulus.
+
+Hypothesis 5 receives no support at all. The inverse of hypothesis 5 receives enough support to be accepted. We therefore conclude that left-handed participants response times' for right-hand responses are faster to the larger stimulus than to the smaller stimulus.
+
+Hypothesis 6 receives enough support to be accepted. However since we did not find the assumed effect in left-handed participants (H4,H5) and since we have rather strong evidence for the inverse effect, we should rather inspect the inverse of hypothesis 6. The inverse of hypothesis 6 receives not enough support to be accepted. Therefore we should conclude that the stimulus size – response location compatibility effect in left-handed participants is larger for right-hand responses than for left-hand responses.
+
 Hypothesis 7 receives not enough support to be accepted. The inverse of hypothesis 7 receives enough support to be accepted, therefore we should conclude that the stimulus size- response location compatibility effect is larger for left-handed compared to right-handed people.
 
 
