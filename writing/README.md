@@ -1,12 +1,19 @@
-This folder contains all files for communicating, i.e. reporting information about and obtained from our replication experiment in the respectively named subfolders  
+# Study Documentation
+This folder contains all files for communicating, i.e. reporting information about and obtained from our replication experiment in the respectively named subfolders.
 
-  - 01_experimentalDesign
-    - images
-    - replication_design.docx
-    - replication_design.pdf
-  - 02_preregistration_report
-    - preregistration_report.doc
-    - preregistration_report.pdf
-  - 03_termPaper
-    - termPaper.rmd
-    - references.bib
+Here you can find a detailed description and explanation of our study's design and a discussion of possible design alternatives:
+- **01_experimentalDesign**
+     - images
+     - replication_design.docx
+     - replication_design.pdf
+     
+Here you can access our Preregistration:
+- **02_preregistration_report**
+     - preregistration_report.docx
+     - preregistration_report.pdf
+     
+Find our final report here:
+- **03_termPaper**
+     - termPaper.rmd
+     - termPaper.pdf
+     - references.bib
