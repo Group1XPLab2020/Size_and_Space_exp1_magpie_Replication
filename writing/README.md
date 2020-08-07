@@ -4,13 +4,13 @@ This folder contains all files for communicating, i.e. reporting information abo
 Here you can find a detailed description and explanation of our study's design and a discussion of possible design alternatives:
 - **01_experimentalDesign**
      - images
-     - replication_design.docx
-     - replication_design.pdf
+     - experimentalDesign.docx
+     - experimentalDesign.pdf
      
 Here you can access our Preregistration:
-- **02_preregistration_report**
-     - preregistration_report.docx
-     - preregistration_report.pdf
+- **02_preregistrationReport**
+     - preregistrationReport.docx
+     - preregistrationReport.pdf
      
 Find our final report here:
 - **03_termPaper**
