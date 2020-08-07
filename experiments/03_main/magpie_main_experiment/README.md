@@ -1,32 +1,22 @@
-# Departure Point
+# Main Experiment
 
-This repository contains a minimal example of a _magpie experiment. It can be used as a quick-start departure point when programming a new _magpie experiment from scratch.
+This repository contains the main implementation of our conceptual replication study from Wühr and Segeelke "Compatibility between Physical Stimulus Size and Left-right Responses: Small is Left and Large is Right"
 
-## Online demo
+Wühr, P., and Seegelke, C. 2018 Compatibility between Physical Stimulus Size and Left-right Responses: Small is Left and Large is Right. Journal of Cognition, 1(1): 17, pp. 1–11, DOI: https://doi.org/10.5334/joc.19
 
-You can have a look at the minimal example experiment [here](https://departure-point.netlify.com/).
+## Experiment
 
-## How to set up an experiment with _magpie (quick start guide)
+The experiment uses a within-subject design with one factor: stimulus-response (S-R) mapping. The factor has 2 levels: the compatible condition (small stimulus (square) = left hand response and large stimulus (square) = right hand response), and incompatible condition (small stimulus (square) = right hand response and large stimulus (square) = left hand response)
 
-### Obtaining the `departure point`
+The experiment consists of two main experimental blocks and one intermediate (non-experimental/distraction) block. In each main experimental block participants view 10 training trials (2 stimuli x 5 repetitions) and 60 main trials (2 stimuli x 30 repetitions) of squares which can be either small or large. They have to decide via a keypress (forced binary choice) whether the squares are small or large.
+In the intermediate block participants are shown either a circle or a triangle and have to classify the presented stimulus as “circle” or “triangle” by clicking on the respective button at the bottom of the screen. The intermediate task consists of 20 trials (2 stimuli × 10 repetitions).
 
-1. install npm by following these [instructions](https://www.npmjs.com/get-npm)
-2. download or clone this github repository: https://github.com/magpie-ea/magpie-departure-point
-   - e.g. type `git clone https://github.com/magpie-ea/magpie-departure-point.git`
-3. change the folder name `departure-point` to whatever you like
-   - let's say you call it `my-exp`, e.g. by typing `mv departure-point my-exp`
-4. go to your folder `my-exp`, e.g., by typing `cd my-exp`
-5. now type `npm install`; this will download the Javascript packages with the most current version of _magpie
-6. you can have a look at the example experiment by opening the file `index.html` in your browser
-7. you can now start editing to create your own experiment
+## \_magpie
 
-### Changing the `departure point` to your own experiment
+The experiment was built using [\_magpie](https://magpie-ea.github.io/magpie-site/index.html).
 
-- Usually, you might just want to manipulate the following files:
-    - `01_custom_styles.css` :: (optional) contains custom styles
-	- `02_custom_functions.js` :: (optional) contains custom functions, variables and hooks (e.g. a global coin flip)
-	- `03_custom_views_templates.js` :: (optional) contains user-defined special-purpose view templates (only needed, if the provided view templates are not enough for your experiment)
-	- `04_trials.js` :: (optional) contains the data of different trials of a task (e.g. names of pictures, test sentences, questions, etc.)
-	- `05_views.js` :: defines the different kinds of tasks, or, more generally, anything users will engage with on the screen
-	- `06_main.js` :: contains the experiment structure and general information about deployment
-- The numbering of the files is important, you can use the functions defined in earlier files in later ones, but not the other way around; that means you can use functions defined in `01` in `04`, but you can't use some variable from `05` in `02`.
+## Running the experiment
+
+1. Online Link: https://main-experiment-group1-xplab2020.netlify.app/
+
+2. Offline: Clone repository, run `npm install` and open `index.html`.
