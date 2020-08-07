@@ -1,5 +1,5 @@
 # Data
-This folder contains all files containing raw, preprocessed and derived data for analysis as obtained from the original, our pilot and our main experiment, respecively and is organized in the following structure:
+This folder contains all files containing raw, preprocessed and derived data for analysis as obtained from the original, our pilot and our main experiment, respectively, organized according to the following structure:
 
 Here you can find data from the original experiment by [Wühr and Seegelke (2018)](https://doi.org/10.5334/joc.19):
 - 01_original
