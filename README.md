@@ -17,7 +17,8 @@ We investigate stimulus-size-horizontal-response mapping compatibility effects b
 
 ### Offline
   - download or clone this github repository: https://github.com/Group1XPLab2020/Size_and_Space_exp1_magpie_Replication, e.g. type `git clone https://github.com/Group1XPLab2020/Size_and_Space_exp1_magpie_Replication`
-  - go into folder `cd Size_and_Space_exp1_magpie_Replication`
+  - go into folder `cd Size_and_Space_exp1_magpie_Replication/experiments`
+  - if you wish to try out the pilot version, type `cd 02_pilot` else try out the main experiment's version by typing `cd 03_main`
   - run `npm install` 
   - open `index.html`
 
