@@ -1,5 +1,7 @@
 # Size_and_Space_exp1_magpie_Replication
-This repository contains all our R-analyses scripts, additional code, design information, data, experiment information and implementation files, notes and writing files
+This repository contains all our R-analyses scripts, additional code, design information, data, experiment information and implementation files, notes and writing files.
+
+Try out the experiment [here](https://main-experiment-group1-xplab2020.netlify.app/)!
 
 Repository structure:
 
@@ -18,9 +20,11 @@ Repository structure:
     - 01_raw_data.csv
     - 02_clean_data.csv
   - 02_pilot
-    - results_165_pilot_Size_and_Space_exp1_replication_Group1XPLab2020.csv
+    - 01_raw_data.csv
+    - 02_clean_data.csv
   - 03_main
-    - results_169_main_Size_and_Space_exp1_replication_Group1XPLab2020.csv
+    - 01_raw_data.csv
+    - 02_clean_data.csv
 - experiments
   - 00_materials
     - ...
@@ -42,4 +46,5 @@ Repository structure:
     - preregistration_report.pdf
   - 03_termPaper
     - termPaper.rmd
+    - termPaper.pdf
     - references.bib
