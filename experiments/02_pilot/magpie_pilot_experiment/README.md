@@ -15,7 +15,7 @@ In the intermediate block participants are shown either a circle or a triangle a
 
 The experiment was built using [\_magpie](https://magpie-ea.github.io/magpie-site/index.html).
 
-## Running the experimental
+## Running the experiment
 
 1. Online Link: https://main-experiment-group1-xplab2020.netlify.app/
 
